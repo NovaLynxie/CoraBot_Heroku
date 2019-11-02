@@ -1,4 +1,5 @@
 # CoraBot - A customizable discord bot built on DiscordJS with NodeJS
+[![Build Status](https://travis-ci.com/NovaLynxie/CoraBot_Heroku.svg?token=6a7QJV4Zn4bss9FGZGzF&branch=master)](https://travis-ci.com/NovaLynxie/CoraBot_Heroku) \n
 This repository is for Heroku usage only and should remain private!
 
 # About Cora
