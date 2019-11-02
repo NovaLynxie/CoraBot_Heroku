@@ -7,6 +7,7 @@ const Client = require('./cora_modules/cora.data/client.js');
 // Destructing methods used to define lines in code.
 const { readdirSync } = require("fs");
 const { sep } = require("path");
+const { success, error, warning } = require("log-symbols"); // npm i log-symbols or yarn add log-symbols
 // Loads config to allow for usage.
 const {
   prefix,
