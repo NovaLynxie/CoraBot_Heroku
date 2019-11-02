@@ -8,7 +8,7 @@ module.exports.run = (bot, message, args, token) => {
 };
 
 module.exports.help = {
-	name: "",
+	name: "restart",
   description: "Restarts the bot and resets the running processes.",
   usage: "restart",
   category: "core",
