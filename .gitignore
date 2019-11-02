@@ -66,3 +66,4 @@ node_modules/util/README.md
 node_modules/util/support/isBuffer.js
 node_modules/util/support/isBufferBrowser.js
 node_modules/util/util.js
+package-lock.json
