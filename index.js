@@ -18,7 +18,7 @@ const cooldowns = new Discord.Collection();
 //var err = fs.createWriteStream(logDir+'/corabot.error.log')
 
 // Command files handler to parse <cmd>.js files.
-const cmdsDir = './cora_modules/cora.commands/'
+const cmdsDir = './cora_modules/cora.cmds/'
 const cmdsData = fs.readdirSync(cmdsDir).filter(cmdsFile => cmdsFile.endsWith('.js'));
 console.log("[System] Searching for files from `"+cmdsDir+"`. Please wait...")
 console.log("[System] Fetching commands from `"+cmdsDir+"` and storing into commands table...")
