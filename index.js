@@ -7,7 +7,6 @@ const Client = require('./cora_modules/cora.data/client.js');
 const {
   prefix,
   debug,
-	token,
 } = require('./config.json');
 
 // Variables for DiscordBot
@@ -27,7 +26,7 @@ for (const cmdsFile of cmdsData) {
   const cmds = require(cmdsDir+`${cmdsFile}`)
   bot.commands.set(cmds.name, cmds)
   if (debug === true) {console.log("[Debug] Added "+cmdsFile+" successfully!")} //Debug console prompt to confirm command file is validated.
-    
+
 }
 
 // Verbose console log debugger. To enable prompts, set debug in config.json to true.
@@ -43,7 +42,7 @@ bot.on('ready', () => {
   bot.user.setActivity("the guild", {type:'Watching'});
   console.log("[CoraBot] Cora is Online!")
 })
-bot.once('reconnecting', () => { 
+bot.once('reconnecting', () => {
   console.log('[WebSocket] L.O.S! Attempting to reconnect...')
 })
 bot.once('disconnect', () => {
@@ -73,11 +72,11 @@ bot.on('message', async message => {
   const cmdName = args.shift().toLowerCase();
   const command = bot.commands.get(cmdName)
     || bot.commands.find(cmd => cmd.aliases && cmd.aliases.includes(cmdName));
-  
+
   // Checks if command is set as guildOnly command.
   if (command.guildOnly && message.channel.type !== 'text')
     return message.reply("I'm sorry, that command is not available in DM's.");
-  
+
   // Checks if message is from the bot and ignores it.
   if (message.author.bot) return;
   if (message.content.indexOf(prefix) !== 0) return;
@@ -86,14 +85,14 @@ bot.on('message', async message => {
   if (!cooldowns.has(command.name)) {
     cooldowns.set(command.name, new Discord.Collection());
   }
-  
+
   const now = Date.now();
   const timestamps = cooldowns.get(command.name);
   const cooldownAmount = (command.cooldown || 3) * 1000;
-  
+
   if (timestamps.has(message.author.id)) {
     const expirationTime = timestamps.get(message.author.id) + cooldownAmount;
-  
+
     if (now < expirationTime) {
       const timeLeft = (expirationTime - now) / 1000;
       return message.reply(`Please wait ${timeLeft.toFixed(1)} more second(s) before reusing the \`${command.name}\` command.`);
@@ -102,16 +101,16 @@ bot.on('message', async message => {
 
   timestamps.set(message.author.id, now);
   setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
-  
+
   // Try Catch Error Handler, catches unhandled errors in the command execute function.
   try {
     command.execute(message, bot, token);
-  } 
+  }
   catch (error) {
     console.error('[CoraBot] Handler Error!',error);
     message.reply('Handler Error!')
   }
 });
 
-bot.login(token); 
+bot.login(token);
 //Required to get bot token to interact with discord bot account.
