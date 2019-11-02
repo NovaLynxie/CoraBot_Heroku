@@ -1,4 +1,4 @@
-module.exports.run = async (bot, message, args) => {
+module.exports.run = (bot, message, args) => {
   const serverQueue = message.client.queue.get(message.guild.id);
   if (!message.member.voiceChannel) {
     console.log("[CoraBot] Music.Skip Error! UserNotFound_voicechat.channelNoUser")

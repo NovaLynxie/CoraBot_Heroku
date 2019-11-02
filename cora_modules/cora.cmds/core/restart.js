@@ -1,4 +1,4 @@
-module.exports.run = async (bot, message, args, token) => {
+module.exports.run = (bot, message, args, token) => {
 	console.log("[CoraBot] RESTART command received! Restarting now!")
 	message.channel.send("Restarting, I will be right back. :wink:")
 	.then(bot.user.setStatus("dnd"))

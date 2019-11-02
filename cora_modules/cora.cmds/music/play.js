@@ -2,7 +2,7 @@ const {
 	Util
 } = require('discord.js');
 const ytdl = require('ytdl-core');
-module.exports.run = async (bot, message, args) => {
+module.exports.run = (bot, message, args) => {
 	const queue = message.client.queue;
 	const serverQueue = message.client.queue.get(message.guild.id);
 

@@ -1,4 +1,4 @@
-module.exports.run = async (bot, message) => {
+module.exports.run = (bot, message) => {
   message.channel.send("<a:pawingcat:635163464905523221> "+message.author.toString())
 };
 

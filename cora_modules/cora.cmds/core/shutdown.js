@@ -1,4 +1,4 @@
-module.exports.run = async (bot, message) => {
+module.exports.run = (bot, message) => {
 	console.log("[CoraBot] SHUTDOWN command received! Shutting down now!")
 	message.channel.send("Shutting down. Good night... <:sleepycat:635163563878514688>")
 	.then(bot.user.setStatus("dnd"))
