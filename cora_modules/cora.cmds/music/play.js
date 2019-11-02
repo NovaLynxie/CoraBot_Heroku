@@ -63,7 +63,6 @@ module.exports.run = async (bot, message, args) => {
 
 	const dispatcher = serverQueue.connection.playStream(ytdl(song.url))
 		.on('end', () => {
-			console.log('[CoraBot] Music ended!');
 			serverQueue.songs.shift();
 			this.play(message, serverQueue.songs[0]);
 		})
