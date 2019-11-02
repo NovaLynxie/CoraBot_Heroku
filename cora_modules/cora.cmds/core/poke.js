@@ -3,10 +3,11 @@ module.exports.run = async (bot, message) => {
 };
 
 module.exports.help = {
-  name: 'poke',
-  description: "Pokes Cora. Hey that tickles!",
-  aliases: ['tap', 'nudge'],
-  usage: 'poke',
+  name: "poke",
+  description: "Gives Cora a small nudge. `Cora: 'Hey that tickles! xD'`",
+  aliases: ["tap", "nudge"],
+  usage: "poke",
+  category: "core",
   cooldown: 5,
   guildOnly: false,
 };

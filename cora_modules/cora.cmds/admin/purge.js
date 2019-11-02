@@ -38,6 +38,6 @@ module.exports.help = {
   description: "Deletes the last set of messages in any chat.",
   usage: "purge <int>",
   category: "admin",
-  aliases: ["flush", "clear", "remove"]
+  aliases: ["flush", "clear", "remove"],
 	guildOnly: true
 };

@@ -65,5 +65,6 @@ module.exports.help = {
 	aliases: ["whois"],
 	usage: "userinfo <args> [@mention, userID]",
 	category: "admin",
+	aliases: ["whois"],
 	guildOnly: true
 };

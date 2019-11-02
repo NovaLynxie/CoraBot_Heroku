@@ -34,6 +34,6 @@ module.exports.help = {
   description: "Bans the specified member out of the server or guild.",
   usage: "ban <@user>",
   category: "admin",
-  aliases: [""]
+  aliases: [""],
 	guildOnly: true
 };

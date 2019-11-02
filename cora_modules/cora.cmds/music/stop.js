@@ -1,24 +1,3 @@
-module.exports = {
-    name: 'stop',
-    description: "Stops the song and disconnects the bot.",
-    aliases: ['finish','end'],
-    usage: 'stop',
-    guildOnly: true,
-    execute(message){
-        const serverQueue = message.client.queue.get(message.guild.id);
-        if (!message.member.voiceChannel) {
-            console.log("[CoraBot] Music.Stop Error! UserNotFound_voicechat.channelNoUser")
-            return message.channel.send('You have to be in a voice channel to stop the music!')};
-        if (!serverQueue) {
-            console.log("[CoraBot] Music.Stop Error! StopErr_voicechat.channelQueue.Stop")
-            return message.channel.send("Nothing is playing. No songs in queue.");
-        }
-        serverQueue.songs = [];
-        serverQueue.connection.dispatcher.end();
-        message.channel.send(":octagonal_sign: Music Stopped!")
-    }
-};
-
 module.exports.run = async (bot, message, args) => {
   const serverQueue = message.client.queue.get(message.guild.id);
   if (!message.member.voiceChannel) {
