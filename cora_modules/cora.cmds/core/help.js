@@ -1,7 +1,7 @@
 const Discord = require('discord.js');
 const fs = require('fs');
 module.exports.run = async (bot, message, args) => {
-  if (!args[1]) {
+  if (!args[0]) {
     var embed = new Discord.RichEmbed()
       .setTitle("Bot Commands :scroll:")
       .setColor(0x00FFFF)
@@ -13,7 +13,7 @@ module.exports.run = async (bot, message, args) => {
       .setFooter("Created by NovaLynxie#9765, coded in Discord.JS v11.5.1")
     message.channel.send(embed);
     return;
-  } else if (args[1] === '-mod') {
+  } else if (args[0] === '-mod') {
     if (message.member.roles.some(role => role.name === 'Staff')) {
     var embed = new Discord.RichEmbed()
       .setTitle("Admin Only Commands :cop:")
@@ -25,10 +25,10 @@ module.exports.run = async (bot, message, args) => {
       .setFooter("Created by NovaLynxie#9765, coded in Discord.JS v11.5.1")
     message.channel.send(embed);
     } else {
-      message.channel.send(":no_entry: Access Denied! :no_entry: \n Staff permissions required!")
+    message.channel.send(":no_entry: Access Denied! :no_entry: \n Staff permissions required!")
     }
     return;
-  } else if (args[1] === '-dev') {
+  } else if (args[0] === '-dev') {
     if (message.member.roles.some(role => role.name === 'BotDev')) {
       var embed = new Discord.RichEmbed()
         .setTitle("Developer Commands :tools:")
@@ -41,8 +41,8 @@ module.exports.run = async (bot, message, args) => {
     } else {
       message.channel.send(":no_entry: Access Denied! :no_entry: \n Developer permissions required!")
     }
-  return;
-  } else if (args[1] === '-cmd') {
+    return;
+  } else if (args[0] === '-cmd') {
     let str = '';
     const commandFiles = fs.readdirSync('./cora_modules/cora.cmds').filter(file => file.endsWith('.js'));
     for (const file of commandFiles) {

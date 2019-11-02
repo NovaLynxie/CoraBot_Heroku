@@ -1,6 +1,6 @@
 const Discord = require('discord.js');
 module.exports.run = async (bot, message, args) => {
-  if (!args[1]) {
+  if (!args[0]) {
       var embed = new Discord.RichEmbed()
           .setTitle("Core Info Help")
           .setColor(0x00FFFF)
@@ -10,7 +10,7 @@ module.exports.run = async (bot, message, args) => {
       message.channel.send(embed);
       return;
   }
-  if (args[1]==='bot'){
+  if (args[0]==='bot'){
       var embed = new Discord.RichEmbed()
           .setTitle("Bot Information <a:pawingcat:635163464905523221>")
           .setColor(0x00FFFF)
@@ -21,7 +21,7 @@ module.exports.run = async (bot, message, args) => {
           .setFooter("Created by NovaLynxie#9765, coded in Discord.JS v11.5.1, coded in Discord.JS v11.5.1")
       message.channel.send(embed);
       return;
-  } else if (args[1]==='owner'){
+  } else if (args[0]==='owner'){
       var ownerID = '234356998836191232'
       let ownerData = message.guild.member(message.guild.members.get(ownerID))
       var embed = new Discord.RichEmbed()
