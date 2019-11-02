@@ -62,3 +62,11 @@ module.exports = {
     }
   },
 };
+
+module.exports.run = async (bot, message) => {
+
+};
+
+module.exports.help = {
+
+};
