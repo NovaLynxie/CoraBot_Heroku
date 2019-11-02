@@ -44,7 +44,7 @@ const loadCmds = (dir = "./cora_modules/cora.cmds/") => {
 				// we add the the comamnd to the collection, Map.prototype.set() for more info
 				bot.commands.set(pull.help.name, pull);
 				// we log if the command was loaded.
-				if (debug === true) return console.log(`${success} Loaded command ${pull.help.name}.`);
+				console.log(`${success} Loaded command ${pull.help.name}.`);
 			}
 			else {
 			// we check if the command is loaded else throw a error saying there was command it didn't load
