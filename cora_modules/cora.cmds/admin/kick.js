@@ -15,7 +15,6 @@ module.exports.run = async (bot, message, args) => {
 		.catch(error => message.reply('Sorry, an error occured.'));
 };
 
-// Help Object
 module.exports.help = {
   name: "kick",
   description: "Kicks the specified member out of the server or guild.",
