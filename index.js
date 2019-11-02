@@ -9,6 +9,7 @@ const { readdirSync } = require("fs");
 const { sep } = require("path");
 const { success, error, warning } = require("log-symbols"); // npm i log-symbols or yarn add log-symbols
 // Loads config to allow for usage.
+const token = process.env.token
 const {
   prefix,
   debug,
