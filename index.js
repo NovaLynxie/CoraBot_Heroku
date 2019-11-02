@@ -4,6 +4,10 @@ const Discord = require("discord.js");
 const fs = require('fs');
 // Read information from files (core bot)
 const Client = require('./cora_modules/cora.data/client.js');
+// Destructing methods used to define lines in code.
+const { readdirSync } = require("fs");
+const { sep } = require("path");
+// Loads config to allow for usage.
 const {
   prefix,
   debug,
