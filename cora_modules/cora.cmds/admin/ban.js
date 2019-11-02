@@ -21,3 +21,19 @@ module.exports = {
 			.catch(error => message.reply('Sorry, an error occured.'));
 	},
 };
+
+module.exports.run = async (bot, message, args) => {
+
+  // Do Some stuff
+
+};
+
+// Help Object
+module.exports.help = {
+  name: "",
+  description: "Bans the specified member out of the server or guild.",
+  usage: "ban <@user>",
+  category: "admin",
+  aliases: [""]
+	guildOnly: true
+};
