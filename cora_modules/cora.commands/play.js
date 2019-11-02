@@ -17,7 +17,7 @@ module.exports = {
 		const voiceChannel = message.member.voiceChannel;
 		if (!voiceChannel) {
 			console.log("[CoraBot] Permissions Error! TargetChannel_voicechat.channelNotSpecified")
-			return message.channel.send('I need a voicechannel to play music!');} 
+			return message.channel.send('I need a voicechannel to play music!');}
 		  const permissions = voiceChannel.permissionsFor(message.client.user);
 		  if (!permissions.has('CONNECT') || !permissions.has('SPEAK')) {
 			console.log("[CoraBot] Permissions Error! InsufficientPerms_voicechat.channelPermsErr")
@@ -63,16 +63,15 @@ module.exports = {
 		const queue = message.client.queue;
 		const guild = message.guild;
 		const serverQueue = queue.get(message.guild.id);
-	
+
 		if (!song) {
 			serverQueue.voiceChannel.leave();
 			queue.delete(guild.id);
 			return;
 		}
-	
+
 		const dispatcher = serverQueue.connection.playStream(ytdl(song.url))
 			.on('end', () => {
-        console.log('[CoraBot] Music ended!');
 				serverQueue.songs.shift();
 				this.play(message, serverQueue.songs[0]);
 			})
