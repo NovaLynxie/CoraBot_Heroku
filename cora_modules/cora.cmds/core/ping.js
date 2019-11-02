@@ -5,8 +5,8 @@ module.exports.run = async (bot, message) => {
 module.exports.help = {
   name: "ping",
   description: "Pings Cora and she returns your ping time",
-  cooldown: 5,
   usage: "ping",
   category: "core",
+  cooldown: 5,
   guildOnly: false
 };

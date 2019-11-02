@@ -12,7 +12,6 @@ module.exports.run = async (bot, message, args) => {
   message.channel.send(":arrow_forward: Song Skipped!")
 };
 
-// Help Object
 module.exports.help = {
   name: "skip",
   description: "Skips the currently playing song.",

@@ -14,7 +14,7 @@ module.exports.run = async (bot, message, args) => {
 		if (!permissions.has('CONNECT') || !permissions.has('SPEAK')) {
 		console.log("[CoraBot] Permissions Error! InsufficientPerms_voicechat.channelPermsErr")
 		return message.channel.send("Insufficient permissions for users channel! Check bot and channel's permissions!");
-		}
+	};
 
 	const songInfo = await ytdl.getInfo(args[1]);
 	const song = {
@@ -33,7 +33,6 @@ module.exports.run = async (bot, message, args) => {
 		};
 
 		queue.set(message.guild.id, queueContruct);
-
 		queueContruct.songs.push(song);
 
 		try {
@@ -44,11 +43,11 @@ module.exports.run = async (bot, message, args) => {
 			console.log(err);
 			queue.delete(message.guild.id);
 			return message.channel.send(err);
-		}
+		};
 	} else {
 		serverQueue.songs.push(song);
 		return message.channel.send(`${song.title} has been added to the queue!`);
-	}
+	};
 
 	play(message, song) {
 		const queue = message.client.queue;
@@ -60,21 +59,20 @@ module.exports.run = async (bot, message, args) => {
 			queue.delete(guild.id);
 		return;
 		}
-
-	const dispatcher = serverQueue.connection.playStream(ytdl(song.url))
-			.on('end', () => {
-				console.log('[CoraBot] Music ended!');
-				serverQueue.songs.shift();
-				this.play(message, serverQueue.songs[0]);
-			})
-			.on('error', error => {
-				console.error('[CoraBot] Dispatcher Error!',error);
-			});
-			dispatcher.setVolumeLogarithmic(serverQueue.volume / 5);
-		}
 	};
 
-// Help Object
+	const dispatcher = serverQueue.connection.playStream(ytdl(song.url))
+		.on('end', () => {
+			console.log('[CoraBot] Music ended!');
+			serverQueue.songs.shift();
+			this.play(message, serverQueue.songs[0]);
+		})
+		.on('error', error => {
+			console.error('[CoraBot] Dispatcher Error!',error);
+		});
+	dispatcher.setVolumeLogarithmic(serverQueue.volume / 5);
+};
+
 module.exports.help = {
   name: "play",
   description: "Joins the user's vc channel and plays the song requested.",

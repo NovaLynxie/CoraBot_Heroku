@@ -9,8 +9,8 @@ module.exports.run = async (bot, message) => {
 module.exports.help = {
 	name: "shutdown",
   description: "Stops the bot and disconnects it from discord.",
-  usage: "",
-  category: "",
-  aliases: [""]
-	guildOnly: false,
+  usage: "shutdown",
+  category: "core",
+  aliases: ["terminate", "sleeptime"]
+	guildOnly: false
 };

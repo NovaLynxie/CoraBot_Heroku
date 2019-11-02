@@ -13,5 +13,5 @@ module.exports.help = {
   usage: "restart",
   category: "core",
   aliases: ["reset", "relog",],
-	guildOnly: false,
+	guildOnly: false
 };

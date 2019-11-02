@@ -4,7 +4,6 @@ module.exports.run = async (bot, message, args) => {
 	return message.channel.send(`Now playing: ${serverQueue.songs[0].title}`);
 };
 
-// Help Object
 module.exports.help = {
   name: "nowplaying",
   description: "Gets the song that is currently playing.",

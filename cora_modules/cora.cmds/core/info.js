@@ -46,9 +46,10 @@ module.exports.run = async (bot, message, args) => {
 };
 
 module.exports.help = {
-  name: 'info',
+  name: "info",
   description: "Displays some info about the bot itself or owner.",
-  aliases: ['i'],
-  usage: 'info <arg> [bot owner]',
-  guildOnly: true,
+  aliases: ["i"],
+  usage: "info <arg> [bot owner]",
+  category: "core",
+  guildOnly: true
 };

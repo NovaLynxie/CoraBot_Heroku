@@ -26,5 +26,5 @@ module.exports.help = {
   category: "core",
   aliases: ["datadump"]
   cooldown: 5,
-  guildOnly: true,
+  guildOnly: true
 };

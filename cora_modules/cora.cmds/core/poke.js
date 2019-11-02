@@ -9,5 +9,5 @@ module.exports.help = {
   usage: "poke",
   category: "core",
   cooldown: 5,
-  guildOnly: false,
+  guildOnly: false
 };
