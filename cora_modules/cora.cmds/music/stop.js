@@ -17,5 +17,6 @@ module.exports.help = {
   description: "Stops the currently playing song and disconnects the bot from vc channel.",
   usage: "stop",
   category: "music",
-  aliases: ["finish", "end"]
+  aliases: ["finish", "end"],
+  guildOnly: true
 };

@@ -18,7 +18,7 @@ module.exports.help = {
   description: "Skips the currently playing song.",
   usage: "skip",
   category: "music",
-  aliases: [""]
-  cooldown: 3,
+  aliases: [""],
+  cooldown: 1,
   guildOnly true
 };

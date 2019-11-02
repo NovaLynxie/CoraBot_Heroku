@@ -80,7 +80,7 @@ module.exports.help = {
   description: "",
   usage: "",
   category: "music",
-  aliases: ["sing", "add"]
+  aliases: ["sing", "add"],
 	cooldown: 1,
 	guildOnly: true
 };
