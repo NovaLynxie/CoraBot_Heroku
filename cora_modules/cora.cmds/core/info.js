@@ -1,5 +1,5 @@
 const Discord = require('discord.js');
-module.exports.run = async (bot, message, args) => {
+module.exports.run = (bot, message, args) => {
   if (!args[0]) {
       var embed = new Discord.RichEmbed()
           .setTitle("Core Info Help")
