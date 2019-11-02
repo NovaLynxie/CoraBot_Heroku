@@ -31,6 +31,7 @@ for (const cmdsFile of cmdsData) {
 
 // Verbose console log debugger. To enable prompts, set debug in config.json to true.
 if (debug === true) {
+  console.log("[Debug] Dev Mode Active! Verbose logging enabled.");
   console.log("[Debug] Command Table Debug Test");
   console.log(bot.commands);//Debug console prompt to print all commands and function types to console.
 }
