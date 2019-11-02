@@ -2,10 +2,6 @@
 const Discord = require("discord.js");
 // Links code to other required parts.
 const fs = require('fs');
-/*
-// Read information from files (core bot)
-const Client = require('./cora_modules/cora.data/client.js');
-*/
 // Destructing methods used to define lines in code.
 const { Client, Collection } = require("discord.js");
 const { readdirSync } = require("fs");
@@ -21,7 +17,6 @@ const {
 // Variables for DiscordBot
 const bot = new Client();
 ["commands", "aliases"].forEach(x => bot[x] = new Collection());
-//bot.commands = new Discord.Collection();
 const cooldowns = new Discord.Collection();
 //const logDir = './cora_modules/cora.debug/'
 //var sys = fs.createWriteStream(logDir+'/corabot.access.log')
