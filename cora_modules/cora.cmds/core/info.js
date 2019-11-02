@@ -24,7 +24,7 @@ module.exports = {
                 .setThumbnail(bot.user.avatarURL)
                 .addField("Name & TagID:",bot.user.username+' ('+bot.user.tag+')')
                 .addField("Created:",bot.user.createdAt)
-                .addField("About Me", "I am Nova's Personal bot. I am mostly used for testing features and stuff. Sometimes I play music but not that well... I do try though ^w^") 
+                .addField("About Me", "I am Nova's Personal bot. I am mostly used for testing features and stuff. Sometimes I play music but not that well... I do try though ^w^")
                 .setFooter("Created by NovaLynxie#9765, coded in Discord.JS v11.5.1, coded in Discord.JS v11.5.1")
             message.channel.send(embed);
             return;
@@ -49,7 +49,7 @@ module.exports = {
                 .addField("Did you enter the command correctly?", "Check you entered the command correctly, \nCommand usage is `>info <args> [bot, owner]`.")
                 .setFooter("Created by NovaLynxie#9765, coded in Discord.JS v11.5.1")
             message.channel.send(embed);
-            return; 
+            return;
         }
     }
 };

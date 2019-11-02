@@ -24,6 +24,6 @@ module.exports = {
             console.error('[CoraBot] FlattedJSON.Parse Error!',error)
             message.reply("Parse Error! Check console.")
         }
-        
+
     }
 };
