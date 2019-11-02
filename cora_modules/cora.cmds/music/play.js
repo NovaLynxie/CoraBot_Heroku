@@ -77,8 +77,8 @@ module.exports.run = async (bot, message, args) => {
 // Help Object
 module.exports.help = {
   name: "play",
-  description: "",
-  usage: "",
+  description: "Joins the user's vc channel and plays the song requested.",
+  usage: "play <url>",
   category: "music",
   aliases: ["sing", "add"],
 	cooldown: 1,
