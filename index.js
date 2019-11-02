@@ -40,7 +40,7 @@ console.log("[System] Commands table generated! Starting CoraBot...")
 // Bot.on Runtime
 bot.on('ready', () => {
   bot.user.setStatus('online')
-  bot.user.setActivity("the guild", {type:'Watching'});
+  bot.user.setActivity("with my developer ^w^", {type:'Playing'});
   console.log("[CoraBot] Cora is Online!")
 })
 bot.once('reconnecting', () => {
