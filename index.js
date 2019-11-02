@@ -121,7 +121,7 @@ bot.on('message', async message => {
   const cmdName = args.shift().toLowerCase();
   const command = bot.commands.get(cmdName)
     || bot.commands.find(cmd => cmd.aliases && cmd.aliases.includes(cmdName));
-
+  console.log(command);
   // Checks if command is set as guildOnly command. (Disabled due to errors with guildOnly property)
   //if (command.guildOnly && message.channel.type !== 'text')
   //  return message.reply("I'm sorry, that command is not available in DM's.");
