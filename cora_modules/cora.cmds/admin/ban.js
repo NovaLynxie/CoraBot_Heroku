@@ -2,7 +2,7 @@ module.exports.run = async (bot, message, args) => {
 	const member = message.mentions.members.first();
 
 	if (!member) {
-		return message.reply('You need to mention the member you want to ban him');
+		return message.reply('You need to mention the member you want to ban them!');
 	}
 
 	if (!member.banable) {
