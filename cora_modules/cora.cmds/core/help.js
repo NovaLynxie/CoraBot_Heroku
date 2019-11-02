@@ -1,6 +1,6 @@
 const Discord = require('discord.js');
 const fs = require('fs');
-module.exports.run = async (bot, message) => {
+module.exports.run = async (bot, message, args) => {
   if (!args[1]) {
     var embed = new Discord.RichEmbed()
       .setTitle("Bot Commands :scroll:")
