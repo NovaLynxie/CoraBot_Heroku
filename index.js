@@ -19,8 +19,9 @@ const {
 } = require('./config.json');
 
 // Variables for DiscordBot
-const bot = new Client(); //Custom discord client.js replaces Discord.Client()
-bot.commands = new Discord.Collection();
+const bot = new Client();
+["commands", "aliases"].forEach(x => bot[x] = new Collection());
+//bot.commands = new Discord.Collection();
 const cooldowns = new Discord.Collection();
 //const logDir = './cora_modules/cora.debug/'
 //var sys = fs.createWriteStream(logDir+'/corabot.access.log')
