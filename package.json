@@ -4,7 +4,7 @@
   "description": "NovaLynxie's Personal Discord Bot",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"System Test OK!\" && exit 1",
+    "test": "echo \"System Test OK!\" && exit 0",
     "start": "node index.js"
   },
   "keywords": [
