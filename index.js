@@ -2,9 +2,12 @@
 const Discord = require("discord.js");
 // Links code to other required parts.
 const fs = require('fs');
+/*
 // Read information from files (core bot)
 const Client = require('./cora_modules/cora.data/client.js');
+*/
 // Destructing methods used to define lines in code.
+const { Client, Collection } = require("discord.js");
 const { readdirSync } = require("fs");
 const { sep } = require("path");
 const { success, error, warning } = require("log-symbols"); // npm i log-symbols or yarn add log-symbols
@@ -151,7 +154,7 @@ bot.on('message', async message => {
   // Try Catch Error Handler, catches unhandled errors in the command execute function.
   try {
     //command.execute(message, bot, token);
-    command.run (message, bot, token);
+    command.run (bot, message, args, token);
   }
   catch (error) {
     console.error('[CoraBot] Handler Error!',error);
