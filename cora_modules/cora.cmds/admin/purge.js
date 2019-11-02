@@ -1,5 +1,4 @@
 module.exports.run = async (bot, message, args) => {
-	const args = message.content.split(' ');
 	let deleteCount = 0;
 	try {
 		deleteCount = parseInt(args[1], 10);
