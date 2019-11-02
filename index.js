@@ -4,6 +4,7 @@ const Discord = require("discord.js");
 const fs = require('fs');
 // Read information from files (core bot)
 const Client = require('./cora_modules/cora.data/client.js');
+const token = process.env.token
 const {
   prefix,
   debug,
