@@ -32,6 +32,7 @@ modules.forEach(c => {
         console.log(`[ERR] Error loading command ${file} in `+dir+`${c}. Missing help.name/help.category or malformed command file.`);
       }
       props.help.aliases.forEach(alias => {
+        if (bot.aliases.get(alias)) return console.warn(`[WARN] Multiple commands have conflicting aliases:'${alias}'`);
         bot.aliases.set(alias, props.name)
       })
     })
