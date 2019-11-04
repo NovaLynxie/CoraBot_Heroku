@@ -26,7 +26,7 @@ modules.forEach(c => {
       const props = require(dir+`${c}/${f}`)
       bot.commands.set(props.help.name, props);
       console.log(props)
-      props.conf.aliases.forEach(alias => {
+      props.help.aliases.forEach(alias => {
         bot.aliases.set(alias, props.name)
       })
     })
