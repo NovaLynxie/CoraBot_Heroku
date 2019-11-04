@@ -19,5 +19,5 @@ module.exports.help = {
   category: "music",
   aliases: [""],
   cooldown: 1,
-  guildOnly true
+  guildOnly: true,
 };
