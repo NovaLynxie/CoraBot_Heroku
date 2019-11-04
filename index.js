@@ -14,6 +14,8 @@ const {
 // Variables for DiscordBot
 //const bot = new Client();
 const bot = new Discord.Client();
+bot.commands = new Discord.Collection();
+bot.aliases = new Discord.Collection();
 const dir = `./cora_modules/cora.cmds/`
 
 modules.forEach(c => {
