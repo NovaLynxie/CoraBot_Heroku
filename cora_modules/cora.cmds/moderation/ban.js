@@ -16,10 +16,10 @@ module.exports.run = async (bot, message, args) => {
 };
 
 module.exports.help = {
-  name: "ban",
-  description: "Bans the specified member out of the server or guild.",
-  usage: "ban <@user>",
-  category: "admin",
-  aliases: ["exile", "boot"],
+	name: "ban",
+  	description: "Bans the specified member out of the server or guild.",
+  	aliases: ["exile", "boot"],
+  	usage: "ban <@user>",
+  	category: "moderation",
 	guildOnly: true
 };

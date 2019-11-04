@@ -19,10 +19,10 @@ module.exports.run = async (bot, message, args) => {
 };
 
 module.exports.help = {
-  name: "purge",
-  description: "Deletes the last set of messages in any chat.",
-  usage: "purge <int>",
-  category: "admin",
-  aliases: ["flush", "clear", "remove"],
+  	name: "purge",
+  	description: "Deletes the last set of messages in any chat.",
+	aliases: ["flush", "clear", "remove"],  
+	usage: "purge <int>",
+  	category: "moderation",
 	guildOnly: true
 };

@@ -29,7 +29,6 @@ module.exports.help = {
 	description: "Get information about a user and sends it in an embedded message format.",
 	aliases: ["whois"],
 	usage: "userinfo <args> [@mention, userID]",
-	category: "admin",
-	aliases: ["whois"],
+	category: "moderation",
 	guildOnly: true
 };

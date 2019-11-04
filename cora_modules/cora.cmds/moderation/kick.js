@@ -16,10 +16,10 @@ module.exports.run = async (bot, message, args) => {
 };
 
 module.exports.help = {
-  name: "kick",
-  description: "Kicks the specified member out of the server or guild.",
-  usage: "kick <@user>",
-  category: "admin",
-  aliases: ["boot"],
+	name: "kick",
+	description: "Kicks the specified member out of the server or guild.",
+	aliases: ["boot"],
+	usage: "kick <@user>",
+	category: "moderation",
 	guildOnly: true
 };
