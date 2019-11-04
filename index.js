@@ -24,12 +24,12 @@ modules.forEach(c => {
     console.log(`[CmdLogs] Loaded ${files.length} commands of module ${c}`)
     files.forEach(f => {
       const props = require(dir+`${c}/${f}`)
-      if (props.help && typeof (props.help.name) === "string" && typeof (pull.help.category) === "string") {
-        if (bot.commands.get(props.help.name)) return console.warn(`[WARN] Two or more commands have the same name ${pull.help.name}.`);
+      if (props.help && typeof (props.help.name) === "string" && typeof (props.help.category) === "string") {
+        if (bot.commands.get(props.help.name)) return console.warn(`[WARN] Multiple commands have the same name ${pull.help.name}.`);
         bot.commands.set(props.help.name, props);
         if (debug === true) return console.log(`[CmdLogs] Loaded ${f} successfully!`);
       } else {
-        console.log(`[ERR] Error loading command ${file} in `+dir+`${c}. Missing help.name/help.category or malformed command file.`);
+        console.log(`[ERR] Error loading command from ${file} in `+dir+`${c}. Missing help.name/help.category or malformed command file.`);
       }
       props.help.aliases.forEach(alias => {
         if (bot.aliases.get(alias)) return console.warn(`[WARN] Multiple commands have conflicting aliases:'${alias}'`);
@@ -38,10 +38,6 @@ modules.forEach(c => {
     })
   })
 })
-
-//const logDir = './cora_modules/cora.debug/'
-//var sys = fs.createWriteStream(logDir+'/corabot.access.log')
-//var err = fs.createWriteStream(logDir+'/corabot.error.log')
 
 // Verbose console log debugger. To enable prompts, set debug in config.json to true.
 if (debug === true) {
