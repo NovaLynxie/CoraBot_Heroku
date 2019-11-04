@@ -4,7 +4,7 @@ const Discord = require('discord.js')
 // Links code to other required parts needed in code.
 const fs = require('fs');
 // Loads required variables into code.
-const modules = ['administration','development','economy','moderation','music','utility'];
+const modules = ['administration','development','moderation','music','utility'];
 const token = process.env.token
 const {
   prefix,
@@ -24,8 +24,13 @@ modules.forEach(c => {
     console.log(`[CmdLogs] Loaded ${files.length} commands of module ${c}`)
     files.forEach(f => {
       const props = require(dir+`${c}/${f}`)
-      bot.commands.set(props.help.name, props);
-      console.log(props)
+      if (props.help && typeof (props.help.name) === "string" && typeof (pull.help.category) === "string") {
+        if (bot.commands.get(props.help.name)) return console.warn(`[WARN] Two or more commands have the same name ${pull.help.name}.`);
+        bot.commands.set(props.help.name, props);
+        if (debug === true) return console.log(`[CmdLogs] Loaded ${f} successfully!`);
+      } else {
+        console.log(`[ERR] Error loading command ${file} in `+dir+`${c}. Missing help.name/help.category or malformed command file.`);
+      }
       props.help.aliases.forEach(alias => {
         bot.aliases.set(alias, props.name)
       })
