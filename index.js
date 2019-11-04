@@ -1,5 +1,5 @@
 // Loads required modules into the code.
-const Discord = require("discord.js");
+const Client = require(`./cora_modules/cora.runtime/client.js`);
 // Links code to other required parts needed in code.
 const fs = require('fs');
 // Loads required variables into code.
