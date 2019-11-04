@@ -4,7 +4,6 @@
   "description": "NovaLynxie's Personal Discord Bot",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"System Test OK!\" && exit 0",
     "start": "node index.js"
   },
   "keywords": [
@@ -17,7 +16,9 @@
     "discord.js": "^11.5.1",
     "ffmpeg-static": "^2.7.0",
     "flatted": "^2.0.1",
+    "log-symbols": "^3.0.0",
     "node-opus": "^0.3.3",
+    "path": "^0.12.7",
     "ytdl-core": "^0.29.7"
   }
 }
