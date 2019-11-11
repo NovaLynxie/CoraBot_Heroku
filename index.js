@@ -2,10 +2,13 @@ const {CommandoClient} =  require('discord.js-commando');
 const path = require('path');
 const {
   prefix,
+  token,
+  cloud,
   debug,
 }
 const bot = new CommandoClient({
   commandPrefix: '>',
+  commandPrefix: prefix,
   owner: [''],
   //owner: process.env.owners, (enable when hosting online)
   //invite: '',
@@ -30,4 +33,12 @@ bot.once('ready', () => {
 })
 bot.on('error', console.error);
 
-bot.login(process.env.token); //Use environment variable token to hide bot token.
+//Checks if bot is running in Cloud Host mode, if not reverts to Local Host Mode.
+if(cloud === true) {
+  console.log('[CoraBot] Running in Cloud Mode!')
+  bot.login(process.env.token); //Use environment variable token to hide bot token.
+}
+if(cloud === false) {
+  console.log('[CoraBot] Running in Local Mode!')
+  bot.login(token); //Set bot token in the config.json file.
+}
