@@ -8,8 +8,9 @@
     "start": "node index.js"
   },
   "keywords": [
+    "Cora.AI",
     "Discord.JS",
-    "DiscordBot"
+    "NodeJS"
   ],
   "author": "NovaLynxie",
   "license": "MIT",
