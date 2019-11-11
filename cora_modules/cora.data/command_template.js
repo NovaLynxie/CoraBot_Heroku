@@ -1,12 +1,25 @@
 //Template for commands to be included as executable command
-//Command file must go into ./cora_modules/cora.cmds as <cmd>.js
-module.exports = {
-    name: 'example_command',
-    description: "Command description goes here.",
-	aliases: ['ex_cmd'],
-	usage: 'example_command <@user>',
-	guildOnly: true,
-    execute(message) {
+//Command file must go into ./cora_commands/ under correct group as <cmd_name>.js
+const { Command } = require('discord.js-commando');
+module.exports = class ExampleCommand extends Command {
+    constructor(bot) {
+        super(bot, {
+            name: '',
+            aliases: [''],
+            group: '',
+            memberName: '',
+            description: '',
+            throttling: {
+                usages: 5,
+                duration: 5,
+            },
+            clientPermissions: [''],
+            userPermissions: [''],
+            ownerOnly: false,
+            guildOnly: true,
+        })
+    }
+    run(message) {
         //Command code to be executed goes here.
         //Must use 'message' to send messages back to channel.
     }
