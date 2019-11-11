@@ -1,4 +1,6 @@
 {
     "prefix": ">",
+    "token": "",
+    "cloud": true,
     "debug": false
 }
