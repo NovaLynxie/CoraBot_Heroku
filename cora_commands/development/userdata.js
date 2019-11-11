@@ -1,7 +1,7 @@
 const Flatted = require("flatted");
 const fs = require('fs');
 const { Command } = require('discord.js-commando');
-module.exports = class ExampleCommand extends Command {
+module.exports = class UserDataCommand extends Command {
     constructor(bot) {
         super(bot, {
             name: 'userdata',
