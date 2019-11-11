@@ -19,6 +19,7 @@
     "ffmpeg-static": "^2.7.0",
     "flatted": "^2.0.1",
     "node-opus": "^0.3.3",
+    "simple-youtube-api": "^5.2.1",
     "ytdl-core": "^0.29.7"
   }
 }
