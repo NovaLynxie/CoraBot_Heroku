@@ -1,5 +1,5 @@
 const { Command } = require('discord.js-commando');
-module.exports = class ExampleCommand extends Command {
+module.exports = class NowPlayingCommand extends Command {
     constructor(bot) {
         super(bot, {
             name: 'nowplaying',
