@@ -1,27 +1,28 @@
+// Defines required constants for bot code.
 const {CommandoClient} =  require('discord.js-commando');
 const path = require('path');
+// Defines parts to get from config file.
 const {
-  prefix,
-  token,
-  cloud,
-  debug,
-}
+  prefix, //Assigns the bot's prefix from config to execute commands.
+  token,  //Assigns the bot's token from config to connect to discord.
+  cloud,  //Sets the bot host mode from config file.
+  debug,  //Sets debug mode on for more console verbose logging. (Not yet implemented)
+} = require('./config.json')
 const bot = new CommandoClient({
-  commandPrefix: '>',
   commandPrefix: prefix,
-  owner: [''],
-  //owner: process.env.owners, (enable when hosting online)
+  owner: process.env.owners,
   //invite: '',
 })
-
+// This sets up the bot.registry for types and groups for commands.
 bot.registry
   .registerDefaultTypes()
   .registerGroups([
-    ['administration', '']
-    ['development', '']
-    ['moderation', '']
-    ['music', '']
-    ['utility', '']
+    ['administration', 'Admin commands, these are very powerful commands.'],
+    ['development', 'Developer only commands. Use with caution!'],
+    ['fun', 'Fun commands to play around with.'],
+    ['moderation', 'Moderator commands for staff to help moderate your guild or community server.'],
+    ['music', 'Music commands for when you want to play some music.'],
+    ['utility', 'Utility commands for giving useful information amongst other things.',]
   ])
   .registerDefaultGroups()
   .registerDefaultCommands()
@@ -40,5 +41,5 @@ if(cloud === true) {
 }
 if(cloud === false) {
   console.log('[CoraBot] Running in Local Mode!')
-  bot.login(token); //Set bot token in the config.json file.
+  bot.login(token); //Set bot token in the config.json file to be used with the bot.
 }
