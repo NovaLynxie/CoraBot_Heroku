@@ -28,7 +28,7 @@ bot.registry
   .registerCommandsIn(path.join(__dirname, 'cora_commands'));
 
 bot.once('ready', () => {
-  console.log(`Connected to DISCORD as ${bot.user.tag} (${bot.user.id})`);
+  console.log(`[CoraBot] Connected to DISCORD as ${bot.user.tag} (${bot.user.id})`);
   bot.user.setActivity("the guild.", {type:"WATCHING"})
 })
 bot.on('error', console.error);
