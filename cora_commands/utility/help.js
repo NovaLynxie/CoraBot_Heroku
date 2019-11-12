@@ -4,10 +4,10 @@ const {Command} = require('discord.js-commando')
 module.exports = class HelpCommand extends Command {
   constructor(bot) {
     super(bot, {
-        name: 'help',
+        name: 'help-cora',
         aliases: ['h'],
         group: 'utility',
-        memberName: 'help',
+        memberName: 'help-cora',
         description: "Shows the bot help in the embedded format",
         throttling: {
             usages: 1,
