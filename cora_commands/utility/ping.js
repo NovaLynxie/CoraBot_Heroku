@@ -1,5 +1,3 @@
-const Discord = 'discord.js'
-const bot = new Discord.Client()
 const { Command } = require('discord.js-commando');
 module.exports = class ExampleCommand extends Command {
     constructor(bot) {
