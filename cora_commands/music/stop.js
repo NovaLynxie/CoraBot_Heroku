@@ -3,7 +3,7 @@ module.exports = class StopCommand extends Command {
   constructor(bot) {
       super(bot, {
         name: 'stop',
-        aliases: [''],
+        aliases: ['end'],
         group: 'music',
         memberName: 'stop',
         description: 'Stops the currently playing song and disconnects the bot from vc channel.',

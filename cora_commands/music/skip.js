@@ -3,7 +3,7 @@ module.exports = class SkipCommand extends Command {
   constructor(bot) {
       super(bot, {
           name: 'skip',
-          aliases: [''],
+          aliases: ['move'],
           group: 'music',
           memberName: 'skip',
           description: 'Skips the currently playing song.',
