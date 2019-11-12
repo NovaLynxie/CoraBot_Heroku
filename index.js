@@ -10,7 +10,7 @@ const {
 } = require('./config.json')
 const bot = new CommandoClient({
   commandPrefix: prefix,
-  owner: process.env.owners,
+  owner: process.env.ownerID,
   //invite: '',
 })
 // This sets up the bot.registry for types and groups for commands.
