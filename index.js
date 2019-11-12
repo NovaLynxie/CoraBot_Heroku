@@ -25,7 +25,9 @@ bot.registry
     ['utility', 'Utility commands for giving useful information amongst other things.',]
   ])
   .registerDefaultGroups()
-  .registerDefaultCommands()
+  .registerDefaultCommands({
+    ping: false
+  })
   .registerCommandsIn(path.join(__dirname, 'cora_commands'));
 
 bot.once('ready', () => {
