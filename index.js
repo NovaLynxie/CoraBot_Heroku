@@ -25,7 +25,7 @@ modules.forEach(c => {
     files.forEach(f => {
       const props = require(dir+`${c}/${f}`)
       if (props.help && typeof (props.help.name) === "string" && typeof (props.help.category) === "string") {
-        if (bot.commands.get(props.help.name)) return console.warn(`[WARN] Multiple commands have the same name ${pull.help.name}.`);
+        if (bot.commands.get(props.help.name)) return console.warn(`[WARN] Multiple commands have the same name ${props.help.name}.`);
         bot.commands.set(props.help.name, props);
         if (debug === true) return console.log(`[CmdLogs] Loaded ${f} successfully!`);
       } else {
