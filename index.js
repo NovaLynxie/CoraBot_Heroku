@@ -1,10 +1,9 @@
 // Loads required modules into the code.
-//const Client = require(`./cora_modules/cora.runtime/client.js`);
-const Discord = require('discord.js')
-// Links code to other required parts needed in code.
+const Discord = require("discord.js");
+// Links code to other required parts.
 const fs = require('fs');
-// Loads required variables into code.
-const modules = ['administration','development','moderation','music','utility'];
+// Read information from files (core bot)
+const Client = require('./cora_modules/cora.data/client.js');
 const token = process.env.token
 const {
   prefix,
@@ -12,34 +11,24 @@ const {
 } = require('./config.json');
 
 // Variables for DiscordBot
-//const bot = new Client();
-const bot = new Discord.Client();
+const bot = new Client(); //Custom discord client.js replaces Discord.Client()
 bot.commands = new Discord.Collection();
-bot.aliases = new Discord.Collection();
-const dir = `./cora_modules/cora.cmds/`
+const cooldowns = new Discord.Collection();
+//const logDir = './cora_modules/cora.debug/'
+//var sys = fs.createWriteStream(logDir+'/corabot.access.log')
+//var err = fs.createWriteStream(logDir+'/corabot.error.log')
 
-modules.forEach(c => {
-  fs.readdir(dir+`${c}/`, (err, files) => {
-    if (err) throw err;
-    console.log(`[CmdLogs] Loaded ${files.length} commands of module ${c}`)
-    files.forEach(f => {
-      const props = require(dir+`${c}/${f}`)
-      if (props.help && typeof (props.help.name) === "string" && typeof (props.help.category) === "string") {
-        if (bot.commands.get(props.help.name)) return console.warn(`[WARN] Multiple commands have the same name ${props.help.name}.`);
-        bot.commands.set(props.help.name, props);
-        if (debug === true) return console.log(`[CmdLogs] Loaded ${f} successfully!`);
-      } else {
-        console.log(`[ERR] Error loading command from ${file} in `+dir+`${c}. Missing help.name/help.category or malformed command file.`);
-      }
-      /*
-      props.help.aliases.forEach(alias => {
-        if (bot.aliases.get(alias)) return console.warn(`[WARN] Multiple commands have conflicting aliases:'${alias}'`);
-        bot.aliases.set(alias, props.name)
-      })
-      */
-    })
-  })
-})
+// Command files handler to parse <cmd>.js files.
+const cmdsDir = './cora_modules/cora.cmds/'
+const cmdsData = fs.readdirSync(cmdsDir).filter(cmdsFile => cmdsFile.endsWith('.js'));
+console.log("[System] Searching for files from `"+cmdsDir+"`. Please wait...")
+console.log("[System] Fetching commands from `"+cmdsDir+"` and storing into commands table...")
+for (const cmdsFile of cmdsData) {
+  const cmds = require(cmdsDir+`${cmdsFile}`)
+  bot.commands.set(cmds.name, cmds)
+  if (debug === true) {console.log("[Debug] Added "+cmdsFile+" successfully!")} //Debug console prompt to confirm command file is validated.
+
+}
 
 // Verbose console log debugger. To enable prompts, set debug in config.json to true.
 if (debug === true) {
@@ -52,7 +41,7 @@ console.log("[System] Commands table generated! Starting CoraBot...")
 // Bot.on Runtime
 bot.on('ready', () => {
   bot.user.setStatus('online')
-  bot.user.setActivity("the guild OwO", {type:'Watching'});
+  bot.user.setActivity("all guilds", {type:'Watching'});
   console.log("[CoraBot] Cora is Online!")
 })
 bot.once('reconnecting', () => {
@@ -85,10 +74,10 @@ bot.on('message', async message => {
   const cmdName = args.shift().toLowerCase();
   const command = bot.commands.get(cmdName)
     || bot.commands.find(cmd => cmd.aliases && cmd.aliases.includes(cmdName));
-  console.log(command);
-  // Checks if command is set as guildOnly command. (Disabled due to errors with guildOnly property)
-  //if (command.guildOnly && message.channel.type !== 'text')
-  //  return message.reply("I'm sorry, that command is not available in DM's.");
+
+  // Checks if command is set as guildOnly command.
+  if (command.guildOnly && message.channel.type !== 'text')
+    return message.reply("I'm sorry, that command is not available in DM's.");
 
   // Checks if message is from the bot and ignores it.
   if (message.author.bot) return;
@@ -117,8 +106,7 @@ bot.on('message', async message => {
 
   // Try Catch Error Handler, catches unhandled errors in the command execute function.
   try {
-    //command.execute(message, bot, token);
-    command.run (bot, message, args, token);
+    command.execute(message, bot, token);
   }
   catch (error) {
     console.error('[CoraBot] Handler Error!',error);
