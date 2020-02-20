@@ -44,6 +44,21 @@ bot.on('ready', () => {
   bot.user.setActivity("all guilds", {type:'Watching'});
   console.log("[CoraBot] Cora is Online!")
 })
+// Randomised Activity Status (Beta)
+const activitiesList = [
+  "with my code 📜", {type: 'Playing'},
+  "booping snoots X3", {type: 'Playing'},
+  "all guilds 🍪ω🍪", {type:'Watching'},
+  "some music 🎧", {type: 'Listening'},
+  "my console 💻", {type: 'Watching'},
+  "to peeps chatter 🗨️", {type: 'Listening'}
+]; // Creates an array of activity status messages
+bot.on('ready', () => {
+  setInterval(() => {
+    const index = Math.floor(Math.random() * (activitiesList.length - 1) + 1);
+    bot.user.setActivity(activitiesList[index]);
+  }, 30000)
+})
 bot.once('reconnecting', () => {
   console.log('[WebSocket] L.O.S! Attempting to reconnect...')
 })
