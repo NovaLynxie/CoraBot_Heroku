@@ -9,6 +9,15 @@ const {
   prefix,
   debug,
 } = require('./config.json');
+// Array of Activity Status messages (Beta)
+const activitiesList = [
+  "with my code 📜", //{type:'Playing'}),
+  "booping snoots X3", //{type:'Playing'}),
+  "some music 🎧", //{type:'Listening'}),
+  "to peeps chatter 🗨️", //{type: 'Listening'})
+  "all guilds 👀", //{type:'Watching'}),
+  "my console 💻" //{type:'Watching'}),
+]; // Creates an array of activity status messages
 
 // Variables for DiscordBot
 const bot = new Client(); //Custom discord client.js replaces Discord.Client()
@@ -35,29 +44,33 @@ if (debug === true) {
   console.log("[Debug] Dev Mode Active! Verbose logging enabled.");
   console.log("[Debug] Command Table Debug Test");
   console.log(bot.commands);//Debug console prompt to print all commands and function types to console.
+  console.log(activitiesList);//Debug console prompt to print all activity status messages to console.
 }
 console.log("[System] Commands table generated! Starting CoraBot...")
 
 // Bot.on Runtime
 bot.on('ready', () => {
   bot.user.setStatus('online')
-  bot.user.setActivity("all guilds", {type:'Watching'});
+  //bot.user.setActivity("all guilds", {type:'Watching'}); //Depreciated to use new randomised activity status.
   console.log("[CoraBot] Cora is Online!")
 })
 // Randomised Activity Status (Beta)
-const activitiesList = [
-  "with my code 📜", {type: 'Playing'},
-  "booping snoots X3", {type: 'Playing'},
-  "all guilds 🍪ω🍪", {type:'Watching'},
-  "some music 🎧", {type: 'Listening'},
-  "my console 💻", {type: 'Watching'},
-  "to peeps chatter 🗨️", {type: 'Listening'}
-]; // Creates an array of activity status messages
 bot.on('ready', () => {
   setInterval(() => {
     const index = Math.floor(Math.random() * (activitiesList.length - 1) + 1);
-    bot.user.setActivity(activitiesList[index]);
-  }, 30000)
+    //if (index == 0); 
+    if (index >= 0 && index <= 1) {
+      var statusType = 1 // 1 - Playing
+    };
+    if (index >= 2 && index <= 3) {
+      var statusType = 2 // 2 - Listening
+    };
+    if (index >= 4 && index <= 5) {
+      var statusType = 3 // 3 - Watching
+    };
+    bot.user.setActivity(activitiesList[index], {type: statusType});
+    if (debug == true) (console.log("trigger => bot.statusUpdate(index=" + index + ")"));
+  }, 600000);
 })
 bot.once('reconnecting', () => {
   console.log('[WebSocket] L.O.S! Attempting to reconnect...')
