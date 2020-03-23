@@ -31,17 +31,19 @@ bot.registry
   .registerCommandsIn(path.join(__dirname, 'cora_commands'));
 
 bot.once('ready', () => {
-  console.log(`[CoraBot] Connected to DISCORD as ${bot.user.tag} (${bot.user.id})`);
+  console.log(`[BotCore] Connected to DISCORD as ${bot.user.tag} (${bot.user.id})`);
   bot.user.setActivity("the guild.", {type:"WATCHING"})
 })
 bot.on('error', console.error);
 
 //Checks if bot is running in Cloud Host mode, if not reverts to Local Host Mode.
 if(cloud === true) {
-  console.log('[CoraBot] Running in Cloud Host Mode!')
+  console.log('[System] Running in Cloud Host Mode!')
+  console.log('[System] Detecting settings from environment variables...')
   bot.login(process.env.token); //Use environment variable token to hide bot token.
 }
 if(cloud === false) {
-  console.log('[CoraBot] Running in Local Host Mode!')
+  console.log('[System] Running in Local Host Mode!')
+  console.log('[System] Loading config.json file in bot\'s root directory...')
   bot.login(token); //Set bot token in the config.json file to be used with the bot.
 }
