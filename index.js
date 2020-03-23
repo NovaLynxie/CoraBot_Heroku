@@ -38,10 +38,10 @@ bot.on('error', console.error);
 
 //Checks if bot is running in Cloud Host mode, if not reverts to Local Host Mode.
 if(cloud === true) {
-  console.log('[CoraBot] Running in Cloud Mode!')
+  console.log('[CoraBot] Running in Cloud Host Mode!')
   bot.login(process.env.token); //Use environment variable token to hide bot token.
 }
 if(cloud === false) {
-  console.log('[CoraBot] Running in Local Mode!')
+  console.log('[CoraBot] Running in Local Host Mode!')
   bot.login(token); //Set bot token in the config.json file to be used with the bot.
 }
