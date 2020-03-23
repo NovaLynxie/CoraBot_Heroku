@@ -1,0 +1,59 @@
+const { CommandoClient } = require('discord.js-commando');
+const { Structures } = require('discord.js');
+const path = require('path');
+
+const {
+    prefix,
+    botToken
+} = require('./config.json')
+
+Structures.extend('Guild', Guild => {
+    class MusicGuild extends Guild {
+        constructor(bot, data){
+            super(bot, data);
+            this.musicData = {
+                queue: [],
+                isPlaying: false,
+                nowPlaying: null,
+                songDispatcher: null,
+                volume: 1
+            };
+            // Music Trivia Excluded
+            // No trivia commands implemented.
+        }
+    }
+    return MusicGuild;
+});
+
+const bot = new CommandoClient({
+    commandPrefix: prefix,
+    owner: '234356998836191232',
+    invite: '',
+});
+
+bot.registry
+    .registerDefaultTypes()
+    .registerGroups([
+        ['admin', 'Admin level commands'],
+        ['core', 'Main commands for this bot'],
+        ['dev', 'Developer only commands'],
+        ['misc', 'Random commands for fun'],
+        ['music', 'Music functionality commands'],
+        ['utils', 'Utility commands anyone can use'],
+
+    ])
+    .registerDefaultGroups()
+    .registerDefaultCommands({
+        //help: false,
+    })
+    .registerCommandsIn(path.join(__dirname, 'proto_cmds'));
+
+bot.once('ready', () => {
+    console.log(`Logged in as ${bot.user.tag}! (${bot.user.id})`);
+    bot.user.setActivity('with Commando');
+});
+
+bot.on('error', console.error);
+
+//client.login('NjQ0NDY3MDcyNDMyMzQwOTky.XniLcQ.ulrov4jxF90XK4Nh7MfDmS8kWHE');
+bot.login(botToken);
