@@ -55,5 +55,14 @@ bot.once('ready', () => {
 
 bot.on('error', console.error);
 
-//client.login('NjQ0NDY3MDcyNDMyMzQwOTky.XniLcQ.ulrov4jxF90XK4Nh7MfDmS8kWHE');
-bot.login(botToken);
+//Checks if bot is running in Cloud Host mode, if not reverts to Local Host Mode.
+if(cloud === true) {
+    console.log('[System] Running in Cloud Host Mode!')
+    console.log('[System] Detecting settings from environment variables...')
+    bot.login(process.env.token); //Use environment variable token to hide bot token.
+  }
+  if(cloud === false) {
+    console.log('[System] Running in Local Host Mode!')
+    console.log('[System] Loading config.json file in bot\'s root directory...')
+    bot.login(botToken); //Set bot token in the config.json file to be used with the bot.
+  }
