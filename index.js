@@ -8,13 +8,13 @@ const {
   cloud,  //Sets the bot host mode from config file.
   debug,  //Sets debug mode on for more console verbose logging. (Not yet implemented)
 } = require('./config.json')
-const bot = new CommandoClient({
+const client = new CommandoClient({
   commandPrefix: prefix,
   owner: process.env.ownerID,
   //invite: '',
 })
 // This sets up the bot.registry for types and groups for commands.
-bot.registry
+client.registry
   .registerDefaultTypes()
   .registerGroups([
     ['administration', 'Admin commands, these are very powerful commands.'],
@@ -30,20 +30,20 @@ bot.registry
   })
   .registerCommandsIn(path.join(__dirname, 'cora_commands'));
 
-bot.once('ready', () => {
-  console.log(`[BotCore] Connected to DISCORD as ${bot.user.tag} (${bot.user.id})`);
+client.once('ready', () => {
+  console.log(`[Cora] Connected to DISCORD as ${bot.user.tag} (${bot.user.id})`);
   bot.user.setActivity("the guild.", {type:"WATCHING"})
 })
-bot.on('error', console.error);
+client.on('error', console.error);
 
 //Checks if bot is running in Cloud Host mode, if not reverts to Local Host Mode.
 if(cloud === true) {
-  console.log('[System] Running in Cloud Host Mode!')
-  console.log('[System] Detecting settings from environment variables...')
-  bot.login(process.env.token); //Use environment variable token to hide bot token.
+  console.log('[Init] Running in Cloud Host Mode!')
+  console.log('[Init] Detecting settings from environment variables...')
+  client.login(process.env.token); //Use environment variable token to hide bot token.
 }
 if(cloud === false) {
-  console.log('[System] Running in Local Host Mode!')
-  console.log('[System] Loading config.json file in bot\'s root directory...')
-  bot.login(token); //Set bot token in the config.json file to be used with the bot.
+  console.log('[Init] Running in Local Host Mode!')
+  console.log('[Init] Loading config.json file in bot\'s root directory...')
+  client.login(token); //Set bot token in the config.json file to be used with the bot.
 }
