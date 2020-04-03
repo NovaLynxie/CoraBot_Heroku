@@ -45,6 +45,7 @@ bot.registry
     ])
     .registerDefaultGroups()
     .registerDefaultCommands({
+        eval: false,
         //help: false,
     })
     .registerCommandsIn(path.join(__dirname, 'proto_cmds'));
