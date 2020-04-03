@@ -1,0 +1,8 @@
+{
+    "prefix": "PREFIX",
+    "ownerIDs": ["OWNER_ID"],
+    "cloud": true,
+    "debug": false,
+    "botToken": "BOT_TOKEN",
+    "youtubeAPI": "API_KEY"
+}
