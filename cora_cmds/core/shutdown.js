@@ -18,7 +18,7 @@ module.exports = class ShutdownCommand extends Command {
         this.client.user.setActivity('Hibernating...')
         this.client.user.setStatus('invisible')
         console.log("[ZEON] Shutdown command received! Terminating...")
-        //client.destroy(); //not working correctly as not defined.
+        this.client.destroy();
         process.exit();
     }
 }
