@@ -4,3 +4,4 @@ index_local.js
 .circleci/config_backup.yml
 cora_cmds/utils/help.js
 cora_cmds/utils/info.js
+config.json
