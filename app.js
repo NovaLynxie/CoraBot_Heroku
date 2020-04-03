@@ -34,12 +34,13 @@ const bot = new CommandoClient({
 bot.registry
     .registerDefaultTypes()
     .registerGroups([
-        ['admin', 'Admin level commands'],
-        ['core', 'Main commands for this bot'],
-        ['dev', 'Developer only commands'],
-        ['misc', 'Random commands for fun'],
-        ['music', 'Music functionality commands'],
-        ['utils', 'Utility commands anyone can use'],
+        ['admin', 'Admin'],
+        ['core', 'Core'],
+        ['dev', 'Developer'],
+        ['info', 'Information'],
+        ['misc', 'Random'],
+        ['music', 'Music'],
+        ['utils', 'Utility'],
 
     ])
     .registerDefaultGroups()
