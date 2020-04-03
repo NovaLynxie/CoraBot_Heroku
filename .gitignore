@@ -2,3 +2,4 @@ node_modules
 index_backup.js
 index_local.js
 .circleci/config_backup.yml
+cora_cmds/utils/help.js
