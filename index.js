@@ -14,7 +14,7 @@ const activitiesList = [
   "with my code 📜", //{type:'Playing'}),
   "booping snoots X3", //{type:'Playing'}),
   "some music 🎧", //{type:'Listening'}),
-  "to peeps chatter 🗨️", //{type: 'Listening'})
+  "peeps chatter 🗨️", //{type: 'Listening'})
   "all guilds 👀", //{type:'Watching'}),
   "my console 💻" //{type:'Watching'}),
 ]; // Creates an array of activity status messages
