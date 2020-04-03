@@ -48,7 +48,7 @@ bot.registry
         eval: false,
         //help: false,
     })
-    .registerCommandsIn(path.join(__dirname, 'proto_cmds'));
+    .registerCommandsIn(path.join(__dirname, 'cora_cmds'));
 
 bot.once('ready', () => {
     console.log(`Logged in as ${bot.user.tag}! (${bot.user.id})`);
