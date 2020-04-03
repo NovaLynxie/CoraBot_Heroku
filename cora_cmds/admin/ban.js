@@ -9,6 +9,8 @@ module.exports = class BanCommand extends Command {
             aliases: ['exile'],
             description: 'Bans guild member from this server.',
             examples: ['ban <@user>'],
+            clientPermissions: ['BAN_MEMBERS'],
+            userPermissions: ['BAN_MEMBERS'],
             guildOnly: true,
         })
     }

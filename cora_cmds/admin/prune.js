@@ -1,18 +1,21 @@
 const { Command } = require('discord.js-commando');
 
 module.exports = class PruneCommand extends Command {
-    constructor(bot) {
-        super(bot, {
-            name: 'prune',
-            aliases: ['clear','purge','delete'],
-            group: 'admin',
+    constructor(client) {
+        super(client, {
+			name: 'prune',
+			group: 'admin',
             memberName: 'prune',
-            guildOnly: true,
-            description: 'Deletes the last message(s) in the chat the command is run in.',
-        })
+			aliases: ['clear','purge','delete'],
+			description: 'Deletes up to 100 messages in channel history.',
+			details: 'Deletes the last message(s) in the chat the command is run in.',
+			clientPermissions: ['READ_MESSAGE_HISTORY','MANAGE_MESSAGES'],
+			userPermissions: ['MANAGE_MESSAGES'],
+			guildOnly: true,
+		});
+		
     }
-    async run(message) {
-        const args = message.content.split(' ');
+    async run(message, args) {
 		let deleteCount = 0;
 		try {
 			deleteCount = parseInt(args[1], 10);
@@ -26,9 +29,13 @@ module.exports = class PruneCommand extends Command {
 		const fetched = await message.channel.fetchMessages({
 			limit: deleteCount,
 		});
-		console.log("[Bot] Purging "+fetched.deleteCount+" messages...")
+		console.log("[ClearMsg] Purging "+fetched.deleteCount+" messages...")
 		message.channel.bulkDelete(fetched)
-			.catch(error => message.reply(`Couldn't delete messages because of: ${error}`));
-		console.log("[Bot] Messages purged successfully!")
+			.catch(error => {
+				console.log('[ClearMsg] ERROR! Unable to remove messages!')
+				console.error(error)
+				message.reply(`Couldn't delete messages because of: ${error}`)
+			});
+		console.log("[ClearMsg] Messages removed successfully!")
     }
 }
