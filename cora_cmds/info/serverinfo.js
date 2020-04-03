@@ -54,7 +54,7 @@ module.exports = class ServerInfoCommand extends Command {
         }
         
         const serverinfo = new MessageEmbed()
-            .setTitle("Server Information v1.0")
+            .setTitle("Server Information")
             .setColor(0x154360)
             .setDescription('Provides detailed information about any discord server/guild.')
             .addFields(

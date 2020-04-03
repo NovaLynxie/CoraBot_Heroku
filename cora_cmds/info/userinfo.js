@@ -36,7 +36,7 @@ module.exports = class UserInfoCommand extends Command {
             .sort((a, b) => b.position - a.position)
             .map(role => role.name)
         const userInfo = new MessageEmbed()
-            .setTitle('User Information v1.0')
+            .setTitle('User Information')
             .setColor(0x154360)
             .setDescription('Provides detailed information about any users in a guild.')
             .addFields(
