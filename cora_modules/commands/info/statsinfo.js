@@ -19,7 +19,7 @@ module.exports = class BotInfoCommand extends Command {
         const users = this.client.users.cache.filter(user => !user.bot).size
         const embed = new MessageEmbed()
             .setTitle("Bot Statistics")
-            .setColor(0x154360)
+            .setColor(0xE7A3F0)
             .addFields(
                 
                 {

@@ -12,7 +12,13 @@ module.exports = class HelpInfoCommand extends Command {
             guildOnly: false,
         })
     }
-    run(message){
-        message.say(`This is a placeholder as currently work in progress ;)`)
+    run(message) {
+        const embed = new MessageEmbed()
+            .setTitle("Help Information")
+            .setColor(0xE7A3F0)
+            .setDescription("This command has not yet been fully implemented. Nothing to see here, yet. ")
+            .setFooter("Built on Node.js using Discord.js with Commando.")
+            .setThumbnail(this.client.user.displayAvatarURL({ formant: 'png'}))
+        return message.embed(embed);
     }
 }
