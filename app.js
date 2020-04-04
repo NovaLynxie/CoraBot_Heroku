@@ -3,7 +3,7 @@ const { Structures } = require('discord.js');
 const path = require('path');
 
 const { activitiesList } = require('./cora_modules/providers/activities.json');
-const botToken = process.env.token;
+const botToken = process.env.botToken;
 const prefix = process.env.prefix;
 const ownerID = process.env.ownerID;
 
