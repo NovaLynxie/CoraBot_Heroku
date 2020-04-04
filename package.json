@@ -1,23 +1,28 @@
 {
   "name": "corabot",
-  "version": "1.1.6",
-  "description": "NovaLynxie's Personal Discord Bot",
-  "main": "index.js",
+  "version": "2.0.0",
+  "private": true,
+  "description": "Discord Bot code for CoraLynx",
+  "main": "app.js",
   "scripts": {
-    "test": "echo \"System Test OK!\" && exit 0",
-    "start": "node index.js"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
   },
   "keywords": [
+    "Cora.AI",
     "Discord.JS",
-    "DiscordBot"
+    "Commando",
+    "NodeJS"
   ],
   "author": "NovaLynxie",
-  "license": "MIT",
+  "license": "ISC",
   "dependencies": {
-    "discord.js": "^11.5.1",
+    "discord.js": "github:discordjs/discord.js",
+    "discord.js-commando": "github:discordjs/Commando",
     "ffmpeg-static": "^2.7.0",
-    "flatted": "^2.0.1",
+    "log-timestamp": "^0.3.0",
     "node-opus": "^0.3.3",
-    "ytdl-core": "^2.0.1"
+    "simple-youtube-api": "^5.2.1",
+    "ytdl-core": "^1.0.9"
   }
 }
