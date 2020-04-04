@@ -3,8 +3,9 @@ const { Structures } = require('discord.js');
 const path = require('path');
 
 const { activitiesList } = require('./cora_modules/providers/activities.json');
-const prefix = process.env.prefix
-const botToken = process.env.token
+const botToken = process.env.token;
+const prefix = process.env.prefix;
+const ownerID = process.env.ownerID;
 
 Structures.extend('Guild', Guild => {
     class MusicGuild extends Guild {
