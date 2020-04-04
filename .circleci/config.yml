@@ -1,23 +1,17 @@
-version: 2
+version: 2.1
+orbs:
+  node: circleci/node@1.1.6
 jobs:
-  build:
-    working_directory: ~/repo
-    docker:
-      - image: circleci/node:10.16.3
-      - image: circleci/mongo:4.2.0
+  build-and-test:
+    executor:
+      name: node/default
     steps:
       - checkout
-      - run:
-          name: update-npm
-          command: sudo npm install -g npm@6.9.0
-      - restore_cache:
-          key: dependency-cache-{{ checksum "package-lock.json" }}
-
-      - run: npm install
-
-      - save_cache:
-          paths:
-            - node_modules
-          key: dependency-cache-{{ checksum "package.json" }}
-    
-      - run: npm test
+      - node/with-cache:
+          steps:
+            - run: npm install
+            - run: npm test
+workflows:
+    build-and-test:
+      jobs:
+        - build-and-test
