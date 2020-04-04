@@ -3,3 +3,6 @@ node_modules
 cora_cmds/utils/help.js
 cora_cmds/utils/info.js
 config.json
+cora_modules/models
+cora_modules/providers
+cora_modules/structures
