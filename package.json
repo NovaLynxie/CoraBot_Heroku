@@ -1,8 +1,8 @@
 {
   "name": "corabot",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "private": true,
-  "description": "Discord Bot code for CoraLynx",
+  "description": "Discord Bot for CoraLynx",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Warn: no test specified\" && exit 0",
@@ -22,8 +22,8 @@
     "ffmpeg-static": "^2.7.0",
     "log-timestamp": "^0.3.0",
     "node-opus": "^0.3.3",
-    "sequelize": "^5.21.6",
     "simple-youtube-api": "^5.2.1",
+    "sqlite": "^3.0.6",
     "winston": "^3.2.1",
     "ytdl-core": "^1.0.9"
   }
