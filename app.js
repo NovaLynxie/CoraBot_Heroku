@@ -2,7 +2,7 @@ const { CommandoClient } = require('discord.js-commando');
 const { Structures } = require('discord.js');
 const path = require('path');
 
-const { activitiesList } = require('./zeon_modules/internal/activities.json');
+const { activitiesList } = require('./cora_modules/providers/activities.json');
 const prefix = process.env.prefix
 const botToken = process.env.token
 
