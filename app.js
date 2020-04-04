@@ -1,6 +1,6 @@
 const { CommandoClient, SQLiteProvider } = require('discord.js-commando');
 const { Structures } = require('discord.js');
-const sqlite = require('sqlite');
+const sqlite = require('sqlite3');
 const path = require('path');
 console.log('[Init] Loading activity list providers...')
 const { activitiesList } = require('./cora_modules/internal/activities.json');
