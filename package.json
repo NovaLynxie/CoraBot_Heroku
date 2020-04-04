@@ -1,11 +1,10 @@
 {
   "name": "corabot",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "private": true,
   "description": "Discord Bot code for CoraLynx",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node app.js"
   },
   "keywords": [
