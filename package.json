@@ -8,7 +8,6 @@
     "start": "node app.js"
   },
   "keywords": [
-    "Cora.AI",
     "Discord.JS",
     "Commando",
     "NodeJS"
