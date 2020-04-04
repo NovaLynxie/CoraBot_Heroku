@@ -4,9 +4,7 @@ const path = require('path');
 console.log('[Init] Loading activity list providers...')
 const { activitiesList } = require('./cora_modules/providers/activities.json');
 console.log('[Init] Getting settings from cloud host enviroment variables.')
-const botToken = process.env.botToken;
-const prefix = process.env.prefix;
-const ownerID = process.env.ownerID;
+const { botToken, prefix, ownerID } = process.env;
 
 Structures.extend('Guild', Guild => {
     class MusicGuild extends Guild {
