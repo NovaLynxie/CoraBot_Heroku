@@ -1,12 +1,11 @@
-const { CommandoClient } = require('discord.js-commando');
+const { CommandoClient, SQLiteProvider } = require('discord.js-commando');
 const { Structures } = require('discord.js');
+const sqlite = require('sqlite');
 const path = require('path');
 console.log('[Init] Loading activity list providers...')
-const { activitiesList } = require('./cora_modules/providers/activities.json');
+const { activitiesList } = require('./cora_modules/internal/activities.json');
 console.log('[Init] Getting settings from cloud host enviroment variables.')
-const botToken = process.env.botToken;
-const prefix = process.env.prefix;
-const ownerID = process.env.ownerID;
+const { botToken, prefix, ownerID } = process.env;
 
 Structures.extend('Guild', Guild => {
     class MusicGuild extends Guild {
@@ -49,6 +48,11 @@ client.registry
         path.join(__dirname, './cora_modules/commands')
     );
 
+sqlite.open(path.join(__dirname, "settings.sqlite3")).then((db) => {
+    console.log('[SQLite] Loading settings database...')
+    client.setProvider(new SQLiteProvider(db));
+});
+
 client.once('ready', () => {
     console.log(`[Cora] Logged in as ${client.user.tag}! (${client.user.id})`);
     client.user.setActivity('with Commando');
@@ -85,4 +89,4 @@ client.on('error', error => {
     console.error('[Cora]', error)
 })
 
-client.login(botToken); //disabled as replaced with a cloud config loader.
+client.login(botToken);
