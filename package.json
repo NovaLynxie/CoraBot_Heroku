@@ -24,6 +24,7 @@
     "node-opus": "^0.3.3",
     "sequelize": "^5.21.6",
     "simple-youtube-api": "^5.2.1",
+    "winston": "^3.2.1",
     "ytdl-core": "^1.0.9"
   }
 }
