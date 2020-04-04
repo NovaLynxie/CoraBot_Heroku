@@ -2,10 +2,8 @@ const { CommandoClient } = require('discord.js-commando');
 const { Structures } = require('discord.js');
 const path = require('path');
 
-const {
-    prefix,
-    botToken
-} = require('./config.json')
+const prefix = process.env.prefix
+const botToken = process.env.token
 
 Structures.extend('Guild', Guild => {
     class MusicGuild extends Guild {
@@ -57,14 +55,4 @@ bot.once('ready', () => {
 
 bot.on('error', console.error);
 
-//Checks if bot is running in Cloud Host mode, if not reverts to Local Host Mode.
-if(cloud === true) {
-    console.log('[System] Running in Cloud Host Mode!')
-    console.log('[System] Detecting settings from environment variables...')
-    bot.login(process.env.token); //Use environment variable token to hide bot token.
-  }
-  if(cloud === false) {
-    console.log('[System] Running in Local Host Mode!')
-    console.log('[System] Loading config.json file in bot\'s root directory...')
-    bot.login(botToken); //Set bot token in the config.json file to be used with the bot.
-  }
+bot.login(botToken);
