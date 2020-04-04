@@ -17,7 +17,7 @@ module.exports = class ShutdownCommand extends Command {
         message.reply("Goodbye")
         this.client.user.setActivity('Hibernating...')
         this.client.user.setStatus('invisible')
-        console.log("[ZEON] Shutdown command received! Terminating...")
+        console.log("[Cora] Shutdown command received! Terminating...")
         this.client.destroy();
         process.exit();
     }
