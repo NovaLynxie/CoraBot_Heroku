@@ -36,7 +36,6 @@ client.registry
     .registerGroups([
         ['admin', 'Admin'],
         ['core', 'Core'],
-        //['dev', 'Developer'],
         ['info', 'Information'],
         ['misc', 'Miscelaneous'],
         ['music', 'Music'],
