@@ -1,10 +1,12 @@
 const { CommandoClient } = require('discord.js-commando');
 const { Structures } = require('discord.js');
 const path = require('path');
-
-const { activitiesList } = require('./zeon_modules/internal/activities.json');
-const prefix = process.env.prefix
-const botToken = process.env.token
+console.log('[Init] Loading activity list providers...')
+const { activitiesList } = require('./cora_modules/providers/activities.json');
+console.log('[Init] Getting settings from cloud host enviroment variables.')
+const botToken = process.env.botToken;
+const prefix = process.env.prefix;
+const ownerID = process.env.ownerID;
 
 Structures.extend('Guild', Guild => {
     class MusicGuild extends Guild {
@@ -35,7 +37,6 @@ client.registry
     .registerGroups([
         ['admin', 'Admin'],
         ['core', 'Core'],
-        //['dev', 'Developer'],
         ['info', 'Information'],
         ['misc', 'Miscelaneous'],
         ['music', 'Music'],
@@ -81,7 +82,7 @@ client.on('guildMemberUpdate', (oldMember, newMember) => {
 })
 
 client.on('error', error => {
-    console.error('[Zeon]', error)
+    console.error('[Cora]', error)
 })
 
-client.login(botToken); //disabled as replaced with a cloud config loader.
+client.login(botToken);
