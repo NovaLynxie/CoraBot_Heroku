@@ -1,8 +1,9 @@
 const { CommandoClient } = require('discord.js-commando');
 const { Structures } = require('discord.js');
 const path = require('path');
-
+console.log('[Init] Loading activities lists...')
 const { activitiesList } = require('./cora_modules/providers/activities.json');
+console.log('[Init] Detecting settings from cloud host enviroment variables.')
 const botToken = process.env.botToken;
 const prefix = process.env.prefix;
 const ownerID = process.env.ownerID;
@@ -81,7 +82,7 @@ client.on('guildMemberUpdate', (oldMember, newMember) => {
 })
 
 client.on('error', error => {
-    console.error('[Zeon]', error)
+    console.error('[Cora]', error)
 })
 
 client.login(botToken); //disabled as replaced with a cloud config loader.
