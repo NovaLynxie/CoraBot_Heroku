@@ -50,9 +50,16 @@ module.exports = class ServerInfoCommand extends Command {
                 var verifLevel = 4;
             } //return verifLevel
         } catch (err) {
-
+            console.log('[Error] Security status missing or undefined! This should not happen.')
+            console.log(err);
         }
         
+        var TxtChannels = message.guild.channels.cache.filter(ch => ch.type === 'text').size
+        var VcChannels = message.guild.channels.cache.filter(ch => ch.type === 'voice').size
+        var AfkChannels = message.guild.afkChannelID ? `<#${message.guild.afkChannelID}> after ${message.guild.afkTimeout / 60}min` : 'None'
+        var GuildUsers = message.guild.users.cache.filter(user => !user.bot).size
+        var GuildBots = message.guild.users.cache.filter(user => user.bot).size
+
         const serverinfo = new MessageEmbed()
             .setTitle("Server Information")
             .setColor(0xE7A3F0)
@@ -61,9 +68,9 @@ module.exports = class ServerInfoCommand extends Command {
                 {
                     name: '> Channels',
                     value: stripIndents`
-                            - Text: ${message.guild.channels.cache.filter(ch => ch.type === 'text').size} Channels
-                            - Voice: ${message.guild.channels.cache.filter(ch => ch.type === 'voice').size} Channels
-                            - AFK Ch.: ${message.guild.afkChannelID ? `<#${message.guild.afkChannelID}> after ${message.guild.afkTimeout / 60}min` : 'None'}
+                            - Text: ${TxtChannels} Channels
+                            - Voice: ${VcChannels} Channels
+                            - AFK Ch.: ${AfkChannels}
                     `
                 },
                 {
@@ -71,7 +78,8 @@ module.exports = class ServerInfoCommand extends Command {
                     value: stripIndents`
                             - Owner: ${message.guild.owner.user.tag}
                             (OwnerID: ${message.guild.ownerID})
-                            - Members: ${message.guild.memberCount} members  
+                            - Users: ${GuildUsers} (TBI)
+                            - Bots: ${GuildBots} (TBI)
                     `
                 },
                 {

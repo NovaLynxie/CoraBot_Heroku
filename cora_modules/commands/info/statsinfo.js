@@ -15,8 +15,9 @@ module.exports = class BotInfoCommand extends Command {
         });
     }
     run(message) {
-        const servers = this.client.guilds.cache.size
-        const users = this.client.users.cache.filter(user => !user.bot).size
+        var Servers = this.client.guilds.cache.size
+        var Channels = this.client.channels.cache.size
+        var Users = this.client.users.cache.filter(user => !user.bot).size
         const embed = new MessageEmbed()
             .setTitle("Bot Statistics")
             .setColor(0xE7A3F0)
@@ -35,9 +36,9 @@ module.exports = class BotInfoCommand extends Command {
                 {
                     name: '> General Stats',
                     value: stripIndents`
-                    Guilds: ${this.client.guilds.cache.size} servers
-                    Channels: ${this.client.channels.cache.size} channels
-                    Users: ${this.client.users.cache.filter(user => !user.bot).size} users
+                    Guilds: ${Servers} servers
+                    Channels: ${Channels} channels
+                    Users: ${Users} users
                     `
                 },
                 {
