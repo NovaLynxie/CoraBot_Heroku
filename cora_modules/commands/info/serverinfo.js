@@ -57,8 +57,8 @@ module.exports = class ServerInfoCommand extends Command {
         var TxtChannels = message.guild.channels.cache.filter(ch => ch.type === 'text').size
         var VcChannels = message.guild.channels.cache.filter(ch => ch.type === 'voice').size
         var AfkChannels = message.guild.afkChannelID ? `<#${message.guild.afkChannelID}> after ${message.guild.afkTimeout / 60}min` : 'None'
-        var GuildUsers = message.guild.users.cache.filter(user => !user.bot).size
-        var GuildBots = message.guild.users.cache.filter(user => user.bot).size
+        var GuildUsers = message.guild.members.cache.filter(user => !user.bot).size
+        var GuildBots = message.guild.members.cache.filter(user => user.bot).size
 
         const serverinfo = new MessageEmbed()
             .setTitle("Server Information")
