@@ -71,7 +71,9 @@ module.exports = class ServerInfoCommand extends Command {
                     value: stripIndents`
                             - Owner: ${message.guild.owner.user.tag}
                             (OwnerID: ${message.guild.ownerID})
-                            - Members: ${message.guild.memberCount} members  
+                            - Members: ${message.guild.memberCount} total members
+                            - Users: TBI 
+                            - Bots: TBI
                     `
                 },
                 {
