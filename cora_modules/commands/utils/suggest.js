@@ -35,7 +35,7 @@ module.exports = class SuggestCommand extends Command {
     }
 
     run(message, { type, input }) {
-        var channel = message.guild.channels.find(ch => ch.name === 'suggestions')
+        var channel = message.guild.channels.cache.find(ch => ch.name === 'suggestions')
         var type = requestType.toLowerCase();
         if (!type) {
             message.reply(`Please specify the type of your suggestion request.`)
