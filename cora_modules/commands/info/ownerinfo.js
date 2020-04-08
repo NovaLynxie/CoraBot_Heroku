@@ -1,5 +1,6 @@
 const { Command } = require('discord.js-commando');
 const { MessageEmbed } = require('discord.js');
+const { stripIndents } = require('common-tags');
 
 module.exports = class TimetableNovaCommand extends Command {
     constructor(client) {
@@ -16,7 +17,14 @@ module.exports = class TimetableNovaCommand extends Command {
 
         var embed = new MessageEmbed()
             .addTitle('About my Owner')
-            .addField('')
+            .addFields(
+                {
+                    name: 'About Nova',
+                    value: stripIndents`
+                            This is a work in progress currently.
+                    `
+                }
+            )
         message.embed(embed);
 
         message.say(`
