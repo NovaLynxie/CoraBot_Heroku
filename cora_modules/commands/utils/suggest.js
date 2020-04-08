@@ -1,7 +1,7 @@
 const { Command } = require('discord.js-commando');
 const { MessageEmbed } = require('discord.js');
 const { stripIndents } = require('common-tags');
-const timezone = require('../../functions/timezone');
+const getLocalTime = require('../../functions/localtime');
 //const moment = require('moment');
 //require('moment-timezone');
 
@@ -63,7 +63,7 @@ module.exports = class SuggestCommand extends Command {
             var requestDesc = input
             var requestUser = message.author.username + '#' + message.author.discriminator
             //var requestDate = moment.utc(message.createdTimestamp).tz('Europe/London').format('dddd, MMMM Do YYYY, HH:mm:ss Z')
-            var requestDate = timezone.getTimezone(message);
+            var requestDate = getLocalTime(message);
             console.log(`[Cora] Generating embed log message...`)
             var suggestEmbed = new MessageEmbed()
                 .setTitle("New suggestion logged!")
