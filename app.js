@@ -39,6 +39,7 @@ client.registry
         ['info', 'Information'],
         ['misc', 'Miscelaneous'],
         ['music', 'Music'],
+        ['utils', 'Utilities'],
     ])
     .registerDefaultGroups()
     .registerDefaultCommands({
