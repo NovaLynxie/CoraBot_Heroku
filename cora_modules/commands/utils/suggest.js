@@ -52,7 +52,7 @@ module.exports = class SuggestCommand extends Command {
         try {
             if (!channel) {
                 message.say(stripIndents`
-                Whoops! I'm missing a suggestions channel or cannot find it, unable to note down your suggestion. \n
+                Whoops! I'm missing a suggestions channel or cannot find it, unable to note down your suggestion.
                 Please contact my owner or higher ups immediately as this should not happen!
                 `)
                 console.log('[Error] Missing channel or permissions invalid! Unable to log suggestion!')
