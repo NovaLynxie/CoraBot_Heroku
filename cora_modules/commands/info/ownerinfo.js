@@ -14,7 +14,7 @@ module.exports = class OwnerInfoCommand extends Command {
         })
     }
     run(message) {
-        var embed = new MessageEmbed()
+        const embed = new MessageEmbed()
             .addTitle('About my Owner')
             .addFields(
                 {
