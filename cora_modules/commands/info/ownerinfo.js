@@ -6,7 +6,7 @@ module.exports = class OwnerInfoCommand extends Command {
     constructor(client) {
         super(client, {
             name: 'ownerinfo',
-            aliases: ['about-owner'],
+            aliases: ['aboutme'],
             group: 'info',
             memberName: 'ownerinfo',
             description: `Adds`,
@@ -14,7 +14,7 @@ module.exports = class OwnerInfoCommand extends Command {
     }
     run(message) {
         var embed = new MessageEmbed()
-            .addTitle('A little bit about My Owner')
+            .setTitle('A little bit about My Owner')
             .addFields(
                 {
                     name: 'About myself',
