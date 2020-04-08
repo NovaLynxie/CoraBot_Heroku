@@ -1,9 +1,9 @@
 const { Command } = require('discord.js-commando');
 const { MessageEmbed } = require('discord.js');
 const { stripIndents } = require('common-tags');
-const timezone = require('../../providers/timezone')
-const moment = require('moment');
-require('moment-timezone');
+const timezone = require('../../functions/timezone');
+//const moment = require('moment');
+//require('moment-timezone');
 
 module.exports = class SuggestCommand extends Command {
     constructor(client) {
@@ -51,40 +51,45 @@ module.exports = class SuggestCommand extends Command {
         }
         try {
             if (!channel) {
-                message.say(`
-                Whoops! I'm missing a suggestions channel or cannot find it, your suggestion has not been logged. \n
+                message.say(stripIndents`
+                Whoops! I'm missing a suggestions channel or cannot find it, unable to note down your suggestion. \n
                 Please contact my owner or higher ups immediately as this should not happen!
                 `)
                 console.log('[Error] Missing channel or permissions invalid! Unable to log suggestion!')
                 console.log('[Error] Suggestion has not been saved, check above.')
                 return
             }
+
+            var requestDesc = input
+            var requestUser = message.author.username + '#' + message.author.discriminator
+            //var requestDate = moment.utc(message.createdTimestamp).tz('Europe/London').format('dddd, MMMM Do YYYY, HH:mm:ss Z')
+            var requestDate = timezone.getTimezone(message);
+            console.log(`[Cora] Generating embed log message...`)
+            var suggestEmbed = new MessageEmbed()
+                .setTitle("New suggestion logged!")
+                .setColor("#F781F3")
+                .addFields(
+                    {
+                        name: '> Suggestion Request Information',
+                        value: stripIndents`
+                                ** Request Type:** ${requestType}
+                                __**Description of Request**__
+                                ${requestDesc}
+                                **Suggested by** ${requestUser}
+                                **Suggested at** ${requestDate}`
+                    }
+                )
+                .setFooter(`Suggestion logged by Cora`)
+            channel.send(suggestEmbed).then(embedMessage => {
+                embedMessage.react('👍')
+                embedMessage.react('👎')
+            })
+            console.log('[Cora] Suggestion logged successfully!')
+            message.reply(`thank you for your suggestion, it has been noted 📝. We will look into your request.`)
+            return
         } catch (error) {
             console.log(`[Severe] Processing fault in channel read/write permissions!`)
             return console.error(error);
         }
-        var requestDesc = input
-        var requestUser = message.author.username + '#' + message.author.discriminator
-        var requestDate = moment.utc(message.createdTimestamp).tz('Europe/London').format('dddd, MMMM Do YYYY, HH:mm:ss Z')
-        var suggestEmbed = new MessageEmbed()
-            .setTitle("New suggestion logged!")
-            .setColor("#F781F3")
-            .addFields(
-                {
-                    name: '> Suggestion Request Information',
-                    value: stripIndents`
-                            **Type:** ${requestType}
-                            __**Description of Request**__
-                            ${requestDesc}
-                            **Suggested by** ${requestUser}
-                            **Suggested at** ${requestDate}`
-                }
-            )
-            .setFooter(`Suggestion logged by Cora`)
-        channel.send(suggestEmbed).then(embedMessage => {
-            embedMessage.react('👍')
-            embedMessage.react('👎')
-        })
-        message.reply(` thank you for your suggestion. We will look into your request.`)
     }
 };
