@@ -10,12 +10,11 @@ module.exports = class OwnerInfoCommand extends Command {
             group: 'info',
             memberName: 'ownerinfo',
             description: `Adds`,
-
-        })
+        });
     }
     run(message) {
         const embed = new MessageEmbed()
-            .addTitle('About my Owner')
+            .setTitle('About my Owner')
             .addFields(
                 {
                     name: 'About Nova',
