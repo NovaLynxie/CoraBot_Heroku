@@ -26,8 +26,9 @@ module.exports = class OwnerInfoCommand extends Command {
         message.embed(embed);
 
         message.say(`
-        I don't have much info to give you right now...\n
-        However if you want to find out if they are available here is their timetable: \n
-        <https://tinyurl.com/rslblaw>`)
+        I don't have much info to give you right now...
+        However if you would like to find out when they are available, here is their timetable.
+        Link to Timetable: <https://tinyurl.com/rslblaw>
+        `)
     }
 }
