@@ -1,6 +1,7 @@
 const { Command } = require('discord.js-commando');
 const { MessageEmbed } = require('discord.js');
 const { stripIndents } = require('common-tags');
+const timezone = require('../../providers/timezone')
 const moment = require('moment');
 require('moment-timezone');
 
