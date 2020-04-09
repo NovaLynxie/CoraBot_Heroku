@@ -1,6 +1,6 @@
 {
   "name": "corabot",
-  "version": "2.1.5",
+  "version": "2.1.6",
   "private": true,
   "description": "Discord Bot for CoraLynx",
   "main": "app.js",
@@ -22,7 +22,7 @@
     "log-timestamp": "^0.3.0",
     "moment": "^2.24.0",
     "moment-duration-format": "^2.3.2",
-    "moment-timezone": "^0.5.23",
+    "moment-timezone": "^0.5.28",
     "node-opus": "^0.3.3",
     "simple-youtube-api": "^5.2.1",
     "sqlite": "^4.0.2",
