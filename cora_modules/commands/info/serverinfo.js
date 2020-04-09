@@ -50,20 +50,27 @@ module.exports = class ServerInfoCommand extends Command {
                 var verifLevel = 4;
             } //return verifLevel
         } catch (err) {
-
+            console.log('[Error] Security status missing or undefined! This should not happen.')
+            console.log(err);
         }
         
+        var TxtChannels = message.guild.channels.cache.filter(ch => ch.type === 'text').size
+        var VcChannels = message.guild.channels.cache.filter(ch => ch.type === 'voice').size
+        var AfkChannels = message.guild.afkChannelID ? `<#${message.guild.afkChannelID}> after ${message.guild.afkTimeout / 60}min` : 'None'
+        var GuildUsers = message.guild.members.cache.filter(m => !m.user.bot).size
+        var GuildBots = message.guild.members.cache.filter(m => m.user.bot).size
+
         const serverinfo = new MessageEmbed()
             .setTitle("Server Information")
-            .setColor(0x154360)
+            .setColor(0xE7A3F0)
             .setDescription('Provides detailed information about any discord server/guild.')
             .addFields(
                 {
                     name: '> Channels',
                     value: stripIndents`
-                            - Text: ${message.guild.channels.cache.filter(ch => ch.type === 'text').size} Channels
-                            - Voice: ${message.guild.channels.cache.filter(ch => ch.type === 'voice').size} Channels
-                            - AFK Ch.: ${message.guild.afkChannelID ? `<#${message.guild.afkChannelID}> after ${message.guild.afkTimeout / 60}min` : 'None'}
+                            - Text: ${TxtChannels} channels
+                            - Voice: ${VcChannels} channels
+                            - AFK Ch.: ${AfkChannels}
                     `
                 },
                 {
@@ -71,13 +78,14 @@ module.exports = class ServerInfoCommand extends Command {
                     value: stripIndents`
                             - Owner: ${message.guild.owner.user.tag}
                             (OwnerID: ${message.guild.ownerID})
-                            - Members: ${message.guild.memberCount} members  
+                            - Users: ${GuildUsers} users
+                            - Bots: ${GuildBots} bots
                     `
                 },
                 {
                     name: '> Extra Info',
                     value: stripIndents`
-                            - Roles: ${message.guild.roles.cache.size}
+                            - Roles: ${message.guild.roles.cache.size} roles
                             - Region: ${message.guild.region}
                             - Created: ${moment.utc(message.guild.createdAt).format('dddd, MMMM Do YYYY, HH:mm:ss Z')}
                             - Verif. Lvl: ${humanLevels[verifLevel]}
