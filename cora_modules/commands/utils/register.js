@@ -21,7 +21,7 @@ module.exports = class RegisterCommand extends Command {
     }
     async run(message) {
         //Defines variables and constants to be used.
-        const messages = [];
+        //const messages = [];
         const guildID = message.guild.id
         const whitelist = serverIDs
         const isWhitelisted = checkWhitelist(whitelist, guildID);
@@ -170,6 +170,6 @@ module.exports = class RegisterCommand extends Command {
             console.log(`[Warn] User may have disabled DMs for ${message.guild.name} server.`)
             console.error(error)
         }
-        return messages;
+        //return messages;
     }
 };
