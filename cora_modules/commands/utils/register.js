@@ -54,6 +54,8 @@ module.exports = class RegisterCommand extends Command {
             if (message.channel.type !== 'dm') {
                 console.log(`[Cora] Opening private channel to ${message.author.username}#${message.author.discriminator}'s DM`)
                 await message.author.createDM(); //Starts new DM channel if not already created.
+                await message.author.send(stripIndents`
+                Hi there! Lets start with some simple questions. Please answer to the best of your ability.`)
                 await message.reply(stripIndents`
                 I have sent you a DM with futher instructions. Please read the instructions very carefully.
                 Any answers that are found to be incorrect or dishonest will result in your account being penalized and/or banned.`)
@@ -113,7 +115,7 @@ module.exports = class RegisterCommand extends Command {
                 })
             }
             if (blockProcess === 4) {
-                console.log(`[Zeon] Registration data collected, processing information.`)
+                console.log(`[Cora] Registration data collected, processing information.`)
                 // Logs registration to channel and completes registration.
                 if (!channel) {
                     message.say(stripIndents`
@@ -128,7 +130,7 @@ module.exports = class RegisterCommand extends Command {
                 const username = message.author.username+'#'+message.author.discriminator;
                 const nickname = ''
                 dmsOpen = dmsOpen.charAt(0).toUpperCase()+dmsOpen.slice(1);
-                console.log(`[Zeon] Generating Embed from information gathered from user...`)
+                console.log(`[Cora] Generating Embed from information gathered from user...`)
                 const registerEmbed = new MessageEmbed()
                     .setColor(0xEC9AED)
                     .setTitle('Registration Log')
