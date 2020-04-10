@@ -45,10 +45,9 @@ module.exports = class RegisterCommand extends Command {
         }
         if (isWhitelisted==false) {
             message.say(stripIndents`
-                Woah there! 🙀 
-                That is a special guild specific command for whitelisted servers only!
-                This command is specifically for my owner's discord server only.
-                If you are seeing this message and you are in my owner's discord server, please contact the owner asap as this should only allow specific servers.`)
+                Woah there buddy,  you're trying to run a restricted command! 🙀
+                That is a special command has been created specifically to register yourself in my owner's discord server only.
+                If this error message appears while running this in my owner's discord server, contact them immediately.`)
         }
         try {
             // Start of Register in Guild            
@@ -125,7 +124,7 @@ module.exports = class RegisterCommand extends Command {
                     console.log('[Error] Registration was not saved and has been discarded.')
                     return
                 }
-                const username = message.author.name+'#'+message.author.discriminator;
+                const username = message.author.username+'#'+message.author.discriminator;
                 const nickname = ''
                 dmsOpen = dmsOpen.charAt(0).toUpperCase()+dmsOpen.slice(1);
                 console.log(`[Zeon] Generating Embed from information gathered from user...`)
