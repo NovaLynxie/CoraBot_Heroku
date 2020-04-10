@@ -1,7 +1,7 @@
 const { Command } = require('discord.js-commando');
 const { MessageEmbed } = require('discord.js');
 const { stripIndents } = require('common-tags');
-const { serverIDs } = require('../../../config')
+const { serverIDs } = process.env.serverIDs
 const getLocalTime = require('../../functions/localtime');
 module.exports = class RegisterCommand extends Command {
     constructor(client) {
