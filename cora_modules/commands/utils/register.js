@@ -50,9 +50,10 @@ module.exports = class RegisterCommand extends Command {
                 If this error message appears while running this in my owner's discord server, contact them immediately.`)
         }
         try {
-            // Start of Register in Guild            
+            // Message tells user to check their DMs to continue.           
             if (message.channel.type !== 'dm') {
-                console.log(`[Zeon] Opening private channel to ${message.author.username}#${message.author.discriminator}'s DM`)
+                console.log(`[Cora] Opening private channel to ${message.author.username}#${message.author.discriminator}'s DM`)
+                await message.author.createDM(); //Starts new DM channel if not already created.
                 await message.reply(stripIndents`
                 I have sent you a DM with futher instructions. Please read the instructions very carefully.
                 Any answers that are found to be incorrect or dishonest will result in your account being penalized and/or banned.`)
