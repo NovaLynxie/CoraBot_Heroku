@@ -43,6 +43,7 @@ client.registry
     ])
     .registerDefaultGroups()
     .registerDefaultCommands({
+        unknownCommand: false,
         //help: false,
     })
     .registerCommandsIn(
