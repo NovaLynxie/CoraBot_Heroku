@@ -50,7 +50,7 @@ module.exports = class PruneCommand extends Command {
     async run(message, args) {
 		let messageFilter;
 		const { filter, limit, member} = args;
-		console.log("[Zeon] Initializing message clean up protocols...")
+		console.log("[Cora] Initializing message clean up protocols...")
 		if (filter) {
 			if (filter === 'invite') {
 				messageFilter = message => message.content.search(/(discord\.gg\/.+|discordapp\.com\/invite\/.+)/i)
@@ -82,7 +82,7 @@ module.exports = class PruneCommand extends Command {
 
 		const msgs2del = await message.channel.messages.fetch({ limit }). catch(err => null);
 		message.channel.bulkDelete(msgs2del.array().reverse()).catch(err => null);
-		console.log("[Zeon] Messages have been removed successfully!")
+		console.log("[Cora] Messages have been removed successfully!")
 
 		return null;
     }
