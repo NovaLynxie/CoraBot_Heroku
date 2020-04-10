@@ -67,8 +67,8 @@ module.exports = class SuggestCommand extends Command {
             var requestDate = getLocalTime(message);
             console.log(`[Cora] Generating embed log message...`)
             var suggestEmbed = new MessageEmbed()
+                .setColor(0xF781F3)
                 .setTitle("New suggestion logged!")
-                .setColor("#F781F3")
                 .addFields(
                     {
                         name: '> Suggestion Request Information',

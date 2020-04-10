@@ -134,7 +134,6 @@ module.exports = class RegisterCommand extends Command {
                 const registerEmbed = new MessageEmbed()
                     .setColor(0xEC9AED)
                     .setTitle('Registration Log')
-                    .setDescription('> User Registry Info')
                     .addFields(
                         {
                             name: `> Member's Information`,
