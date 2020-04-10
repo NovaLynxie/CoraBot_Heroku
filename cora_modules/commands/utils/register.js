@@ -22,7 +22,7 @@ module.exports = class RegisterCommand extends Command {
     async run(message) {
         //Defines variables and constants to be used.
         //const messages = [];
-        const guildID = message.guild.id
+        //const guildID = message.guild.id
         //const whitelistIDs = serverIDs
         //const isWhitelisted = checkWhitelist(whitelist, guildID);
         var channel = message.guild.channels.cache.find(ch => ch.name === 'registrations')
@@ -42,13 +42,13 @@ module.exports = class RegisterCommand extends Command {
             }
             return false;
         }
-        */
         if (serverID==guildID) {
             message.say(stripIndents`
                 Woah there buddy,  you're trying to run a restricted command! 🙀
                 That is a special command has been created specifically to register yourself in my owner's discord server only.
                 If this error message appears while running this in my owner's discord server, contact them immediately.`)
         }
+        */
         try {
             // Message tells user to check their DMs to continue.           
             if (message.channel.type !== 'dm') {
