@@ -82,8 +82,8 @@ module.exports = class SuggestCommand extends Command {
                 )
                 .setFooter(`Suggestion logged by Cora`)
             channel.send(suggestEmbed).then(embedMessage => {
-                embedMessage.react('👍')
-                embedMessage.react('👎')
+                embedMessage.react('😸')
+                embedMessage.react('😾')
             })
             console.log('[Cora] Suggestion logged successfully!')
             message.reply(`thank you for your suggestion, it has been noted 📝. We will look into your request.`)
