@@ -130,6 +130,7 @@ module.exports = class RegisterCommand extends Command {
                 dmsOpen = dmsOpen.charAt(0).toUpperCase()+dmsOpen.slice(1);
                 console.log(`[Zeon] Generating Embed from information gathered from user...`)
                 const registerEmbed = new MessageEmbed()
+                    .setColor(0xEC9AED)
                     .setTitle('Registration Log')
                     .setDescription('> User Registry Info')
                     .addFields(
