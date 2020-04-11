@@ -10,7 +10,7 @@ module.exports = class WarnCommand extends Command {
             memberName: 'warn',
             aliases: ['tell'],
             description: 'Warns guild member in this server.',
-            details: `Warns the mentioned guild member`,
+            details: `Warns the mentioned guild member in the server with an optional reason.`,
             examples: ['warn <@user> <reason>'],
             clientPermissions : ['MANAGE_ROLES'],
             userPermissions: ['SEND_MESSAGES', 'MANAGE_MESSAGES'],
@@ -25,10 +25,17 @@ module.exports = class WarnCommand extends Command {
                 Whoops! 🙀
                 I'm missing a moderations log channel or cannot find it, unable to log moderation actions.
                 Please contact my owner or higher ups immediately as as I cannot log mod actions without one!
+                \`\`\`Error! Missing channel/permissions for channel #moderation-log\`\`\`
                 `)
                 console.log('[Error] Missing channel or permissions invalid! Unable to log suggestion!')
                 console.log('[Warn] Moderation action has not been saved correctly, check error message.')
                 return
+            }
+            if (!user) {
+                message.reply(stripIndents`
+                You didn't mention anyone to warn! Please check your spelling and try again.
+                `)
+                console.log(`[Warn] Missing args! No user mentioned, aborting command.`)
             }
             var logColor = 0xDC9934
             var operator = message.author

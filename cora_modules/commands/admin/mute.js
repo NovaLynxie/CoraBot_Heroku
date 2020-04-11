@@ -55,17 +55,24 @@ module.exports = class MuteCommand extends Command {
                 Whoops! 🙀
                 I'm missing a moderations log channel or cannot find it, unable to log moderation actions.
                 Please contact my owner or higher ups immediately as as I cannot log mod actions without one!
+                \`\`\`Error! Missing channel/permissions for channel #moderation-log\`\`\`
                 `)
                 console.log('[Error] Missing channel or permissions invalid! Unable to log suggestion!')
                 console.log('[Warn] Moderation action has not been saved correctly, check error message.')
                 return
             }
-            var muteColor = 0xDC9934
+            if (!user) {
+                message.reply(stripIndents`
+                You didn't mention anyone to mute! Please check your spelling and try again.
+                `)
+                console.log(`[Warn] Missing args! No user mentioned, aborting command.`)
+            }
+            var logColor = 0xDC9934
             var operator = message.author
             var nick = message.guild.members.fetch(user.id)
             var date = getLocalTime(message)
             var logEmbed = new MessageEmbed()
-                .setColor(muteColor)
+                .setColor(logColor)
                 .setTitle('Silence fool!')
                 .addFields(
                     {
