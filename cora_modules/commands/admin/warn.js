@@ -31,7 +31,7 @@ module.exports = class WarnCommand extends Command {
             }
             var warnColor = 0xDC9934
             var nick = message.guild.members.fetch(user.id)
-            var date = getLocalTime()
+            var date = getLocalTime(message)
             var warnEmbed = new MessageEmbed()
                 .setColor(warnColor)
                 .setTitle('Warning Logged!')

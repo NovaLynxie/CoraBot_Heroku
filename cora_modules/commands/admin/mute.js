@@ -62,7 +62,7 @@ module.exports = class MuteCommand extends Command {
             var muteColor = 0xDC9934 // Black embeds for testing.
             var moderator = message.author
             var nick = message.guild.members.fetch(user.id)
-            var date = getLocalTime()
+            var date = getLocalTime(message)
             var muteEmbed = new MessageEmbed()
                 .setColor(muteColor)
                 .setTitle('Mute Logged!')
