@@ -1,5 +1,7 @@
 const { Command } = require('discord.js-commando');
-
+const { MessageEmbed } = require('discord.js');
+const { stripIndents } = require('common-tags');
+const getLocalTime = require('../../functions/localtime')
 module.exports = class PruneCommand extends Command {
     constructor(client) {
         super(client, {
@@ -51,39 +53,65 @@ module.exports = class PruneCommand extends Command {
 		let messageFilter;
 		const { filter, limit, member} = args;
 		console.log("[Cora] Initializing message clean up protocols...")
-		if (filter) {
-			if (filter === 'invite') {
-				messageFilter = message => message.content.search(/(discord\.gg\/.+|discordapp\.com\/invite\/.+)/i)
-				!== -1;
-			} else if (filter === 'user') {
-				if (member) {
-					const { user } = member;
-					messageFilter = message => message.author.id === user.id;
+		try {
+			if (filter) {
+				if (filter === 'invite') {
+					messageFilter = message => message.content.search(/(discord\.gg\/.+|discordapp\.com\/invite\/.+)/i)
+					!== -1;
+				} else if (filter === 'user') {
+					if (member) {
+						const { user } = member;
+						messageFilter = message => message.author.id === user.id;
+					} else {
+						return message.say(`${message.author}, you have to mention someone.`);
+					}
+				} else if (filter === 'bots') {
+					messageFilter = message => message.author.bot;
+				} else if (filter === 'you') {
+					messageFilter = message => message.author.id === this.client.user.id;
+				} else if (filter === 'upload') {
+					messageFilter = message => message.attachments.size !== 0;
+				} else if (filter === 'links') {
+					messageFilter = message => message.content.search(/https?:\/\/[^ \/\.]+\.[^ \/\.]+/) !== -1;
 				} else {
-					return message.say(`${message.author}, you have to mention someone.`);
+					return message.say(`${message.author}, this is not a valid filter. Use \`help prune\` for all available filters.`)
 				}
-			} else if (filter === 'bots') {
-				messageFilter = message => message.author.bot;
-			} else if (filter === 'you') {
-				messageFilter = message => message.author.id === this.client.user.id;
-			} else if (filter === 'upload') {
-				messageFilter = message => message.attachments.size !== 0;
-			} else if (filter === 'links') {
-				messageFilter = message => message.content.search(/https?:\/\/[^ \/\.]+\.[^ \/\.]+/) !== -1;
-			} else {
-				return message.say(`${message.author}, this is not a valid filter. Use \`help prune\` for all available filters.`)
+				const messages = await message.channel.messages.fetch({ limit }).catch(err => null);
+				const msgs2del = messages.filter(messageFilter);
+				message.channel.bulkDelete(msgs2del.array().reverse()).catch(err => null);
+	
+				return null;
 			}
-			const messages = await message.channel.messages.fetch({ limit }).catch(err => null);
-			const msgs2del = messages.filter(messageFilter);
+			
+			const msgs2del = await message.channel.messages.fetch({ limit }). catch(err => null);
 			message.channel.bulkDelete(msgs2del.array().reverse()).catch(err => null);
-
+			console.log("[Cora] Messages have been removed successfully!")
+			/*
+			var logColor = 0xDC9934
+            var operator = message.author
+            var date = getLocalTime(message)
+            var logEmbed = new MessageEmbed()
+                .setColor(logColor)
+                .setTitle(`Prune Complete!`)
+                .addFields(
+                    {
+                        name: `> Prune Results`,
+                        value: stripIndents`
+                                **Deleted**: ${msgs2del}
+                                **Log Date:** ${date}
+                        `
+					}
+                )
+                .setThumbnail(message.author.displayAvatarURL({format:'png'}))
+                .setFooter(`Action logged by Cora`)
+			channel.send(logEmbed);
+			*/
 			return null;
-		}
-
-		const msgs2del = await message.channel.messages.fetch({ limit }). catch(err => null);
-		message.channel.bulkDelete(msgs2del.array().reverse()).catch(err => null);
-		console.log("[Cora] Messages have been removed successfully!")
-
-		return null;
+		} catch (err) {
+			console.log(`[Severe] Exception Error! An error has occured in the prune command!`)
+			message.say(`An error occured while running this command, please try again.`)
+            return console.error(err);
+        }
+		
     }
 }

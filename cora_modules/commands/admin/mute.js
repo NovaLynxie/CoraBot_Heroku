@@ -1,6 +1,7 @@
 const { Command } = require('discord.js-commando');
 const { MessageEmbed } = require('discord.js');
 const { stripIndents } = require('common-tags');
+const getLocalTime = require('../../functions/localtime')
 module.exports = class MuteCommand extends Command {
     constructor(client) {
         super(client, {
@@ -59,14 +60,13 @@ module.exports = class MuteCommand extends Command {
                 console.log('[Warn] Moderation action has not been saved correctly, check error message.')
                 return
             }
-            var muteColor = 0xDC9934 // Black embeds for testing.
-            var moderator = message.author
+            var muteColor = 0xDC9934
+            var operator = message.author
             var nick = message.guild.members.fetch(user.id)
             var date = getLocalTime(message)
-            var muteEmbed = new MessageEmbed()
+            var logEmbed = new MessageEmbed()
                 .setColor(muteColor)
-                .setTitle('Mute Logged!')
-                .setAuthor(moderator.username+'#'+moderator.discriminator, moderator.avatarURL)
+                .setTitle('Silence fool!')
                 .addFields(
                     {
                         name: `> User Info`,
@@ -77,17 +77,19 @@ module.exports = class MuteCommand extends Command {
                         `
                     },
                     {
-                        name: `> Reason for Mute`,
+                        name: `> Details on Mute`,
                         value: stripIndents`
-                                ${reason}
+                                Muted by ${operator.username}#${operator.discriminator}
+                                For ${reason}.
                         `
                     }
                 )
                 .setThumbnail(user.displayAvatarURL({format:'png'}))
                 .setFooter(`Moderation logged by Cora`)
-            return channel.send(muteEmbed);
+            return channel.send(logEmbed);
         } catch (err) {
-            console.log(`[Severe] Exception Error! Process fault in channel read/write permissions!`)
+            console.log(`[Severe] Exception Error! An error has occured in the mute command!`)
+            message.say(`An error occured while running this command, please try again.`)
             return console.error(err);
         }
     }
