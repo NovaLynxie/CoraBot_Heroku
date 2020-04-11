@@ -11,13 +11,14 @@ module.exports = class PruneCommand extends Command {
 			aliases: ['clear','purge','delete'],
 			description: 'Deletes up to 100 messages in channel history.',
 			details: `Deletes up to a total of 100 message(s) in the chat the command is run in.
-			Here is a list of filters that can be specified to only clear messages certain messages:
+			Here is a list of filters that can be specified to only clear certain types of messages:
 			__invites:__ Messages containing an invite url to a discord
 			__user @user:__ Messages sent by @user mentioned
 			__bots:__ Messages sent by any bots in the server
 			__you:__ Messages sent by Commando itself
 			__uploads:__ Messages that contains an attachement
 			__links:__ Messages which contains any links`,
+			examples: ['prune <limit> [filter] [member]'],
 			clientPermissions: ['MANAGE_MESSAGES'],
 			userPermissions: ['MANAGE_MESSAGES'],
 			guildOnly: true,
@@ -49,11 +50,24 @@ module.exports = class PruneCommand extends Command {
 		});
 		
     }
-    async run(message, args) {
+    async run(message, { limit, filter, member }) {
+		var channel = message.guild.channels.cache.find(ch => ch.name === 'moderation-log') // Currently unused till logEmbed is implemented.
 		let messageFilter;
-		const { filter, limit, member} = args;
-		console.log("[Cora] Initializing message clean up protocols...")
+		console.log("[Cora] Initializing message removal protocols...")
 		try {
+			/* //DISABLED AS logEmbed IS NOT YET IMPLEMENTED!
+			if (!channel) {
+                message.say(stripIndents`
+                Whoops! 🙀
+                I'm missing a moderations log channel or cannot find it, unable to log moderation actions.
+                Please contact my owner or higher ups immediately as as I cannot log mod actions without one!
+                \`\`\`Error! Missing channel/permissions for channel #moderation-log\`\`\`
+                `)
+                console.log('[Error] Missing channel or permissions invalid! Unable to log suggestion!')
+                console.log('[Warn] Moderation action has not been saved correctly, check error message.')
+				return
+			}
+			*/ //DISABLED AS logEmbed IS NOT YET IMPLEMENTED!
 			if (filter) {
 				if (filter === 'invite') {
 					messageFilter = message => message.content.search(/(discord\.gg\/.+|discordapp\.com\/invite\/.+)/i)
@@ -82,22 +96,20 @@ module.exports = class PruneCommand extends Command {
 	
 				return null;
 			}
-			
-			const msgs2del = await message.channel.messages.fetch({ limit }). catch(err => null);
+			const msgs2del = await message.channel.messages.fetch({ limit }).catch(err => null);
 			message.channel.bulkDelete(msgs2del.array().reverse()).catch(err => null);
 			console.log("[Cora] Messages have been removed successfully!")
-			/*
 			var logColor = 0xDC9934
             var operator = message.author
             var date = getLocalTime(message)
             var logEmbed = new MessageEmbed()
                 .setColor(logColor)
-                .setTitle(`Prune Complete!`)
+                .setTitle(`Message Cleaner Log`)
                 .addFields(
                     {
                         name: `> Prune Results`,
                         value: stripIndents`
-                                **Deleted**: ${msgs2del}
+                                Removed ${limit} messages.
                                 **Log Date:** ${date}
                         `
 					}
@@ -105,13 +117,11 @@ module.exports = class PruneCommand extends Command {
                 .setThumbnail(message.author.displayAvatarURL({format:'png'}))
                 .setFooter(`Action logged by Cora`)
 			channel.send(logEmbed);
-			*/
-			return null;
+			return console.log(`[Cora] Logged action to moderation-logs`)
 		} catch (err) {
 			console.log(`[Severe] Exception Error! An error has occured in the prune command!`)
 			message.say(`An error occured while running this command, please try again.`)
             return console.error(err);
         }
-		
     }
-}
+};
