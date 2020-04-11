@@ -1,6 +1,7 @@
 const { Command } = require('discord.js-commando');
 const { MessageEmbed } = require('discord.js');
-const getLocalTime = require('../../functions/localtime')
+const { stripIndents } = require('common-tags');
+const getLocalTime = require('../../functions/localtime') 
 module.exports = class WarnCommand extends Command {
     constructor(client) {
         super(client, {
@@ -29,13 +30,13 @@ module.exports = class WarnCommand extends Command {
                 console.log('[Warn] Moderation action has not been saved correctly, check error message.')
                 return
             }
-            var warnColor = 0xDC9934
+            var logColor = 0xDC9934
+            var operator = message.author
             var nick = message.guild.members.fetch(user.id)
-            var date = getLocalTime()
-            var warnEmbed = new MessageEmbed()
-                .setColor(warnColor)
-                .setTitle('Warning Logged!')
-                .setAuthor(moderator.username+'#'+moderator.discriminator, moderator.avatarURL)
+            var date = getLocalTime(message)
+            var logEmbed = new MessageEmbed()
+                .setColor(logColor)
+                .setTitle(`Warning Issued`)
                 .addFields(
                     {
                         name: `> User Info`,
@@ -46,18 +47,20 @@ module.exports = class WarnCommand extends Command {
                         `
                     },
                     {
-                        name: `> Reason for Warn`,
+                        name: `> Details for Warn`,
                         value: stripIndents`
+                                Warned by ${operator.username}#${operator.discriminator}
                                 ${reason}
                         `
                     }
                 )
                 .setThumbnail(message.author.displayAvatarURL({format:'png'}))
                 .setFooter(`Moderation logged by Cora`)
-            return channel.send(warnEmbed);
+            return channel.send(logEmbed);
         } catch (err) {
-            console.log(`[Severe] Exception Error! Process fault in channel read/write permissions!`)
-            return console.error(error);
+            console.log(`[Severe] Exception Error! An error has occured in the warn command!`)
+            message.say(`An error occured while running this command, please try again.`)
+            return console.error(err);
         }
         
     }
