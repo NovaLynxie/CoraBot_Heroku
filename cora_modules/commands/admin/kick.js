@@ -73,7 +73,7 @@ module.exports = class BanCommand extends Command {
                 .setFooter(`Moderation logged by Cora`)
             channel.send(logEmbed);
             return member
-                .kick('You have been kicked by operator.')
+                .kick('You have been kicked by an administrator.')
                 .then(() => message.reply(`${member.user.tag} has been kicked from the server.`))
                 .catch(error => {
                     console.error(error);

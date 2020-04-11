@@ -43,7 +43,7 @@ module.exports = class BanCommand extends Command {
                 return
             }
             var logColor = 0xDC9934
-            var operator = message.author
+            var operator = message.author.username+'#'+message.author.discriminator
             var nick = message.guild.members.fetch(user.id)
             var date = getLocalTime(message)
             var logEmbed = new MessageEmbed()
@@ -61,7 +61,7 @@ module.exports = class BanCommand extends Command {
                     {
                         name: `> Details for Ban`,
                         value: stripIndents`
-                                Banned by ${operator.username}#${operator.discriminator}
+                                Banned by ${operator}
                                 For ${reason}
                         `
                     }
