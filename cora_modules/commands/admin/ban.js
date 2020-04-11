@@ -10,23 +10,27 @@ module.exports = class BanCommand extends Command {
             memberName: 'ban',
             aliases: ['exile'],
             description: 'Bans guild member from this server.',
-            examples: ['ban <@user>'],
+            examples: ['ban <@user> [reason]'],
             clientPermissions: ['BAN_MEMBERS'],
             userPermissions: ['BAN_MEMBERS'],
             guildOnly: true,
+            throttling: {
+                usages: 1,
+                duration: 3,
+            },
+            args: [
+                {
+                    key: 'user',
+                    type: 'user'
+                },
+                {
+                    key: 'reason',
+                    type: 'string',
+                }
+            ]
         })
     }
-    run(message) {
-        const member = message.mentions.members.first();
-
-        if (!member) {
-            return message.reply('Mention the member you wish to ban.');
-        }
-
-        if (!member.banable) {
-            return message.reply('I\'m sorry but I am unable to ban this member.');
-        }
-
+    run(message, { user, reason }) {
         var channel = message.guild.channels.cache.find(ch => ch.name === 'moderation-log')
         try {
             if (!channel) {
@@ -34,17 +38,30 @@ module.exports = class BanCommand extends Command {
                 Whoops! 🙀
                 I'm missing a moderations log channel or cannot find it, unable to log moderation actions.
                 Please contact my owner or higher ups immediately as as I cannot log mod actions without one!
+                \`\`\`Error! Missing channel/permissions for channel #moderation-log\`\`\`
                 `)
                 console.log('[Error] Missing channel or permissions invalid! Unable to log suggestion!')
                 console.log('[Warn] Moderation action has not been saved correctly, check error message.')
                 return
             }
-            var muteColor = 0xDC9934
-            var operator = message.author
+            if (!user) {
+                message.reply(stripIndents`
+                you didn't mention anyone to ban! Please check your spelling and try again.`)
+                console.log(`[Warn] Missing args! No user mentioned, aborting command.`)
+                return
+            }
+            if (!user.bannable) {
+                message.reply(stripIndents`
+                I'm sorry but I am unable to ban this user. May be missing permissions or their permission level is higher than mine.`)
+                console.log(`[Warn] Unable to kick user, possibly permission error or my permission level is too low.`)
+                return
+            }
+            var logColor = 0xDC9934
+            var operator = message.author.username+'#'+message.author.discriminator
             var nick = message.guild.members.fetch(user.id)
             var date = getLocalTime(message)
             var logEmbed = new MessageEmbed()
-                .setColor(muteColor)
+                .setColor(logColor)
                 .setTitle('The ban hammer has spoken')
                 .addFields(
                     {
@@ -58,8 +75,8 @@ module.exports = class BanCommand extends Command {
                     {
                         name: `> Details for Ban`,
                         value: stripIndents`
-                                Banned by ${operator.username}#${operator.discriminator}
-                                For ${reason}
+                                Banned by ${operator}
+                                For ${reason ? reason : "No reason given"}.
                         `
                     }
                 )
@@ -80,4 +97,4 @@ module.exports = class BanCommand extends Command {
         }
         
     }
-}
+};

@@ -6,11 +6,11 @@ module.exports = function getTimezone(message) {
     var getServerTime = message.createdTimestamp;
     let setServerRegion = '';
     // Supported Regions for the timezone provider.
-    if (getServerRegion == 'us-central') return setServerRegion = 'America/Denver'
-    if (getServerRegion == 'us-west') return setServerRegion = 'America/Los_Angeles'
-    if (getServerRegion == 'us-east') return setServerRegion = 'America/New_York'
-    if (getServerRegion == 'us-south') return setServerRegion = 'America/Mexico_City'
-    if (getServerRegion == 'europe') return setServerRegion = 'Europe/London';
+    if (getServerRegion == 'us-central') setServerRegion = 'America/Denver'
+    if (getServerRegion == 'us-west') setServerRegion = 'America/Los_Angeles'
+    if (getServerRegion == 'us-east') setServerRegion = 'America/New_York'
+    if (getServerRegion == 'us-south') setServerRegion = 'America/Mexico_City'
+    if (getServerRegion == 'europe') setServerRegion = 'Europe/London';
     // Additional Regions for the timezone provider. May add later.
     //if (getServerRegion == 'brazil') return setServerRegion = 'America/Araguaina';
     //if (getServerRegion == 'hongkong') return setServerRegion = 'Asia/Hong_Kong';

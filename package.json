@@ -1,6 +1,6 @@
 {
   "name": "corabot",
-  "version": "2.1.2",
+  "version": "2.1.7",
   "private": true,
   "description": "Discord Bot for CoraLynx",
   "main": "app.js",
@@ -9,13 +9,12 @@
     "start": "node app.js"
   },
   "keywords": [
-    "Cora.AI",
     "Discord.JS",
     "Commando",
     "NodeJS"
   ],
   "author": "NovaLynxie",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "discord.js": "github:discordjs/discord.js",
     "discord.js-commando": "github:discordjs/Commando",
@@ -23,11 +22,10 @@
     "log-timestamp": "^0.3.0",
     "moment": "^2.24.0",
     "moment-duration-format": "^2.3.2",
-    "moment-timezone": "^0.5.23",
+    "moment-timezone": "^0.5.28",
     "node-opus": "^0.3.3",
     "simple-youtube-api": "^5.2.1",
-    "sqlite": "^3.0.6",
-    "winston": "^3.2.1",
-    "ytdl-core": "^1.0.9"
+    "sqlite": "^4.0.2",
+    "ytdl-core": "^2.0.1"
   }
 }

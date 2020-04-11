@@ -1,6 +1,6 @@
-const { CommandoClient, SQLiteProvider } = require('discord.js-commando');
+const { CommandoClient, /*SQLiteProvider*/ } = require('discord.js-commando');
 const { Structures } = require('discord.js');
-const sqlite = require('sqlite');
+//const sqlite = require('sqlite');
 const path = require('path');
 console.log('[Init] Loading activity list providers...')
 const { activitiesList } = require('./cora_modules/internal/activities.json');
@@ -39,19 +39,16 @@ client.registry
         ['info', 'Information'],
         ['misc', 'Miscelaneous'],
         ['music', 'Music'],
+        ['utils', 'Utilities'],
     ])
     .registerDefaultGroups()
     .registerDefaultCommands({
+        unknownCommand: false,
         //help: false,
     })
     .registerCommandsIn(
         path.join(__dirname, './cora_modules/commands')
     );
-
-sqlite.open(path.join(__dirname, "settings.sqlite3")).then((db) => {
-    console.log('[SQLite] Loading settings database...')
-    client.setProvider(new SQLiteProvider(db));
-});
 
 client.once('ready', () => {
     console.log(`[Cora] Logged in as ${client.user.tag}! (${client.user.id})`);

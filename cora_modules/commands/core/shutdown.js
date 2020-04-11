@@ -4,7 +4,7 @@ module.exports = class ShutdownCommand extends Command {
     constructor(client) {
         super(client, {
             name: 'shutdown',
-            aliases: ['sleep', 'deactivate'],
+            aliases: ['sleep', 'hibernate'],
             group: 'core',
             memberName: 'shutdown',
             description: 'Shuts down the bot and disconnects it from discord.',

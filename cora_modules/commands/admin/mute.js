@@ -14,21 +14,55 @@ module.exports = class MuteCommand extends Command {
             clientPermissions : ['MUTE_MEMBERS', 'MANAGE_ROLES'],
             userPermissions: ['SEND_MESSAGES', 'MANAGE_MESSAGES'],
             guildOnly: true,
+            throttling: {
+                usages: 1,
+                duration: 3,
+            },
+            args: [
+                {
+                    key: 'user',
+                    type: 'user'
+                },
+                {
+                    key: 'reason',
+                    type: 'string',
+                }
+            ]
         });
     }
-    run(message, {user, reason="No reasons given."}) {
-        if (user.hasPermission("ADMINISTRATOR")) {
-            message.say(stripIndents`
-            I'm sorry but I cannot to mute this user as they have \`ADMINISTRATOR\` permissions.
-            Users with \`ADMINISTRATOR\` permission overrides all channel and role specific permissions.`)
-        }
-        if (user.hasPermission("MANAGE_MESSAGES")) {
-            message.say(stripIndents`
-            I'm sorry but I cannot to mute this user as they have \`MANAGE_MESSAGES\` permissions.
-            Users with \`MANAGE_MESSAGES\` permission bypasses channel and role permissions.`)
-        }
-        let muterole = message.guild.roles.cache.find(muterole => muterole.name === "Muted")
-        if (!muterole) {
+    async run(message, {user, reason}) {
+        var channel = message.guild.channels.cache.find(ch => ch.name === 'moderation-log')
+        try {
+            if (!channel) {
+                message.say(stripIndents`
+                Whoops! 🙀
+                I'm missing a moderations log channel or cannot find it, unable to log moderation actions.
+                Please contact my owner or higher ups immediately as as I cannot log mod actions without one!
+                \`\`\`Error! Missing channel/permissions for channel #moderation-log\`\`\`
+                `)
+                console.log('[Error] Missing channel or permissions invalid! Unable to log suggestion!')
+                console.log('[Warn] Moderation action has not been saved correctly, check error message.')
+                return
+            }
+            if (!user) {
+                message.reply(stripIndents`
+                you didn't mention anyone to mute! Please check your spelling and try again.
+                `)
+                console.log(`[Warn] Missing args! No user mentioned, aborting command.`)
+                return
+            }
+            if (user.hasPermission("ADMINISTRATOR")) {
+                message.say(stripIndents`
+                I'm sorry but I cannot to mute this user as they have \`ADMINISTRATOR\` permissions.
+                Users with \`ADMINISTRATOR\` permission overrides all channel and role specific permissions.`)
+            }
+            if (user.hasPermission("MANAGE_MESSAGES")) {
+                message.say(stripIndents`
+                I'm sorry but I cannot to mute this user as they have \`MANAGE_MESSAGES\` permissions.
+                Users with \`MANAGE_MESSAGES\` permission bypasses channel and role permissions.`)
+            }
+            let muterole = message.guild.roles.cache.find(muterole => muterole.name === "Muted")
+            if (!muterole) {
             try {
                 console.log(`[Warn] Role 'Muted' not found! Generating one now.`)
                 muterole = await message.guild.createRole({
@@ -48,24 +82,12 @@ module.exports = class MuteCommand extends Command {
                 console.log(`[Warn] Cannot mute properly without a mute role in the server.`)
             }
         }
-        var channel = message.guild.channels.cache.find(ch => ch.name === 'moderation-log')
-        try {
-            if (!channel) {
-                message.say(stripIndents`
-                Whoops! 🙀
-                I'm missing a moderations log channel or cannot find it, unable to log moderation actions.
-                Please contact my owner or higher ups immediately as as I cannot log mod actions without one!
-                `)
-                console.log('[Error] Missing channel or permissions invalid! Unable to log suggestion!')
-                console.log('[Warn] Moderation action has not been saved correctly, check error message.')
-                return
-            }
-            var muteColor = 0xDC9934
+            var logColor = 0xDC9934
             var operator = message.author
             var nick = message.guild.members.fetch(user.id)
             var date = getLocalTime(message)
             var logEmbed = new MessageEmbed()
-                .setColor(muteColor)
+                .setColor(logColor)
                 .setTitle('Silence fool!')
                 .addFields(
                     {
@@ -80,7 +102,7 @@ module.exports = class MuteCommand extends Command {
                         name: `> Details on Mute`,
                         value: stripIndents`
                                 Muted by ${operator.username}#${operator.discriminator}
-                                For ${reason}.
+                                For ${reason ? reason : "No reason given"}.
                         `
                     }
                 )

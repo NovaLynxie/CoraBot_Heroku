@@ -1,7 +1,6 @@
 const { Command } = require('discord.js-commando');
 const { MessageEmbed } = require('discord.js');
 const { stripIndents } = require('common-tags');
-const { serverIDs } = process.env.serverIDs
 const getLocalTime = require('../../functions/localtime');
 module.exports = class RegisterCommand extends Command {
     constructor(client) {
@@ -21,10 +20,6 @@ module.exports = class RegisterCommand extends Command {
     }
     async run(message) {
         //Defines variables and constants to be used.
-        //const messages = [];
-        const guildID = message.guild.id
-        const whitelist = serverIDs
-        const isWhitelisted = checkWhitelist(whitelist, guildID);
         var channel = message.guild.channels.cache.find(ch => ch.name === 'registrations')
         var logDate = getLocalTime(message);
         //var nickname = null;
@@ -33,27 +28,13 @@ module.exports = class RegisterCommand extends Command {
         var gender = null;
         var desc = null;
         var blockProcess = 0;
-        //message.channel = await message.author.createDM()
-        //const userID = message.author.id
-        function checkWhitelist(list, obj) {
-            for (var i = 0; i < list.length; i++) {
-                if (list[i] === obj) {
-                    return true;
-                }
-            }
-            return false;
-        }
-        if (isWhitelisted==false) {
-            message.say(stripIndents`
-                Woah there buddy,  you're trying to run a restricted command! 🙀
-                That is a special command has been created specifically to register yourself in my owner's discord server only.
-                If this error message appears while running this in my owner's discord server, contact them immediately.`)
-        }
         try {
             // Message tells user to check their DMs to continue.           
             if (message.channel.type !== 'dm') {
                 console.log(`[Cora] Opening private channel to ${message.author.username}#${message.author.discriminator}'s DM`)
                 await message.author.createDM(); //Starts new DM channel if not already created.
+                await message.author.send(stripIndents`
+                Hi there! Lets start with some simple questions. Please answer to the best of your ability.`)
                 await message.reply(stripIndents`
                 I have sent you a DM with futher instructions. Please read the instructions very carefully.
                 Any answers that are found to be incorrect or dishonest will result in your account being penalized and/or banned.`)
@@ -113,7 +94,7 @@ module.exports = class RegisterCommand extends Command {
                 })
             }
             if (blockProcess === 4) {
-                console.log(`[Zeon] Registration data collected, processing information.`)
+                console.log(`[Cora] Registration data collected, processing information.`)
                 // Logs registration to channel and completes registration.
                 if (!channel) {
                     message.say(stripIndents`
@@ -128,10 +109,10 @@ module.exports = class RegisterCommand extends Command {
                 const username = message.author.username+'#'+message.author.discriminator;
                 const nickname = ''
                 dmsOpen = dmsOpen.charAt(0).toUpperCase()+dmsOpen.slice(1);
-                console.log(`[Zeon] Generating Embed from information gathered from user...`)
+                console.log(`[Cora] Generating Embed from information gathered from user...`)
                 const registerEmbed = new MessageEmbed()
+                    .setColor(0xEC9AED)
                     .setTitle('Registration Log')
-                    .setDescription('> User Registry Info')
                     .addFields(
                         {
                             name: `> Member's Information`,

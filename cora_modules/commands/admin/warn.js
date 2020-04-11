@@ -10,14 +10,28 @@ module.exports = class WarnCommand extends Command {
             memberName: 'warn',
             aliases: ['tell'],
             description: 'Warns guild member in this server.',
-            details: `Warns the mentioned guild member`,
+            details: `Warns the mentioned guild member in the server with an optional reason.`,
             examples: ['warn <@user> <reason>'],
             clientPermissions : ['MANAGE_ROLES'],
             userPermissions: ['SEND_MESSAGES', 'MANAGE_MESSAGES'],
             guildOnly: true,
+            throttling: {
+				usages: 1,
+				duration: 3
+			},
+			args: [
+                {
+                    key: 'user',
+                    type: 'user'
+                },
+                {
+                    key: 'reason',
+                    type: 'string',
+                }
+            ]
         })
     }
-    run(message, { user, reason="No reason given"}) {
+    run(message, { user, reason }) {
         var channel = message.guild.channels.cache.find(ch => ch.name === 'moderation-log')
         try {
             if (!channel) {
@@ -25,9 +39,16 @@ module.exports = class WarnCommand extends Command {
                 Whoops! 🙀
                 I'm missing a moderations log channel or cannot find it, unable to log moderation actions.
                 Please contact my owner or higher ups immediately as as I cannot log mod actions without one!
+                \`\`\`Error! Missing channel/permissions for channel #moderation-log\`\`\`
                 `)
                 console.log('[Error] Missing channel or permissions invalid! Unable to log suggestion!')
                 console.log('[Warn] Moderation action has not been saved correctly, check error message.')
+                return
+            }
+            if (!user) {
+                message.reply(stripIndents`
+                you didn't mention anyone to warn! Please check your spelling and try again.`)
+                console.log(`[Warn] Missing args! No user mentioned, aborting command.`)
                 return
             }
             var logColor = 0xDC9934
@@ -50,7 +71,7 @@ module.exports = class WarnCommand extends Command {
                         name: `> Details for Warn`,
                         value: stripIndents`
                                 Warned by ${operator.username}#${operator.discriminator}
-                                ${reason}
+                                For ${reason ? reason : "No reason given"}.
                         `
                     }
                 )

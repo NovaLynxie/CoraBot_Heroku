@@ -1,7 +1,7 @@
 const { Command } = require('discord.js-commando');
 const { MessageEmbed } = require('discord.js');
 const { stripIndents } = require('common-tags');
-const timezone = require('../../functions/timezone');
+const getLocalTime = require('../../functions/localtime');
 //const moment = require('moment');
 //require('moment-timezone');
 
@@ -35,8 +35,8 @@ module.exports = class SuggestCommand extends Command {
     }
 
     run(message, { type, input }) {
-        var channel = message.guild.channels.find(ch => ch.name === 'suggestions')
-        var type = requestType.toLowerCase();
+        var channel = message.guild.channels.cache.find(ch => ch.name === 'suggestions')
+        var type = type.toLowerCase();
         if (!type) {
             message.reply(`Please specify the type of your suggestion request.`)
             console.log(`[Warn] Missing 'type' for request, cancelling suggestion request.`)
@@ -52,7 +52,8 @@ module.exports = class SuggestCommand extends Command {
         try {
             if (!channel) {
                 message.say(stripIndents`
-                Whoops! I'm missing a suggestions channel or cannot find it, unable to note down your suggestion. \n
+                🙀 Whoops! I cannot seem to find your suggestions channel.
+                This server is either missing a suggestions channel or am unable to see the channel.
                 Please contact my owner or higher ups immediately as this should not happen!
                 `)
                 console.log('[Error] Missing channel or permissions invalid! Unable to log suggestion!')
@@ -63,11 +64,11 @@ module.exports = class SuggestCommand extends Command {
             var requestDesc = input
             var requestUser = message.author.username + '#' + message.author.discriminator
             //var requestDate = moment.utc(message.createdTimestamp).tz('Europe/London').format('dddd, MMMM Do YYYY, HH:mm:ss Z')
-            var requestDate = timezone.getTimezone(message);
+            var requestDate = getLocalTime(message);
             console.log(`[Cora] Generating embed log message...`)
             var suggestEmbed = new MessageEmbed()
+                .setColor(0xF781F3)
                 .setTitle("New suggestion logged!")
-                .setColor("#F781F3")
                 .addFields(
                     {
                         name: '> Suggestion Request Information',
@@ -79,6 +80,7 @@ module.exports = class SuggestCommand extends Command {
                                 **Suggested at** ${requestDate}`
                     }
                 )
+                .setThumbnail(message.author.displayAvatarURL({format:'png'}))
                 .setFooter(`Suggestion logged by Cora`)
             channel.send(suggestEmbed).then(embedMessage => {
                 embedMessage.react('😸')
