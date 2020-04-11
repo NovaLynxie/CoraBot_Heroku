@@ -51,11 +51,10 @@ module.exports = class PruneCommand extends Command {
 		
     }
     async run(message, { limit, filter, member }) {
-		var channel = message.guild.channels.cache.find(ch => ch.name === 'moderation-log') // Currently unused till logEmbed is implemented.
+		var channel = message.guild.channels.cache.find(ch => ch.name === 'moderation-log')
 		let messageFilter;
 		console.log("[Cora] Initializing message removal protocols...")
 		try {
-			/* //DISABLED AS logEmbed IS NOT YET IMPLEMENTED!
 			if (!channel) {
                 message.say(stripIndents`
                 Whoops! 🙀
@@ -67,7 +66,6 @@ module.exports = class PruneCommand extends Command {
                 console.log('[Warn] Moderation action has not been saved correctly, check error message.')
 				return
 			}
-			*/ //DISABLED AS logEmbed IS NOT YET IMPLEMENTED!
 			if (filter) {
 				if (filter === 'invite') {
 					messageFilter = message => message.content.search(/(discord\.gg\/.+|discordapp\.com\/invite\/.+)/i)
