@@ -80,6 +80,7 @@ module.exports = class SuggestCommand extends Command {
                                 **Suggested at** ${requestDate}`
                     }
                 )
+                .setThumbnail(message.author.displayAvatarURL({format:'png'}))
                 .setFooter(`Suggestion logged by Cora`)
             channel.send(suggestEmbed).then(embedMessage => {
                 embedMessage.react('😸')
