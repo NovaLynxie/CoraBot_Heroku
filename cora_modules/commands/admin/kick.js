@@ -14,6 +14,20 @@ module.exports = class BanCommand extends Command {
             clientPermissions: ['KICK_MEMBERS'],
             userPermissions: ['KICK_MEMBERS'],
             guildOnly: true,
+            throttling: {
+                usages: 1,
+                duration: 3,
+            },
+            args: [
+                {
+                    key: 'user',
+                    type: 'user'
+                },
+                {
+                    key: 'reason',
+                    type: 'string',
+                }
+            ]
         })
     }
     run(message, { user, reason="No reason given"}) {
@@ -65,7 +79,7 @@ module.exports = class BanCommand extends Command {
                         name: `> Details on Kick`,
                         value: stripIndents`
                                 Kicked by ${operator.username}#${operator.discriminator}
-                                ${reason}.
+                                For ${reason ? reason : "No reason given"}.
                         `
                     }
                 )

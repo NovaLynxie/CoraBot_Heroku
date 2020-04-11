@@ -14,9 +14,23 @@ module.exports = class BanCommand extends Command {
             clientPermissions: ['BAN_MEMBERS'],
             userPermissions: ['BAN_MEMBERS'],
             guildOnly: true,
+            throttling: {
+                usages: 1,
+                duration: 3,
+            },
+            args: [
+                {
+                    key: 'user',
+                    type: 'user'
+                },
+                {
+                    key: 'reason',
+                    type: 'string',
+                }
+            ]
         })
     }
-    run(message, { user, reason="No reason given"}) {
+    run(message, { user, reason }) {
         var channel = message.guild.channels.cache.find(ch => ch.name === 'moderation-log')
         try {
             if (!channel) {
@@ -62,7 +76,7 @@ module.exports = class BanCommand extends Command {
                         name: `> Details for Ban`,
                         value: stripIndents`
                                 Banned by ${operator}
-                                For ${reason}
+                                For ${reason ? reason : "No reason given"}.
                         `
                     }
                 )

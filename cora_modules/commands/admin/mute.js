@@ -14,40 +14,23 @@ module.exports = class MuteCommand extends Command {
             clientPermissions : ['MUTE_MEMBERS', 'MANAGE_ROLES'],
             userPermissions: ['SEND_MESSAGES', 'MANAGE_MESSAGES'],
             guildOnly: true,
+            throttling: {
+                usages: 1,
+                duration: 3,
+            },
+            args: [
+                {
+                    key: 'user',
+                    type: 'user'
+                },
+                {
+                    key: 'reason',
+                    type: 'string',
+                }
+            ]
         });
     }
-    async run(message, {user, reason="No reasons given."}) {
-        if (user.hasPermission("ADMINISTRATOR")) {
-            message.say(stripIndents`
-            I'm sorry but I cannot to mute this user as they have \`ADMINISTRATOR\` permissions.
-            Users with \`ADMINISTRATOR\` permission overrides all channel and role specific permissions.`)
-        }
-        if (user.hasPermission("MANAGE_MESSAGES")) {
-            message.say(stripIndents`
-            I'm sorry but I cannot to mute this user as they have \`MANAGE_MESSAGES\` permissions.
-            Users with \`MANAGE_MESSAGES\` permission bypasses channel and role permissions.`)
-        }
-        let muterole = message.guild.roles.cache.find(muterole => muterole.name === "Muted")
-        if (!muterole) {
-            try {
-                console.log(`[Warn] Role 'Muted' not found! Generating one now.`)
-                muterole = await message.guild.createRole({
-                    name: "Muted",
-                    color: 0x000000,
-                    permissions:[]
-                })
-                message.guild.channels.forEach(async (channel, id) => {
-                    await channel.overwritePermissions(muterole, {
-                        SEND_MESSAGES: false,
-                        ADD_REACTIONS: false
-                    });
-                });
-            } catch (err) {
-                console.log(`[Error] Unable to create a new role named 'Muted'! Possibly missing permissions`)
-                console.log(err.stack);
-                console.log(`[Warn] Cannot mute properly without a mute role in the server.`)
-            }
-        }
+    async run(message, {user, reason}) {
         var channel = message.guild.channels.cache.find(ch => ch.name === 'moderation-log')
         try {
             if (!channel) {
@@ -68,6 +51,37 @@ module.exports = class MuteCommand extends Command {
                 console.log(`[Warn] Missing args! No user mentioned, aborting command.`)
                 return
             }
+            if (user.hasPermission("ADMINISTRATOR")) {
+                message.say(stripIndents`
+                I'm sorry but I cannot to mute this user as they have \`ADMINISTRATOR\` permissions.
+                Users with \`ADMINISTRATOR\` permission overrides all channel and role specific permissions.`)
+            }
+            if (user.hasPermission("MANAGE_MESSAGES")) {
+                message.say(stripIndents`
+                I'm sorry but I cannot to mute this user as they have \`MANAGE_MESSAGES\` permissions.
+                Users with \`MANAGE_MESSAGES\` permission bypasses channel and role permissions.`)
+            }
+            let muterole = message.guild.roles.cache.find(muterole => muterole.name === "Muted")
+            if (!muterole) {
+            try {
+                console.log(`[Warn] Role 'Muted' not found! Generating one now.`)
+                muterole = await message.guild.createRole({
+                    name: "Muted",
+                    color: 0x000000,
+                    permissions:[]
+                })
+                message.guild.channels.forEach(async (channel, id) => {
+                    await channel.overwritePermissions(muterole, {
+                        SEND_MESSAGES: false,
+                        ADD_REACTIONS: false
+                    });
+                });
+            } catch (err) {
+                console.log(`[Error] Unable to create a new role named 'Muted'! Possibly missing permissions`)
+                console.log(err.stack);
+                console.log(`[Warn] Cannot mute properly without a mute role in the server.`)
+            }
+        }
             var logColor = 0xDC9934
             var operator = message.author
             var nick = message.guild.members.fetch(user.id)
@@ -88,7 +102,7 @@ module.exports = class MuteCommand extends Command {
                         name: `> Details on Mute`,
                         value: stripIndents`
                                 Muted by ${operator.username}#${operator.discriminator}
-                                For ${reason}.
+                                For ${reason ? reason : "No reason given"}.
                         `
                     }
                 )

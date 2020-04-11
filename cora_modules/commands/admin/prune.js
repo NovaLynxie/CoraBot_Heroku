@@ -29,22 +29,18 @@ module.exports = class PruneCommand extends Command {
 			args: [
 				{
 					key: 'limit',
-					prompt: 'specify how many messages to delete.\n',
 					type: 'integer',
 					max: 100
 				},
 				{
 					key: 'filter',
-					prompt: 'specify which filters to be applied.\n',
 					type: 'string',
 					default: '',
 					parse: str => str.toLowerCase()
 				},
 				{
 					key: 'member',
-					prompt: 'whose messages would you like to delete?\n',
 					type: 'member',
-					default: ''
 				}
 			]
 		});
@@ -116,8 +112,8 @@ module.exports = class PruneCommand extends Command {
                         value: stripIndents`
 								Cleared ${limit} messages.
 								Run by ${operator.username}#${operator.discriminator}
-								**Filters:** ${filter}
-								**Members:** ${member}
+								**Filters:** ${filter ? filter : "None"}
+								**Members:** ${member ? member : "None"}
                                 **Log Date:** ${date}
                         `
 					}
