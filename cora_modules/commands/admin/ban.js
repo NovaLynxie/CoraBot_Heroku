@@ -32,7 +32,7 @@ module.exports = class BanCommand extends Command {
             }
             if (!user) {
                 message.reply(stripIndents`
-                You didn't mention anyone to ban! Please check your spelling and try again.`)
+                you didn't mention anyone to ban! Please check your spelling and try again.`)
                 console.log(`[Warn] Missing args! No user mentioned, aborting command.`)
                 return
             }

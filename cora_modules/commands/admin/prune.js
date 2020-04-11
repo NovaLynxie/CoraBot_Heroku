@@ -66,6 +66,12 @@ module.exports = class PruneCommand extends Command {
                 console.log('[Warn] Moderation action has not been saved correctly, check error message.')
 				return
 			}
+			if (!limit) {
+				message.reply(stripIndents`
+                you didn't specify how many messages for me to remove! Please specify a numeric value and try again.`)
+                console.log(`[Warn] Missing args! No limit specified, aborting command.`)
+                return
+			}
 			if (filter) {
 				if (filter === 'invite') {
 					messageFilter = message => message.content.search(/(discord\.gg\/.+|discordapp\.com\/invite\/.+)/i)
