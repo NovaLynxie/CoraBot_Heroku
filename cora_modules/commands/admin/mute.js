@@ -15,7 +15,7 @@ module.exports = class MuteCommand extends Command {
             guildOnly: true,
         });
     }
-    run(message, {user, reason="No reasons given."}) {
+    async run(message, {user, reason="No reasons given."}) {
         if (user.hasPermission("ADMINISTRATOR")) {
             message.say(stripIndents`
             I'm sorry but I cannot to mute this user as they have \`ADMINISTRATOR\` permissions.
