@@ -33,9 +33,9 @@ module.exports = class WarnCommand extends Command {
             }
             if (!user) {
                 message.reply(stripIndents`
-                You didn't mention anyone to warn! Please check your spelling and try again.
-                `)
+                You didn't mention anyone to warn! Please check your spelling and try again.`)
                 console.log(`[Warn] Missing args! No user mentioned, aborting command.`)
+                return
             }
             var logColor = 0xDC9934
             var operator = message.author

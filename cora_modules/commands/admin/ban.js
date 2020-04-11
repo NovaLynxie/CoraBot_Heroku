@@ -32,15 +32,15 @@ module.exports = class BanCommand extends Command {
             }
             if (!user) {
                 message.reply(stripIndents`
-                You didn't mention anyone to ban! Please check your spelling and try again.
-                `)
+                You didn't mention anyone to ban! Please check your spelling and try again.`)
                 console.log(`[Warn] Missing args! No user mentioned, aborting command.`)
+                return
             }
             if (!user.bannable) {
                 message.reply(stripIndents`
-                I'm sorry but I am unable to ban this user. May be missing permissions or their permission level is higher than mine.
-                `)
+                I'm sorry but I am unable to ban this user. May be missing permissions or their permission level is higher than mine.`)
                 console.log(`[Warn] Unable to kick user, possibly permission error or my permission level is too low.`)
+                return
             }
             var logColor = 0xDC9934
             var operator = message.author

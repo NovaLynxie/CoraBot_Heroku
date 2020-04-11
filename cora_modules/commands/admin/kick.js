@@ -35,12 +35,14 @@ module.exports = class BanCommand extends Command {
                 You didn't mention anyone to kick! Please check your spelling and try again.
                 `)
                 console.log(`[Warn] Missing args! No user mentioned, aborting command.`)
+                return
             }
             if (!user.kickable) {
                 message.reply(stripIndents`
                 I'm sorry but I am unable to kick this user. May be missing permissions or their permission level is higher than mine.
                 `)
                 console.log(`[Warn] Unable to kick user, possibly permission error or my permission level is too low.`)
+                return
             }
             var logColor = 0xDC9934
             var operator = message.author
@@ -71,12 +73,12 @@ module.exports = class BanCommand extends Command {
                 .setFooter(`Moderation logged by Cora`)
             channel.send(logEmbed);
             return member
-            .kick('You have been kicked by operator.')
-            .then(() => message.reply(`${member.user.tag} has been kicked from the server.`))
-            .catch(error => {
-                console.error(error);
+                .kick('You have been kicked by operator.')
+                .then(() => message.reply(`${member.user.tag} has been kicked from the server.`))
+                .catch(error => {
+                    console.error(error);
                 message.reply('An error occured, please try again.')
-            });
+                });
         } catch (err) {
             console.log(`[Severe] Exception Error! An error has occured in the kick command!`)
             message.say(`An error occured while running this command, please try again.`)

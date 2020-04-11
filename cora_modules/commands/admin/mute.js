@@ -66,6 +66,7 @@ module.exports = class MuteCommand extends Command {
                 You didn't mention anyone to mute! Please check your spelling and try again.
                 `)
                 console.log(`[Warn] Missing args! No user mentioned, aborting command.`)
+                return
             }
             var logColor = 0xDC9934
             var operator = message.author
