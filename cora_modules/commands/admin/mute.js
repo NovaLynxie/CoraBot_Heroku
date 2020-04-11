@@ -88,7 +88,7 @@ module.exports = class MuteCommand extends Command {
             return channel.send(muteEmbed);
         } catch (err) {
             console.log(`[Severe] Exception Error! Process fault in channel read/write permissions!`)
-            return console.error(error);
+            return console.error(err);
         }
     }
 };

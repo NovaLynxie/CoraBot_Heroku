@@ -57,7 +57,7 @@ module.exports = class WarnCommand extends Command {
             return channel.send(warnEmbed);
         } catch (err) {
             console.log(`[Severe] Exception Error! Process fault in channel read/write permissions!`)
-            return console.error(error);
+            return console.error(err);
         }
         
     }
