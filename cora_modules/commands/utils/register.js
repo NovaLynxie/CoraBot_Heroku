@@ -1,7 +1,6 @@
 const { Command } = require('discord.js-commando');
 const { MessageEmbed } = require('discord.js');
 const { stripIndents } = require('common-tags');
-//const { serverID } = process.env.serverID
 const getLocalTime = require('../../functions/localtime');
 module.exports = class RegisterCommand extends Command {
     constructor(client) {
@@ -21,10 +20,6 @@ module.exports = class RegisterCommand extends Command {
     }
     async run(message) {
         //Defines variables and constants to be used.
-        //const messages = [];
-        //const guildID = message.guild.id
-        //const whitelistIDs = serverIDs
-        //const isWhitelisted = checkWhitelist(whitelist, guildID);
         var channel = message.guild.channels.cache.find(ch => ch.name === 'registrations')
         var logDate = getLocalTime(message);
         //var nickname = null;
@@ -33,22 +28,6 @@ module.exports = class RegisterCommand extends Command {
         var gender = null;
         var desc = null;
         var blockProcess = 0;
-        /*
-        function checkWhitelist(list, obj) {
-            for (var i = 0; i < list.length; i++) {
-                if (list[i] === obj) {
-                    return true;
-                }
-            }
-            return false;
-        }
-        if (serverID==guildID) {
-            message.say(stripIndents`
-                Woah there buddy,  you're trying to run a restricted command! 🙀
-                That is a special command has been created specifically to register yourself in my owner's discord server only.
-                If this error message appears while running this in my owner's discord server, contact them immediately.`)
-        }
-        */
         try {
             // Message tells user to check their DMs to continue.           
             if (message.channel.type !== 'dm') {
