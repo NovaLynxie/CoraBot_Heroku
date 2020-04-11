@@ -97,22 +97,26 @@ module.exports = class PruneCommand extends Command {
 			const msgs2del = await message.channel.messages.fetch({ limit }).catch(err => null);
 			message.channel.bulkDelete(msgs2del.array().reverse()).catch(err => null);
 			console.log("[Cora] Messages have been removed successfully!")
-			var logColor = 0xDC9934
-            var operator = message.author
-            var date = getLocalTime(message)
-            var logEmbed = new MessageEmbed()
+			const member = 'None'
+			const operator = message.author
+			const logColor = 0xDC9934
+            const date = getLocalTime(message)
+            const logEmbed = new MessageEmbed()
                 .setColor(logColor)
                 .setTitle(`Message Cleaner Log`)
                 .addFields(
                     {
-                        name: `> Prune Results`,
+                        name: `> Log Details`,
                         value: stripIndents`
-                                Removed ${limit} messages.
+								Cleared ${limit} messages.
+								Run by ${operator.username}#${operator.discriminator}
+								**Filters:** ${filter}
+								**Members:** ${member}
                                 **Log Date:** ${date}
                         `
 					}
-                )
-                .setThumbnail(message.author.displayAvatarURL({format:'png'}))
+				)
+				.setThumbnail(message.author.displayAvatarURL({format:'png'}))
                 .setFooter(`Action logged by Cora`)
 			channel.send(logEmbed);
 			return console.log(`[Cora] Logged action to moderation-logs`)
