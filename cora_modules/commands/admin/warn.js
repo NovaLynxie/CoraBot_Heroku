@@ -22,10 +22,12 @@ module.exports = class WarnCommand extends Command {
 			args: [
                 {
                     key: 'user',
+                    prompt: 'Tell me the user to warn.',
                     type: 'user'
                 },
                 {
                     key: 'reason',
+                    prompt: 'Any reasons for the warning?',
                     type: 'string',
                 }
             ]

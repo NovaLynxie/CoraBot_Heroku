@@ -29,17 +29,20 @@ module.exports = class PruneCommand extends Command {
 			args: [
 				{
 					key: 'limit',
+					prompt: 'How many messages to be removed?',
 					type: 'integer',
 					max: 100
 				},
 				{
 					key: 'filter',
+					prompt: 'Which filters should be applied?',
 					type: 'string',
 					default: '',
 					parse: str => str.toLowerCase()
 				},
 				{
 					key: 'member',
+					prompt: 'Who did you wish to remove messages for?',
 					type: 'member',
 				}
 			]

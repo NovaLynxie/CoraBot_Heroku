@@ -25,6 +25,7 @@ module.exports = class MuteCommand extends Command {
                 },
                 {
                     key: 'reason',
+                    prompt: 'Any reasons for muting them?',
                     type: 'string',
                 }
             ]

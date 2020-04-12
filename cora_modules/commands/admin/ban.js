@@ -21,10 +21,12 @@ module.exports = class BanCommand extends Command {
             args: [
                 {
                     key: 'user',
+                    prompt: 'Tell me the user to use the ban hammer on.',
                     type: 'user'
                 },
                 {
                     key: 'reason',
+                    prompt: 'Any reasons for their ban?',
                     type: 'string',
                 }
             ]
