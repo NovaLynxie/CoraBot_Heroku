@@ -21,12 +21,13 @@ module.exports = class MuteCommand extends Command {
             args: [
                 {
                     key: 'user',
+                    prompt: 'Tell me the user to mute.',
                     type: 'user'
                 },
                 {
                     key: 'reason',
                     prompt: 'Any reasons for muting them?',
-                    type: 'string',
+                    type: 'string'
                 }
             ]
         });
