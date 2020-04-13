@@ -61,7 +61,7 @@ module.exports = class PruneCommand extends Command {
                 Please contact my owner or higher ups immediately as as I cannot log mod actions without one!
                 \`\`\`Error! Missing channel/permissions for channel #moderation-log\`\`\`
                 `)
-                console.log('[Error] Missing channel or permissions invalid! Unable to log suggestion!')
+                console.log('[Error] Missing channel or permissions invalid! Unable to log message removal action!')
                 console.log('[Warn] Moderation action has not been saved correctly, check error message.')
 				return
 			}
