@@ -33,22 +33,31 @@ module.exports = class RegisterCommand extends Command {
         var gender = null;
         var desc = null;
         var blockProcess = 0;
-        //message.channel = await message.author.createDM()
-        //const userID = message.author.id
-        function checkWhitelist(list, obj) {
-            for (var i = 0; i < list.length; i++) {
-                if (list[i] === obj) {
-                    return true;
-                }
+        let serverName = message.guild.name;
+        let roleRegistered = message.guild.roles.cache.find(muterole => muterole.name === "Muted")
+        if (!roleRegistered) {
+            try {
+                console.log(`[Warn] Role 'Registered' not found in ${serverName}! Generating one now.`)
+                console.log(`[Info] Generating role 'Registered' in ${serverName}.`)
+                muterole = await message.guild.createRole({
+                    name: "Registered",
+                    color: 0x000000,
+                    permissions:[]
+                })
+                console.log(`[Info] Setting channel perms for role "Muted" in ${serverName}.`)
+                message.guild.channels.forEach(async (channel, id) => {
+                    await channel.overwritePermissions(muterole, {
+                        SEND_MESSAGES: false,
+                        ADD_REACTIONS: false
+                    });
+                    console.log(`[Info] Settings applied to channels in ${serverName}.`)
+                });
+                console.log(`[Info] Role generation completed successfully!`)
+            } catch (err) {
+                console.log(`[Error] Unable to create a new role named 'Registered'! Possibly missing permissions`)
+                console.log(err.stack);
+                console.log(`[Warn] Cannot properly register user without a 'Registered' role in the server.`)
             }
-            return false;
-        }
-        if (isWhitelisted==false) {
-            message.say(stripIndents`
-                Woah there! 🙀 
-                That is a special guild specific command for whitelisted servers only!
-                This command is specifically for my owner's discord server only.
-                If you are seeing this message and you are in my owner's discord server, please contact the owner asap as this should only allow specific servers.`)
         }
         try {
             // Start of Register in Guild            
