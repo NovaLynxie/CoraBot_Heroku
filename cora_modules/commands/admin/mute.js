@@ -22,17 +22,25 @@ module.exports = class MuteCommand extends Command {
                 {
                     key: 'user',
                     prompt: 'Tell me the user to mute.',
-                    type: 'user'
+                    type: 'member',
+                    default: ''
                 },
                 {
                     key: 'reason',
                     prompt: 'Any reasons for muting them?',
-                    type: 'string'
-                }
+                    type: 'string',
+                    default: ''
+                },
+                {
+                    key: 'muteTime',
+                    prompt: 'How long should I mute them for?',
+                    type: 'string',
+                    default: ''
+                },
             ]
         });
     }
-    async run(message, {user, reason}) {
+    async run(message, {user, reason, muteTime}) {
         var channel = message.guild.channels.cache.find(ch => ch.name === 'moderation-log')
         try {
             if (!channel) {
@@ -53,46 +61,53 @@ module.exports = class MuteCommand extends Command {
                 console.log(`[Warn] Missing args! No user mentioned, aborting command.`)
                 return
             }
-            if (user.hasPermission("ADMINISTRATOR")) {
+            if (user.hasPermission('ADMINISTRATO')) {
                 message.say(stripIndents`
                 I'm sorry but I cannot to mute this user as they have \`ADMINISTRATOR\` permissions.
                 Users with \`ADMINISTRATOR\` permission overrides all channel and role specific permissions.`)
+                return
             }
-            if (user.hasPermission("MANAGE_MESSAGES")) {
+            if (user.hasPermission('MANAGE_MESSAGES')) {
                 message.say(stripIndents`
                 I'm sorry but I cannot to mute this user as they have \`MANAGE_MESSAGES\` permissions.
                 Users with \`MANAGE_MESSAGES\` permission bypasses channel and role permissions.`)
+                return
             }
             let serverName = message.guild.name;
             let roleMute = message.guild.roles.cache.find(muterole => muterole.name === "Muted")
             if (!roleMute) {
-            try {
-                console.log(`[Warn] Role 'Muted' not found in ${serverName}! Generating one now.`)
-                console.log(`[Info] Generating role in ${serverName}.`)
-                muterole = await message.guild.createRole({
-                    name: "Muted",
-                    color: 0x000000,
-                    permissions:[]
-                })
-                console.log(`[Info] Setting channel perms for role "Muted" in ${serverName}.`)
-                message.guild.channels.forEach(async (channel, id) => {
-                    await channel.overwritePermissions(muterole, {
-                        SEND_MESSAGES: false,
-                        ADD_REACTIONS: false
+                try {
+                    console.log(`[Warn] Role 'Muted' not found in ${serverName}! Generating one now.`)
+                    console.log(`[Info] Generating role in ${serverName}.`)
+                    muterole = await message.guild.createRole({
+                        name: "Muted",
+                        color: 0x000000,
+                        permissions:[]
+                    })
+                    console.log(`[Info] Setting channel perms for role "Muted" in ${serverName}.`)
+                    message.guild.channels.forEach(async (channel, id) => {
+                        await channel.overwritePermissions(muterole, {
+                            SEND_MESSAGES: false,
+                            ADD_REACTIONS: false
+                        });
+                        console.log(`[Info] Settings applied to channels in ${serverName}.`)
                     });
-                    console.log(`[Info] Settings applied to channels in ${serverName}.`)
-                });
-                console.log(`[Info] Role generation completed successfully!`)
-            } catch (err) {
-                console.log(`[Error] Unable to create a new role named 'Muted'! Possibly missing permissions`)
-                console.log(err.stack);
-                console.log(`[Warn] Cannot mute properly without a mute role in the server.`)
+                    console.log(`[Info] Role generation completed successfully!`)
+                } catch (err) {
+                    console.log(`[Error] Unable to create a new role named 'Muted'! Possibly missing permissions`)
+                    console.log(err.stack);
+                    console.log(`[Warn] Cannot mute properly without a mute role in the server.`)
+                }
+                // End of generate muted role
+                let toMute = user; //Saves user data to toMute instead of calling directly.
+                await(toMute.roles.add(roleMute.id)) //Assigns the mute role to user specified.
+                if (muteTime) { //If timeout variable is defined, call this else skip this.
+                    setTimeout( () => {
+                        toMute.roles.add(roleMute, `Muted by ${message.author.tag} for ${time} minutes. Reason: ${reason}.`)
+                    }, muteTime * 60000);
+                }
+                // End of assign muted role
             }
-            // End of generate muted role
-            let toMute = user; //Saves user data to toMute instead of calling directly.
-            await(toMute.roles.add(roleMute.id))
-            // End of assign muted role
-        }
             var logColor = 0xDC9934
             var operator = message.author
             var nick = message.guild.members.fetch(user.id)
@@ -113,7 +128,8 @@ module.exports = class MuteCommand extends Command {
                         name: `> Details on Mute`,
                         value: stripIndents`
                                 Muted by ${operator.username}#${operator.discriminator}
-                                For ${reason ? reason : "No reason given"}.
+                                Reason: ${reason ? reason : "No reason given"}.
+                                Expires in ${muteTime ? muteTime : "infinity"} minutes.
                         `
                     }
                 )
