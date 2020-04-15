@@ -4,7 +4,7 @@ module.exports = class LeaveCommand extends Command {
   constructor(client) {
     super(client, {
       name: 'leave',
-      aliases: ['end'],
+      aliases: ['end','dc'],
       group: 'music',
       memberName: 'leave',
       guildOnly: true,
@@ -15,7 +15,12 @@ module.exports = class LeaveCommand extends Command {
   run(message) {
     var voiceChannel = message.member.voice.channel;
     if (!voiceChannel) return message.reply('Join a channel and try again');
-
+    /* //Disabled for now, bot must be disconnected from vc by admin (to be changed later)
+    if (typeof message.guild.radioData.radioDispatcher == 'undefined' ||
+      message.guild.radioData.radioDispatcher == null
+    ) {
+      message.say(`Not playing radio streams, checking for songs.`)
+    }*/
     if (
       typeof message.guild.musicData.songDispatcher == 'undefined' ||
       message.guild.musicData.songDispatcher == null
