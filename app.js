@@ -4,8 +4,9 @@ const sqlite = require('sqlite');
 const path = require('path');
 console.log('[Init] Loading activity list providers...')
 const { activitiesList } = require('./cora_modules/internal/activities.json');
-console.log('[Init] Getting settings from cloud host enviroment variables.')
-const { botToken, prefix, ownerID } = process.env;
+console.log('[Init] Loading settings variables...')
+//const { botToken, prefix, ownerID } = process.env;
+const { botToken, prefix, ownerIDs } = require('./config.json')
 
 Structures.extend('Guild', Guild => {
     class MusicGuild extends Guild {
@@ -22,12 +23,23 @@ Structures.extend('Guild', Guild => {
             // No trivia commands implemented.
         }
     }
-    return MusicGuild;
+    class RadioGuild extends Guild {
+        constructor(bot, data){
+            super(bot, data);
+            this.radioData = {
+                isPlaying: false,
+                nowPlaying: null,
+                radioDispatcher: null,
+                volume: 1
+            }
+        }
+    }
+    return MusicGuild, RadioGuild;
 });
 
 const client = new CommandoClient({
     commandPrefix: prefix,
-    owner: ownerID,
+    owner: ownerIDs,
     invite: '',
 });
 
@@ -39,6 +51,7 @@ client.registry
         ['info', 'Information'],
         ['misc', 'Miscelaneous'],
         ['music', 'Music'],
+        ['utils', 'Utilities'],
     ])
     .registerDefaultGroups()
     .registerDefaultCommands({
@@ -48,10 +61,12 @@ client.registry
         path.join(__dirname, './cora_modules/commands')
     );
 
-sqlite.open(path.join(__dirname, "settings.sqlite3")).then((db) => {
+/*
+sqlite.open(path.join(__dirname, "./settings.sqlite3")).then((db) => {
     console.log('[SQLite] Loading settings database...')
     client.setProvider(new SQLiteProvider(db));
 });
+*/
 
 client.once('ready', () => {
     console.log(`[Cora] Logged in as ${client.user.tag}! (${client.user.id})`);
