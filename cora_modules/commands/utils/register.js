@@ -1,6 +1,7 @@
 const { Command } = require('discord.js-commando');
 const { MessageEmbed } = require('discord.js');
 const { stripIndents } = require('common-tags');
+const { serverIDs } = require('../../../config')
 const getLocalTime = require('../../functions/localtime');
 module.exports = class RegisterCommand extends Command {
     constructor(client) {
@@ -20,6 +21,10 @@ module.exports = class RegisterCommand extends Command {
     }
     async run(message) {
         //Defines variables and constants to be used.
+        const messages = [];
+        const guildID = message.guild.id
+        const whitelist = serverIDs
+        const isWhitelisted = checkWhitelist(whitelist, guildID);
         var channel = message.guild.channels.cache.find(ch => ch.name === 'registrations')
         var logDate = getLocalTime(message);
         //var nickname = null;
@@ -28,13 +33,36 @@ module.exports = class RegisterCommand extends Command {
         var gender = null;
         var desc = null;
         var blockProcess = 0;
+        let serverName = message.guild.name;
+        let roleRegistered = message.guild.roles.cache.find(muterole => muterole.name === "Muted")
+        if (!roleRegistered) {
+            try {
+                console.log(`[Warn] Role 'Registered' not found in ${serverName}! Generating one now.`)
+                console.log(`[Info] Generating role 'Registered' in ${serverName}.`)
+                muterole = await message.guild.createRole({
+                    name: "Registered",
+                    color: 0x000000,
+                    permissions:[]
+                })
+                console.log(`[Info] Setting channel perms for role "Muted" in ${serverName}.`)
+                message.guild.channels.forEach(async (channel, id) => {
+                    await channel.overwritePermissions(muterole, {
+                        SEND_MESSAGES: false,
+                        ADD_REACTIONS: false
+                    });
+                    console.log(`[Info] Settings applied to channels in ${serverName}.`)
+                });
+                console.log(`[Info] Role generation completed successfully!`)
+            } catch (err) {
+                console.log(`[Error] Unable to create a new role named 'Registered'! Possibly missing permissions`)
+                console.log(err.stack);
+                console.log(`[Warn] Cannot properly register user without a 'Registered' role in the server.`)
+            }
+        }
         try {
-            // Message tells user to check their DMs to continue.           
+            // Start of Register in Guild            
             if (message.channel.type !== 'dm') {
-                console.log(`[Cora] Opening private channel to ${message.author.username}#${message.author.discriminator}'s DM`)
-                await message.author.createDM(); //Starts new DM channel if not already created.
-                await message.author.send(stripIndents`
-                Hi there! Lets start with some simple questions. Please answer to the best of your ability.`)
+                console.log(`[Zeon] Opening private channel to ${message.author.username}#${message.author.discriminator}'s DM`)
                 await message.reply(stripIndents`
                 I have sent you a DM with futher instructions. Please read the instructions very carefully.
                 Any answers that are found to be incorrect or dishonest will result in your account being penalized and/or banned.`)
@@ -94,7 +122,7 @@ module.exports = class RegisterCommand extends Command {
                 })
             }
             if (blockProcess === 4) {
-                console.log(`[Cora] Registration data collected, processing information.`)
+                console.log(`[Zeon] Registration data collected, processing information.`)
                 // Logs registration to channel and completes registration.
                 if (!channel) {
                     message.say(stripIndents`
@@ -106,13 +134,13 @@ module.exports = class RegisterCommand extends Command {
                     console.log('[Error] Registration was not saved and has been discarded.')
                     return
                 }
-                const username = message.author.username+'#'+message.author.discriminator;
+                const username = message.author.name+'#'+message.author.discriminator;
                 const nickname = ''
                 dmsOpen = dmsOpen.charAt(0).toUpperCase()+dmsOpen.slice(1);
-                console.log(`[Cora] Generating Embed from information gathered from user...`)
+                console.log(`[Zeon] Generating Embed from information gathered from user...`)
                 const registerEmbed = new MessageEmbed()
-                    .setColor(0xEC9AED)
                     .setTitle('Registration Log')
+                    .setDescription('> User Registry Info')
                     .addFields(
                         {
                             name: `> Member's Information`,
@@ -151,6 +179,6 @@ module.exports = class RegisterCommand extends Command {
             console.log(`[Warn] User may have disabled DMs for ${message.guild.name} server.`)
             console.error(error)
         }
-        //return messages;
+        return messages;
     }
 };
