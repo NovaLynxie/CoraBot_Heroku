@@ -44,6 +44,7 @@ module.exports = class PruneCommand extends Command {
 					key: 'member',
 					prompt: 'Who did you wish to remove messages for?',
 					type: 'member',
+					default: ''
 				}
 			]
 		});
