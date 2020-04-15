@@ -76,8 +76,8 @@ module.exports = class WarnCommand extends Command {
                     {
                         name: `> Details for Warn`,
                         value: stripIndents`
-                                **Warned by** ${operator.username}#${operator.discriminator}
-                                **Reason:** ${reason ? reason : "No reason given"}.
+                                Warned by ${operator.username}#${operator.discriminator}
+                                Reason: ${reason ? reason : "No reason given"}.
                         `
                     }
                 )
