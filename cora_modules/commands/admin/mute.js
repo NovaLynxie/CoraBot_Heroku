@@ -68,12 +68,6 @@ module.exports = class MuteCommand extends Command {
                 Users with \`ADMINISTRATOR\` permission overrides all channel and role specific permissions.`)
                 return
             }
-            if (user.hasPermission('MANAGE_MESSAGES')) {
-                message.say(stripIndents`
-                I'm sorry but I cannot to mute this user as they have \`MANAGE_MESSAGES\` permissions.
-                Users with \`MANAGE_MESSAGES\` permission bypasses channel and role permissions.`)
-                return
-            }
             let serverName = message.guild.name;
             let roleMute = message.guild.roles.cache.find(muterole => muterole.name === "Muted")
             if (!roleMute) {
