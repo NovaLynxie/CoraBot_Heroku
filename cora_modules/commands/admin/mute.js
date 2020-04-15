@@ -10,7 +10,7 @@ module.exports = class MuteCommand extends Command {
             memberName: 'mute',
             aliases: ['silence', 'shutup'],
             description: 'Mutes guild member in this server.',
-            examples: ['mute <@user> [reason]'],
+            examples: ['mute <@user> <mins> [reason]'],
             clientPermissions : ['MUTE_MEMBERS', 'MANAGE_ROLES'],
             userPermissions: ['SEND_MESSAGES', 'MANAGE_MESSAGES'],
             guildOnly: true,
@@ -22,7 +22,13 @@ module.exports = class MuteCommand extends Command {
                 {
                     key: 'user',
                     prompt: 'Tell me the user to mute.',
-                    type: 'user',
+                    type: 'member',
+                    default: ''
+                },
+                {
+                    key: 'time',
+                    prompt: 'Duration of the mute?',
+                    type: 'string',
                     default: ''
                 },
                 {
@@ -31,18 +37,12 @@ module.exports = class MuteCommand extends Command {
                     type: 'string',
                     default: ''
                 },
-                {
-                    key: 'muteTime',
-                    prompt: 'How long should I mute them for?',
-                    type: 'string',
-                    default: ''
-                },
             ]
         });
     }
-    async run(message, {user, reason, muteTime}) {
+    async run(message, {user, time, reason}) {
         var channel = message.guild.channels.cache.find(ch => ch.name === 'moderation-log')
-        var member = message.guild.members.cache.find(n => n.id == user.id);
+        var member = message.guild.members.cache.find(n => n.id == user.id)
         try {
             if (!channel) {
                 message.say(stripIndents`
@@ -55,7 +55,7 @@ module.exports = class MuteCommand extends Command {
                 console.log('[Warn] Moderation action has not been saved correctly, check error message.')
                 return
             }
-            if (!member) {
+            if (!user) {
                 message.reply(stripIndents`
                 you didn't mention anyone to mute! Please check your spelling and try again.
                 `)
@@ -69,8 +69,8 @@ module.exports = class MuteCommand extends Command {
                 return
             }
             let serverName = message.guild.name;
-            let roleMute = message.guild.roles.cache.find(muterole => muterole.name === "Muted")
-            if (!roleMute) {
+            let muteRole = message.guild.roles.cache.find(muterole => muterole.name === "Muted")
+            if (!muteRole) {
                 try {
                     console.log(`[Warn] Role 'Muted' not found in ${serverName}! Generating one now.`)
                     console.log(`[Info] Generating role in ${serverName}.`)
@@ -93,20 +93,20 @@ module.exports = class MuteCommand extends Command {
                     console.log(err.stack);
                     console.log(`[Warn] Cannot mute properly without a mute role in the server.`)
                 }
-                // End of generate muted role
-                let toMute = user; //Saves user data to toMute instead of calling directly.
-                await(toMute.roles.add(roleMute.id)) //Assigns the mute role to user specified.
-                if (muteTime) { //If timeout variable is defined, call this else skip this.
-                    setTimeout( () => {
-                        toMute.roles.add(roleMute, `Muted by ${message.author.tag} for ${time} minutes. Reason: ${reason}.`)
-                    }, muteTime * 60000);
-                }
-                // End of assign muted role
             }
+            // End of generate muted role
+            let toMute = user; //Saves user data to toMute instead of calling directly.
+            await(toMute.roles.add(muteRole.id)) //Assigns the mute role to user specified.
+            console.log(`[Cora] Assigned role 'Mute' to user ${user.tag}.`)
+            if (time) { //If timeout variable is defined, call this else skip this.
+                setTimeout( () => {
+                    toMute.roles.remove(muteRole, `Muted by ${message.author.tag} for ${time} minutes. Reason: ${reason}.`)
+                }, time * 60000);
+            }
+            // End of assign muted role
             var logColor = 0xDC9934
             var operator = message.author
-            var member = message.guild.members.cache.find(n => n.id == user.id);
-            var name = member.user.username+'(#'+member.user.discriminator+')';
+            var name = member.user.tag;
             var nick = member.nickname;
             var date = getLocalTime(message)
             var logEmbed = new MessageEmbed()
@@ -125,12 +125,12 @@ module.exports = class MuteCommand extends Command {
                         name: `> Details on Mute`,
                         value: stripIndents`
                                 Muted by ${operator.username}#${operator.discriminator}
+                                For ${time ? time : "infinity"} minutes.
                                 Reason: ${reason ? reason : "No reason given"}.
-                                Expires in ${muteTime ? muteTime : "infinity"} minutes.
                         `
                     }
                 )
-                .setThumbnail(user.displayAvatarURL({format:'png'}))
+                .setThumbnail(member.user.displayAvatarURL({format:'png'}))
                 .setFooter(`Moderation logged by Cora`)
             return channel.send(logEmbed);
         } catch (err) {
