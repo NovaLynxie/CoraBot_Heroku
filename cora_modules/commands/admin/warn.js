@@ -57,6 +57,9 @@ module.exports = class WarnCommand extends Command {
             }
             var logColor = 0xDC9934
             var operator = message.author
+            var member = message.guild.members.cache.find(n => n.id == user.id);
+            var name = member.user.username+'(#'+member.user.discriminator+')';
+            var nick = member.nickname;
             var date = getLocalTime(message)
             var logEmbed = new MessageEmbed()
                 .setColor(logColor)
@@ -65,15 +68,16 @@ module.exports = class WarnCommand extends Command {
                     {
                         name: `> User Info`,
                         value: stripIndents`
-                                **Username:** ${user}
+                                **Username:** ${name}
+                                **Nickname:** ${nick}
                                 **Log Date:** ${date}
                         `
                     },
                     {
                         name: `> Details for Warn`,
                         value: stripIndents`
-                                Warned by ${operator.username}#${operator.discriminator}
-                                Reason: ${reason ? reason : "No reason given"}.
+                                **Warned by** ${operator.username}#${operator.discriminator}
+                                **Reason:** ${reason ? reason : "No reason given"}.
                         `
                     }
                 )

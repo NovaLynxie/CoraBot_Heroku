@@ -22,7 +22,7 @@ module.exports = class MuteCommand extends Command {
                 {
                     key: 'user',
                     prompt: 'Tell me the user to mute.',
-                    type: 'member',
+                    type: 'user',
                     default: ''
                 },
                 {
@@ -110,7 +110,9 @@ module.exports = class MuteCommand extends Command {
             }
             var logColor = 0xDC9934
             var operator = message.author
-            var nick = message.guild.members.fetch(user.id)
+            var member = message.guild.members.cache.find(n => n.id == user.id);
+            var name = member.user.username+'(#'+member.user.discriminator+')';
+            var nick = member.nickname;
             var date = getLocalTime(message)
             var logEmbed = new MessageEmbed()
                 .setColor(logColor)
@@ -119,7 +121,7 @@ module.exports = class MuteCommand extends Command {
                     {
                         name: `> User Info`,
                         value: stripIndents`
-                                **Username:** ${user}
+                                **Username:** ${name}
                                 **Nickname:** ${nick}
                                 **Log Date:** ${date}
                         `
