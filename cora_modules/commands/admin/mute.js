@@ -42,6 +42,7 @@ module.exports = class MuteCommand extends Command {
     }
     async run(message, {user, reason, muteTime}) {
         var channel = message.guild.channels.cache.find(ch => ch.name === 'moderation-log')
+        var member = message.guild.members.cache.find(n => n.id == user.id);
         try {
             if (!channel) {
                 message.say(stripIndents`
@@ -54,14 +55,14 @@ module.exports = class MuteCommand extends Command {
                 console.log('[Warn] Moderation action has not been saved correctly, check error message.')
                 return
             }
-            if (!user) {
+            if (!member) {
                 message.reply(stripIndents`
                 you didn't mention anyone to mute! Please check your spelling and try again.
                 `)
                 console.log(`[Warn] Missing args! No user mentioned, aborting command.`)
                 return
             }
-            if (user.hasPermission('ADMINISTRATO')) {
+            if (member.hasPermission('ADMINISTRATOR')) {
                 message.say(stripIndents`
                 I'm sorry but I cannot to mute this user as they have \`ADMINISTRATOR\` permissions.
                 Users with \`ADMINISTRATOR\` permission overrides all channel and role specific permissions.`)
