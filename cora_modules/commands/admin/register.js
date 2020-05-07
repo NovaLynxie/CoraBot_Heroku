@@ -7,7 +7,7 @@ module.exports = class RegisterCommand extends Command {
         super(client, {
             name: 'register',
             aliases: ['signup'],
-            group: 'utils',
+            group: 'admin',
             memberName: 'register',
             description: 'Registers user to gain access to certain content.',
             details: `Adds user to registered users which would allow access to restricted content hidden from the other users.`,
