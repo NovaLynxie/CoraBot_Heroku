@@ -1,4 +1,5 @@
 const { Command } = require('discord.js-commando');
+const logger = require('../../providers/WinstonPlugin');
 
 module.exports = class ShutdownCommand extends Command {
     constructor(client) {
@@ -12,10 +13,8 @@ module.exports = class ShutdownCommand extends Command {
         });
     }
     run(message) {
-        //console.log('[Bot] This is a placeholder, feature not yet implemented.')
-        //message.say("I'm sorry, but this feature is not yet implemented. :(")
         message.say("Sleeping. Goodnight <:sleepycat:635163563878514688>")
-            .then(console.log("[Cora] Hibernating..."))
+            .then(logger.info("[Cora] Hibernating..."))
             .then(_msg => this.client.user.setStatus('invisible'))
             .then(_msg => this.client.destroy())
             .then(_msg => process.exit());
