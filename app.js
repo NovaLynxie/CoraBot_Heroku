@@ -51,7 +51,7 @@ client.registry
     );
 
 client.once('ready', () => {
-    console.log(`[Cora] Logged in as ${client.user.tag}! (${client.user.id})`);
+    logger.info(`Logged in as ${client.user.tag}! (${client.user.id})`);
     client.user.setActivity('with Commando');
 });
 
