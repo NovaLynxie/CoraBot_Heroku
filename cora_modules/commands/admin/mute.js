@@ -10,6 +10,7 @@ module.exports = class MuteCommand extends Command {
             memberName: 'mute',
             aliases: ['silence', 'shutup'],
             description: 'Mutes guild member in this server.',
+            details: 'Mutes the mentioned guild member in this server with a mute role. Will not work on users with admin privilages however.',
             examples: ['mute <@user> <mins> [reason]'],
             clientPermissions : ['MUTE_MEMBERS', 'MANAGE_ROLES'],
             userPermissions: ['SEND_MESSAGES', 'MANAGE_MESSAGES'],

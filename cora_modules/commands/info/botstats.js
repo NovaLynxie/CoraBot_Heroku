@@ -11,7 +11,7 @@ module.exports = class BotInfoCommand extends Command {
             aliases: ['uptime'],
             group: 'info',
             memberName: 'botstats',
-            description: 'Displays some information about the bot.',
+            description: 'Displays basic stats about the bot.',
         });
     }
     run(message) {

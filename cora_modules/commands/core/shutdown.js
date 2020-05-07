@@ -8,7 +8,7 @@ module.exports = class ShutdownCommand extends Command {
             aliases: ['sleep', 'hibernate'],
             group: 'core',
             memberName: 'shutdown',
-            description: 'Shuts down the bot and disconnects it from discord.',
+            description: 'Shuts down the bot instance.',
             ownerOnly: true,
         });
     }
