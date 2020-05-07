@@ -4,7 +4,7 @@ const Youtube = require('simple-youtube-api');
 const ytdl = require('ytdl-core');
 const ffmpeg = require('ffmpeg-static');
 const logger = require('../../providers/WinstonPlugin');
-const { youtubeAPI } = process.env.youtubeAPI;
+const { youtubeAPI } = process.env;
 const youtube = new Youtube(youtubeAPI);
 
 module.exports = class PlayCommand extends Command {
