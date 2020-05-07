@@ -1,4 +1,4 @@
-const winston = require('winston'); require('winston-daily-rotate-file');
+const winston = require('winston');
 const {addColors, createLogger, format, transports} = winston
 const {combine, colorize, errors, json, timestamp, printf} = format;
 // Logging Levels
@@ -44,56 +44,7 @@ const logger = createLogger({
         printf(info => `(${info.timestamp}) [${info.level}] ${info.message}`),
       ),
       handleExceptions: true
-    }),
-    // Log file transports created here.
-    new transports.DailyRotateFile({ // Requires winston-daily-rotate-file to work.
-      filename: './bot_logs/%DATE%-latest.log',
-      datePattern: 'DD-MM-YYYY',
-      zippedArchive: true,
-      maxSize: '20m',
-      maxFiles: '14d',
-      level: 'error',
-      format: combine(
-        timestamp({format: 'DD-MM-YYYY HH:mm:ss ZZ'}),
-        printf(info => `(${info.timestamp}) [${info.level}] ${info.message}`),
-        errors({stack: true}),
-      )
-    }),
-    new transports.DailyRotateFile({ // Requires winston-daily-rotate-file to work.
-      filename: './bot_logs/%DATE%-debug.log',
-      datePattern: 'DD-MM-YYYY',
-      zippedArchive: true,
-      maxSize: '20m',
-      maxFiles: '14d',
-      level: 'debug',
-      format: combine(
-        timestamp({format: 'DD-MM-YYYY HH:mm:ss ZZ'}),
-        printf(info => `(${info.timestamp}) [${info.level}] ${info.message}`),
-        errors({stack: true}),
-      )
     })
-    /* Disabled to allow dated log files.
-    new transports.File({
-      filename: './bot_logs/debug.log',
-      level: 'debug',
-      format: combine(
-        timestamp({format: 'DD-MM-YYYY HH:mm:ss ZZ'}),
-        printf(info => `(${info.timestamp}) [${info.level}] ${info.message}`),
-        errors({stack: true}),
-      )
-    }),
-    new transports.File({
-      filename: './bot_logs/latest.log',
-      level: 'error',
-      format: combine(
-        timestamp({format: 'DD-MM-YYYY HH:mm:ss ZZ'}),
-        printf(info => `(${info.timestamp}) [${info.level}] ${info.message}`),
-        errors({stack: true}),
-      )
-    })
-    */
-    //logFileLatest, //Testing secondary transport systems.
-    //logFileDebug //Testing secondary transport systems.
   ],
 });
 module.exports = logger;
