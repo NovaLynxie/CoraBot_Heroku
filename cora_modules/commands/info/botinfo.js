@@ -27,7 +27,7 @@ module.exports = class BotInfoCommand extends Command {
                 },
                 {
                     name: "My Functions",
-                    value: `Administration, Moderation, Fun, Utilities and Music`
+                    value: `Administration, Moderation, Support, Fun and Music`
                 },
                 {
                     name: "My Owner",
