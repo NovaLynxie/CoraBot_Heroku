@@ -1,10 +1,11 @@
 const { CommandoClient, /*SQLiteProvider*/ } = require('discord.js-commando');
 const { Structures } = require('discord.js');
 //const sqlite = require('sqlite');
-const path = require('path');
-console.log('[Init] Loading activity list providers...')
+const path = require('path'); // Loads path library for code file to use file directories.
+const logger = require('./cora_modules/providers/WinstonPlugin');
+logger.info('Loading activity list providers...')
 const { activitiesList } = require('./cora_modules/internal/activities.json');
-console.log('[Init] Getting settings from cloud host enviroment variables.')
+console.info('Getting settings from cloud host enviroment variables.')
 const { botToken, prefix, ownerID } = process.env;
 
 Structures.extend('Guild', Guild => {
@@ -16,10 +17,9 @@ Structures.extend('Guild', Guild => {
                 isPlaying: false,
                 nowPlaying: null,
                 songDispatcher: null,
+                radioDispatcher: null,
                 volume: 1
             };
-            // Music Trivia Excluded
-            // No trivia commands implemented.
         }
     }
     return MusicGuild;
@@ -39,7 +39,7 @@ client.registry
         ['info', 'Information'],
         ['misc', 'Miscelaneous'],
         ['music', 'Music'],
-        ['utils', 'Utilities'],
+        ['support', 'Support'],
     ])
     .registerDefaultGroups()
     .registerDefaultCommands({
@@ -72,18 +72,28 @@ client.on('ready', () => {
 })
 
 process.on('unhandledRejection', error => {
-    console.error('[NodeJS] Uncaught Promise Rejection!', error)
-})
+    //console.log(`Uncaught Promise Rejection Detected! ${error}`)
+    logger.log('error',`Uncaught Promise Rejection Detected! ${error}`)
+});
 
 client.on('guildMemberUpdate', (oldMember, newMember) => {
     const removedRoles = oldMember.roles.cache.filter(role => !newMember.roles.cache.has(role.id));
-    if (removedRoles.size > 0) console.log(`[Cora] Role ${removedRoles.map(r=>r.name)} removed from ${oldMember.displayName}.`)
+    if (removedRoles.size > 0) {
+        //console.log(`[Cora] Role ${removedRoles.map(r=>r.name)} removed from ${oldMember.displayName}.`)
+        logger.log('info',`Role ${removedRoles.map(r=>r.name)} removed from ${oldMember.displayName}.`)
+    };
     const addedRoles = newMember.roles.cache.filter(role=>!oldMember.roles.cache.has(role.id));
-    if (addedRoles.size > 0) console.log(`[Cora] Role ${addedRoles.map(r=>r.name)} added to ${oldMember.displayName}.`)
-})
+    if (addedRoles.size > 0) {
+        //console.log(`[Cora] Role ${addedRoles.map(r=>r.name)} added to ${oldMember.displayName}.`)
+        logger.log('info', `Role ${addedRoles.map(r=>r.name)} added to ${oldMember.displayName}.`)
+    };
+});
 
 client.on('error', error => {
-    console.error('[Cora]', error)
-})
+    //console.error('[Error]', error)
+    logger.log('error','Bot Error Exception!')
+    logger.log('error', error)
+});
 
+logger.info(`Connecting to Discord...`);
 client.login(botToken);
