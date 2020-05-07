@@ -56,7 +56,7 @@ module.exports = class ServerInfoCommand extends Command {
         
         var TxtChannels = message.guild.channels.cache.filter(ch => ch.type === 'text').size
         var VcChannels = message.guild.channels.cache.filter(ch => ch.type === 'voice').size
-        var AfkChannels = message.guild.afkChannelID ? `<#${message.guild.afkChannelID}> after ${message.guild.afkTimeout / 60}min` : 'None'
+        var AfkChannels = message.guild.afkChannelID ? `<#${message.guild.afkChannelID}> after ${message.guild.afkTimeout / 60}min` : 'None Set'
         var GuildUsers = message.guild.members.cache.filter(m => !m.user.bot).size
         var GuildBots = message.guild.members.cache.filter(m => m.user.bot).size
 
@@ -70,7 +70,7 @@ module.exports = class ServerInfoCommand extends Command {
                     value: stripIndents`
                             - Text: ${TxtChannels} channels
                             - Voice: ${VcChannels} channels
-                            - AFK Ch.: ${AfkChannels}
+                            - AFK: ${AfkChannels}
                     `
                 },
                 {
