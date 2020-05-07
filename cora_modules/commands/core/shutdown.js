@@ -14,7 +14,7 @@ module.exports = class ShutdownCommand extends Command {
     }
     run(message) {
         message.say("Sleeping. Goodnight <:sleepycat:635163563878514688>")
-            .then(logger.info("[Cora] Hibernating..."))
+            .then(logger.info("Shutdown command recieved! Hibernating..."))
             .then(_msg => this.client.user.setStatus('invisible'))
             .then(_msg => this.client.destroy())
             .then(_msg => process.exit());
