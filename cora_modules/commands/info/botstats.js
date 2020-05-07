@@ -7,10 +7,10 @@ const { version } = require('../../../package.json')
 module.exports = class BotInfoCommand extends Command {
     constructor(client) {
         super(client, {
-            name: 'statsinfo',
-            aliases: ['stats'],
+            name: 'stats',
+            aliases: ['uptime'],
             group: 'info',
-            memberName: 'statsinfo',
+            memberName: 'botstats',
             description: 'Displays some information about the bot.',
         });
     }

@@ -11,7 +11,7 @@ module.exports = class UserInfoCommand extends Command {
             group: 'info',
             aliases: ['whois'],
             memberName: 'userinfo',
-            description: 'Gets information about a user. (Currently not implemented)',
+            description: 'Gets information about a user.',
             details: `Allows you to get detailed information on the specified user.`,
             guildOnly: true,
             throttling: {
