@@ -38,7 +38,6 @@ const logger = createLogger({
     new transports.Console({
       level: 'verbose',
       format: combine(
-        colorize(),
         errors({stack: true,}),
         timestamp({format: 'HH:mm:ss'}),
         printf(info => `(${info.timestamp}) [${info.level}] ${info.message}`),
