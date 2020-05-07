@@ -2,7 +2,9 @@ const { Command } = require('discord.js-commando');
 const { MessageEmbed } = require('discord.js');
 const Youtube = require('simple-youtube-api');
 const ytdl = require('ytdl-core');
-const youtubeAPI = process.env.youtubeAPI;
+const ffmpeg = require('ffmpeg-static');
+const logger = require('../../providers/WinstonPlugin');
+const { youtubeAPI } = process.env.youtubeAPI;
 const youtube = new Youtube(youtubeAPI);
 
 module.exports = class PlayCommand extends Command {
@@ -12,7 +14,8 @@ module.exports = class PlayCommand extends Command {
       aliases: ['play-song', 'add'],
       memberName: 'play',
       group: 'music',
-      description: 'Play any song or playlist from youtube',
+      description: 'Plays any song or playlist from youtube or valid stream urls.',
+      details: `Plays any valid song or playlist url from youtube or valid stream urls via the bot in a voice channel.`,
       guildOnly: true,
       clientPermissions: ['SPEAK', 'CONNECT'],
       throttling: {
@@ -219,7 +222,6 @@ module.exports = class PlayCommand extends Command {
       //     'There are too many songs in the queue already, skip or wait a bit'
       //   );
       // }
-      console.log(message.guild.musicData.queue)
       message.guild.musicData.queue.push(song);
       if (message.guild.musicData.isPlaying == false) {
         message.guild.musicData.isPlaying = true;
@@ -255,6 +257,7 @@ module.exports = class PlayCommand extends Command {
             })
           )
           .on('start', () => {
+            logger.info("Loaded requested songs. Playing song.")
             message.guild.musicData.songDispatcher = dispatcher;
             dispatcher.setVolume(message.guild.musicData.volume);
             const videoEmbed = new MessageEmbed()
@@ -269,8 +272,10 @@ module.exports = class PlayCommand extends Command {
           })
           .on('finish', () => {
             if (queue.length >= 1) {
+              logger.info("Playing next song in server queue.")
               return this.playSong(queue, message);
             } else {
+              logger.info("Song has finished, leaving voice channel.")
               message.guild.musicData.isPlaying = false;
               message.guild.musicData.nowPlaying = null;
               return message.guild.me.voice.channel.leave();
@@ -278,7 +283,8 @@ module.exports = class PlayCommand extends Command {
           })
           .on('error', e => {
             message.say('Cannot play song');
-            console.error(e);
+            logger.error("Caught error while attempting to play song!")
+            logger.error(e);
             message.guild.musicData.queue.length = 0;
             message.guild.musicData.isPlaying = false;
             message.guild.musicData.nowPlaying = null;
@@ -286,7 +292,8 @@ module.exports = class PlayCommand extends Command {
           });
       })
       .catch(e => {
-        console.error(e);
+        logger.error("Exception caught!")
+        logger.error(e);
         return message.guild.me.voice.channel.leave();
       });
   }
