@@ -44,7 +44,7 @@ client.registry
     .registerDefaultGroups()
     .registerDefaultCommands({
         unknownCommand: false,
-        //help: false,
+        help: false,
     })
     .registerCommandsIn(
         path.join(__dirname, './cora_modules/commands')
