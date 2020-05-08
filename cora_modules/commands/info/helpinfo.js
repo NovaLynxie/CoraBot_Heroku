@@ -125,15 +125,18 @@ module.exports = class helpDescCommand extends Command {
                     .setTitle("Help Information")
                     .setColor(0xE7A3F0)
                     .setDescription(stripIndents`
-                        Here is all the commands that are available to the user.
-                        Some commands are Guild Only while some require NSFW channels to run.
-                        To get more information on a specific command use:
-                        \`${this.client.commandPrefix} help <command>\`
-
                         __**All Commands**__
                         
                         ${allCmds}
                         `
+                    )
+                    .addFields(
+                        {
+                            name: "Need help on using the command?",
+                            value: stripIndents`
+                                To get more information on a specific command use: \`${this.client.commandPrefix} help <command>\`
+                            `
+                        }
                     )
                     .setFooter("Built on Node.js using Discord.js with Commando.")
                     .setThumbnail(this.client.user.displayAvatarURL({ format: 'png'}))
