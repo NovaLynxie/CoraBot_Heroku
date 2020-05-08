@@ -2,6 +2,7 @@ const { Command } = require('discord.js-commando');
 const { MessageEmbed } = require('discord.js');
 const { stripIndents } = require('common-tags');
 const getLocalTime = require('../../functions/localtime')
+const logger = require('../../providers/WinstonPlugin')
 module.exports = class PruneCommand extends Command {
     constructor(client) {
         super(client, {
@@ -62,14 +63,14 @@ module.exports = class PruneCommand extends Command {
                 Please contact my owner or higher ups immediately as as I cannot log mod actions without one!
                 \`\`\`Error! Missing channel/permissions for channel #moderation-log\`\`\`
                 `)
-                console.log('[Error] Missing channel or permissions invalid! Unable to log message removal action!')
-                console.log('[Warn] Moderation action has not been saved correctly, check error message.')
+                logger.error('[Error] Missing channel or permissions invalid! Unable to log message removal action!')
+                logger.warn('[Warn] Moderation action has not been saved correctly, check error message.')
 				return
 			}
 			if (!limit) {
 				message.reply(stripIndents`
                 you didn't specify how many messages for me to remove! Please specify a numeric value and try again.`)
-                console.log(`[Warn] Missing args! No limit specified, aborting command.`)
+                logger.warn(`Missing args! No limit specified, aborting command.`)
                 return
 			}
 			if (filter) {
@@ -102,7 +103,7 @@ module.exports = class PruneCommand extends Command {
 			}
 			const msgs2del = await message.channel.messages.fetch({ limit }).catch(err => null);
 			message.channel.bulkDelete(msgs2del.array().reverse()).catch(err => null);
-			console.log("[Cora] Messages have been removed successfully!")
+			logger.info("Messages have been removed successfully!")
 			const member = 'None'
 			const operator = message.author
 			const logColor = 0xDC9934
@@ -125,11 +126,11 @@ module.exports = class PruneCommand extends Command {
 				.setThumbnail(message.author.displayAvatarURL({format:'png'}))
                 .setFooter(`Action logged by Cora`)
 			channel.send(logEmbed);
-			return console.log(`[Cora] Logged action to moderation-logs`)
+			return logger.info(`Logged action to moderation-logs`)
 		} catch (err) {
-			console.log(`[Severe] Exception Error! An error has occured in the prune command!`)
+			logger.error(`[Severe] Exception Error! An error has occured in the prune command!`)
 			message.say(`An error occured while running this command, please try again.`)
-            return console.error(err);
+            return logger.error(err);
         }
     }
 };
