@@ -124,13 +124,13 @@ module.exports = class PruneCommand extends Command {
 					}
 				)
 				.setThumbnail(message.author.displayAvatarURL({format:'png'}))
-                .setFooter(`Action logged by Cora`)
-			channel.send(logEmbed);
-			return logger.info(`Logged action to moderation-logs`)
+				.setFooter(`Action logged by Cora`)
+			logger.info(`Logged action to moderation-logs`)
+			return channel.send(logEmbed);
 		} catch (err) {
 			logger.error(`[Severe] Exception Error! An error has occured in the prune command!`)
-			message.say(`An error occured while running this command, please try again.`)
-            return logger.error(err);
+			logger.error(err);
+			return message.say(`An error occured while running this command, please try again.`)
         }
     }
 };
