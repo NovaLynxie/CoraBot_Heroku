@@ -1,6 +1,7 @@
 const { Command } = require('discord.js-commando');
 const { MessageEmbed } = require('discord.js');
 const { stripIndents, oneLine } = require('common-tags');
+const { debug } = require('../../../config.json');
 const logger = require('../../providers/WinstonPlugin');
 
 module.exports = class helpDescCommand extends Command {
@@ -31,6 +32,15 @@ module.exports = class helpDescCommand extends Command {
         const commands = this.client.registry.findCommands(args.command, false, message);
         const showAll = args.command && args.command.toLowerCase() === 'all';
         
+        if(debug == true) {
+            logger.debug("Debug enabled! Use only for debugging or error checking.")
+            logger.debug(`args.command=${args.command ? args.command : 'undefined'}`)
+            logger.debug(`groups=${groups}`)
+            //console.debug(`${groups}`)
+            logger.debug(`commands`)
+            //console.debug(`${commands}`)
+            logger.debug(`showAll=${showAll}`)
+        }
         if(!args.command) {
             var helpEmbed = new MessageEmbed()
                 .setTitle("Help Information")
@@ -125,17 +135,15 @@ module.exports = class helpDescCommand extends Command {
                     .setTitle("Help Information")
                     .setColor(0xE7A3F0)
                     .setDescription(stripIndents`
-                        __**All Commands**__
-                        
-                        ${allCmds}
-                        `
+                        Here is all the commands that are available to the user.
+                        Some commands are Guild Only while some require NSFW channels to run.
+                        To get more information on a specific command use:
+                        \`${this.client.commandPrefix} help <command>\``
                     )
                     .addFields(
                         {
-                            name: "Need help on using the command?",
-                            value: stripIndents`
-                                To get more information on a specific command use: \`${this.client.commandPrefix} help <command>\`
-                            `
+                            name: `__**Commands**__`,
+                            value: allCmds
                         }
                     )
                     .setFooter("Built on Node.js using Discord.js with Commando.")

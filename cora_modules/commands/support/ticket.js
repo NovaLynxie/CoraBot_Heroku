@@ -1,6 +1,8 @@
 const { Command } = require('discord.js-commando');
 const { MessageEmbed } = require('discord.js');
 const { stripIndents } = require('common-tags');
+const { serverIDs } = require('../../../config');
+const fs = require('fs');
 // Getting other plugins and functions here.
 const logger = require('../../providers/WinstonPlugin');
 const getLocalTime = require('../../functions/localtime');
