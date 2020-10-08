@@ -1,7 +1,6 @@
 const { Command } = require('discord.js-commando');
 const { MessageEmbed } = require('discord.js');
 const { stripIndents, oneLine } = require('common-tags');
-const { debug } = require('../../../config.json');
 const logger = require('../../providers/WinstonPlugin');
 
 module.exports = class helpDescCommand extends Command {
@@ -32,15 +31,6 @@ module.exports = class helpDescCommand extends Command {
         const commands = this.client.registry.findCommands(args.command, false, message);
         const showAll = args.command && args.command.toLowerCase() === 'all';
         
-        if(debug == true) {
-            logger.debug("Debug enabled! Use only for debugging or error checking.")
-            logger.debug(`args.command=${args.command ? args.command : 'undefined'}`)
-            logger.debug(`groups=${groups}`)
-            //console.debug(`${groups}`)
-            logger.debug(`commands`)
-            //console.debug(`${commands}`)
-            logger.debug(`showAll=${showAll}`)
-        }
         if(!args.command) {
             var helpEmbed = new MessageEmbed()
                 .setTitle("Help Information")
