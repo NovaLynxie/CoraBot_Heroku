@@ -42,15 +42,5 @@ module.exports = class VolumeCommand extends Command {
       radioDispatcher.setVolume(volume);
     }
     message.say(`Current volume is: ${wantedVolume}%`);
-    /*
-    if (
-      (typeof message.guild.musicData.songDispatcher == 'undefined' &&
-      message.guild.musicData.songDispatcher == null) || 
-      (typeof message.guild.musicData.radioDispatcher == 'undefined' &&
-      message.guild.musicData.radioDispatcher == null)
-    ) {
-      return message.reply('There is no song playing right now!');
-    }*/
-    //const volume = wantedVolume / 100;
   }
 };
