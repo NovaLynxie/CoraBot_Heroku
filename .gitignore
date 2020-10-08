@@ -1,4 +1,3 @@
 node_modules
 .circleci/config_backup.yml
 config.json
-package-lock.json
