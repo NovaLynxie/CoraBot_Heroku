@@ -4,6 +4,9 @@
   "private": true,
   "description": "Discord Bot for CoraLynx",
   "main": "app.js",
+  "engines": {
+    "node": "12.x"
+  },
   "scripts": {
     "test": "echo \"Warn: no test specified\" && exit 0",
     "start": "node app.js"
