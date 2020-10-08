@@ -19,7 +19,7 @@ module.exports = class VolumeCommand extends Command {
           key: 'wantedVolume',
           prompt: 'What volume would you like to set? from 1 to 200',
           type: 'integer',
-          validate: wantedVolume => wantedVolume >= 1 && wantedVolume <= 200
+          validate: wantedVolume => wantedVolume >= 1 && wantedVolume <= 200 || undefined
         }
       ]
     });
@@ -27,20 +27,30 @@ module.exports = class VolumeCommand extends Command {
 
   run(message, { wantedVolume }) {
     const voiceChannel = message.member.voice.channel;
+    const songDispatcher = message.guild.musicData.songDispatcher;
+    const radioDispatcher = message.guild.musicData.radioDispatcher;
     if (!voiceChannel) return message.reply('Join a channel and try again');
 
-    if (
-      typeof message.guild.musicData.songDispatcher == 'undefined' ||
-      message.guild.musicData.songDispatcher == null || 
-      typeof message.guild.musicData.radioDispatcher == 'undefined' ||
-      message.guild.musicData.radioDispatcher == null
-    ) {
-      return message.reply('There is no song playing right now!');
+    if (typeof songDispatcher === "undefined" || typeof radioDispatcher === "undefined") {
+      return message.reply('there is no song playing right now')
     }
     const volume = wantedVolume / 100;
-    message.guild.musicData.volume = volume;
-    message.guild.musicData.songDispatcher.setVolume(volume);
-    message.guild.musicData.radioDispatcher.setVolume(volume);
+    if (songDispatcher) {
+      songDispatcher.setVolume(volume);
+    }
+    if (radioDispatcher) {
+      radioDispatcher.setVolume(volume);
+    }
     message.say(`Current volume is: ${wantedVolume}%`);
+    /*
+    if (
+      (typeof message.guild.musicData.songDispatcher == 'undefined' &&
+      message.guild.musicData.songDispatcher == null) || 
+      (typeof message.guild.musicData.radioDispatcher == 'undefined' &&
+      message.guild.musicData.radioDispatcher == null)
+    ) {
+      return message.reply('There is no song playing right now!');
+    }*/
+    //const volume = wantedVolume / 100;
   }
 };
