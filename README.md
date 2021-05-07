@@ -1,3 +1,5 @@
+# NO LONGER BEING DEVELOPED OR IN ACTIVE USE! USES OUTDATED CODE SO MAY BREAK UNEXPECTEDLY!
+
 # CoraBot - A customizable discord bot built on DiscordJS with NodeJS
 This repository is for all commits used for the Heroku hosted bot.
 
